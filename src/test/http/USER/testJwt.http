@@ -1,0 +1,2 @@
+GET http://localhost:8080/member/test/jwt
+Authorization: eyJraWQiOiJrZXkxIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJ0ZXN0MUBuYXZlci5jb20iLCJpYXQiOjE3NDgwOTA2MTgsImV4cCI6MTc0ODIzNDYxOH0.K_1291yftT1OSbgJIjGWBryrx4zOkBRMex4L6tVQmVc
