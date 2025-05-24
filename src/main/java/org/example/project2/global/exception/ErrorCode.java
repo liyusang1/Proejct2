@@ -24,6 +24,9 @@ public enum ErrorCode {
     USER_ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "이미 가입된 회원입니다."),
     USER_INVALID_ACCESS(HttpStatus.BAD_REQUEST, "잘못된 유저의 접근입니다."),
 
+    // Item
+    ITEM_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 상품 입니다."),
+
     // AUTH
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 틀렸습니다."),
 

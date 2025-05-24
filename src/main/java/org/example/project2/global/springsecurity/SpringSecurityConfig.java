@@ -70,7 +70,7 @@ public class SpringSecurityConfig {
             .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/member/signup")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/member/test/jwt")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/items")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/items/**")).permitAll()
             .anyRequest().authenticated());
 
         /**
