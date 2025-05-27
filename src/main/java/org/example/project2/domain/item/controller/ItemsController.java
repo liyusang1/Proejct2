@@ -5,13 +5,12 @@ import org.example.project2.domain.item.dto.response.ItemDetailResponseDto;
 import org.example.project2.domain.item.dto.response.ItemResponseDto;
 import org.example.project2.domain.item.service.ItemService;
 import org.example.project2.global.util.ResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/items")
@@ -21,10 +20,16 @@ public class ItemsController {
     private final ItemService itemService;
 
     @GetMapping("")
-    public ResponseEntity<ResponseDTO<List<ItemResponseDto>>> getAllItemList() {
+    public ResponseEntity<ResponseDTO<Page<ItemResponseDto>>> getAllItemList(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String direction
+    ) {
 
-        ResponseDTO<List<ItemResponseDto>>
-                response = itemService.getAllItemList();
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), sortBy));
+        ResponseDTO<Page<ItemResponseDto>>
+                response = itemService.getAllItemList(pageable);
 
         return ResponseEntity
                 .status(response.getCode())

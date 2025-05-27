@@ -2,13 +2,15 @@ package org.example.project2.domain.item.dto.response;
 
 
 import org.example.project2.domain.item.entity.Items;
+import org.example.project2.global.util.DataFormatter;
 
 public record ItemDetailResponseDto(
         Long id,
         String name,
         String description,
         int price,
-        String imageUrl
+        String imageUrl,
+        String createdAt
 ) {
 
     public static ItemDetailResponseDto fromEntity(Items items) {
@@ -17,7 +19,8 @@ public record ItemDetailResponseDto(
                 items.getName(),
                 items.getDescription(),
                 items.getPrice(),
-                items.getImageUrl()
+                items.getImageUrl(),
+                DataFormatter.getFormattedCreatedAt(items.getCreatedAt())
         );
     }
 }
