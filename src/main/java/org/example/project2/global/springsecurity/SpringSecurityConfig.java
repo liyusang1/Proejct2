@@ -30,22 +30,22 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-        HandlerMappingIntrospector introspector) throws Exception {
+                                                   HandlerMappingIntrospector introspector) throws Exception {
 
         // CORS 설정 추가
         http.cors(cors -> cors
-            .configurationSource(request -> {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.applyPermitDefaultValues();
-                configuration.addAllowedOriginPattern("");
-                configuration.addAllowedOriginPattern("http://localhost:8081");
-                configuration.setAllowedMethods(
-                    Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"));
+                .configurationSource(request -> {
+                    CorsConfiguration configuration = new CorsConfiguration();
+                    configuration.applyPermitDefaultValues();
+                    configuration.addAllowedOriginPattern("");
+                    configuration.addAllowedOriginPattern("http://localhost:8081");
+                    configuration.setAllowedMethods(
+                            Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"));
 
-                // 다른 도메인도 필요에 따라 추가
-                configuration.setAllowCredentials(true); // 쿠키를 포함한 크로스 도메인 요청을 허용
-                return configuration;
-            }));
+                    // 다른 도메인도 필요에 따라 추가
+                    configuration.setAllowCredentials(true); // 쿠키를 포함한 크로스 도메인 요청을 허용
+                    return configuration;
+                }));
 
         // basic authentication
         http.httpBasic(AbstractHttpConfigurer::disable); // basic authentication filter 비활성화
@@ -55,23 +55,24 @@ public class SpringSecurityConfig {
         http.rememberMe(AbstractHttpConfigurer::disable);
         // stateless
         http.sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // jwt filter
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authz -> authz
-            /*
-            .requestMatchers(new AntPathRequestMatcher("ant matcher")).authenticated()
-            .requestMatchers(new AntPathRequestMatcher("role sample")).hasRole("ADMIN")
-            .requestMatchers(HttpMethod.OPTIONS, "/basket/**").permitAll() // OPTIONS 메서드에 대한 권한 허용
-            .requestMatchers(new AntPathRequestMatcher("role sample", HttpMethod.POST.name())).hasRole("ADMIN") */
-            .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/member/signup")).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/member/test/jwt")).permitAll()
+                /*
+                .requestMatchers(new AntPathRequestMatcher("ant matcher")).authenticated()
+                .requestMatchers(new AntPathRequestMatcher("role sample")).hasRole("ADMIN")
+                .requestMatchers(HttpMethod.OPTIONS, "/basket/**").permitAll() // OPTIONS 메서드에 대한 권한 허용
+                .requestMatchers(new AntPathRequestMatcher("role sample", HttpMethod.POST.name())).hasRole("ADMIN") */
+                .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/member/signup")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/member/test/jwt")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/s3/upload")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/items/**")).permitAll()
-            .anyRequest().authenticated());
+                .anyRequest().authenticated());
 
         /**
          * @author liyusang1
@@ -88,12 +89,12 @@ public class SpringSecurityConfig {
 
         http.exceptionHandling(exceptionHandling -> {
             exceptionHandling.authenticationEntryPoint(
-                (request, response, authException) -> CustomResponseUtil.fail(response,
-                    "로그인을 진행해 주세요", HttpStatus.UNAUTHORIZED));
+                    (request, response, authException) -> CustomResponseUtil.fail(response,
+                            "로그인을 진행해 주세요", HttpStatus.UNAUTHORIZED));
 
             exceptionHandling.accessDeniedHandler(
-                (request, response, accessDeniedException) -> CustomResponseUtil.fail(response,
-                    "접근 권한이 없습니다", HttpStatus.FORBIDDEN));
+                    (request, response, accessDeniedException) -> CustomResponseUtil.fail(response,
+                            "접근 권한이 없습니다", HttpStatus.FORBIDDEN));
         });
 
         return http.build();

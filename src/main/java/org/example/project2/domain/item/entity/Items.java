@@ -2,6 +2,7 @@ package org.example.project2.domain.item.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.project2.global.entity.BaseTimeEntity;
@@ -23,4 +24,12 @@ public class Items extends BaseTimeEntity {
     private int price;
 
     private String imageUrl;
+
+    @Builder
+    private Items(String name, String description, int price, String imageUrl) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
 }

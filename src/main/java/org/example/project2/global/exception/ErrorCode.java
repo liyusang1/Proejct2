@@ -14,6 +14,9 @@ public enum ErrorCode {
     // Permission
     PERMISSION_DENIED(HttpStatus.FORBIDDEN, "해당 작업을 수행할 권한이 업습니다."),
 
+    // S3
+    S3_ERROR(HttpStatus.FORBIDDEN, "이미지 업로드 중 오류가 발생했습니다."),
+
     // EMAIL
     EMAIL_SENDING_FAILURE(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 전송에 실패했습니다."),
     EMAIL_TEMPLATE_LOAD_FAILURE(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 템플릿 로드에 실패했습니다."),

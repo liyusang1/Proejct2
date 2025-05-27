@@ -1,15 +1,19 @@
 package org.example.project2.domain.item.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.project2.domain.item.dto.request.PostItemRequestDto;
 import org.example.project2.domain.item.dto.response.ItemDetailResponseDto;
 import org.example.project2.domain.item.dto.response.ItemResponseDto;
 import org.example.project2.domain.item.service.ItemService;
+import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,6 +46,15 @@ public class ItemsController {
 
         ResponseDTO<ItemDetailResponseDto> response = itemService.getItemDetail(
                 itemId);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<ResponseDTO<Void>> postItem(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @Valid @RequestBody PostItemRequestDto postItemRequestDto) {
+
+        ResponseDTO<Void> response = itemService.postItem(principalDetails, postItemRequestDto);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 }
