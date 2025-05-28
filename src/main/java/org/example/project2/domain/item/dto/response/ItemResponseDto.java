@@ -12,7 +12,8 @@ public record ItemResponseDto(
         String imageUrl,
         String createdAt,
         String writer,
-        Boolean isLiked
+        Boolean isLiked,
+        String writerProfileImage
 ) {
     public static ItemResponseDto fromEntity(Items items, Boolean isLiked) {
         return new ItemResponseDto(
@@ -23,7 +24,8 @@ public record ItemResponseDto(
                 items.getImageUrl(),
                 DataFormatter.getFormattedCreatedAt(items.getCreatedAt()),
                 items.getMember().getMemberBase().getNickname(),
-                isLiked
+                isLiked,
+                items.getMember().getProfileImage()
         );
     }
 }

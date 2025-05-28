@@ -27,6 +27,8 @@ public class Member extends BaseTimeEntity {
 
     private String provider;
 
+    private String profileImage;
+
     /**
      * orphanRemoval = true란?
      * @OneToMany 또는 @OneToOne 관계에서 사용되며,
@@ -43,6 +45,8 @@ public class Member extends BaseTimeEntity {
     private Member(String email, String nickname, String password, String authority,
                    String provider) {
         this.memberBase = new MemberBase(email, nickname, password, authority);
+        //default image
+        this.profileImage = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
         this.provider = provider;
     }
 
