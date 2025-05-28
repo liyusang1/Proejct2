@@ -1,0 +1,27 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test1@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 상품등록
+POST http://localhost:8080/items
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "다중생성테스트",
+  "description": "test",
+  "imageUrl": ""
+}
