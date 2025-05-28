@@ -8,6 +8,8 @@ import org.example.project2.domain.item.dto.response.ItemResponseDto;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.domain.item.exception.ItemIdIsInvalidException;
 import org.example.project2.domain.item.repository.ItemRepository;
+import org.example.project2.domain.likes.entity.Likes;
+import org.example.project2.domain.likes.repository.LikeRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
 import org.springframework.data.domain.Page;
@@ -21,11 +23,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final LikeRepository likeRepository;
 
-    public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable) {
-        Page<Items> items = itemRepository.findAll(pageable);
-        return ResponseDTO.okWithData(
-                items.map(ItemResponseDto::fromEntity));
+    public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable,Long userId) {
+        Page<Items> itemsPage = itemRepository.findAll(pageable);
+
+        Page<ItemResponseDto> dtoPage = itemsPage.map(item -> {
+            boolean isLiked = false;
+
+            if (userId != null) {
+                isLiked = likeRepository.findByMember_IdAndItems_Id(userId, item.getId())
+                        .map(Likes::getStatus)
+                        .orElse(false);
+            }
+
+            return ItemResponseDto.fromEntity(item, isLiked);
+        });
+
+        return ResponseDTO.okWithData(dtoPage);
     }
 
     public ResponseDTO<ItemDetailResponseDto> getItemDetail(long itemId) {

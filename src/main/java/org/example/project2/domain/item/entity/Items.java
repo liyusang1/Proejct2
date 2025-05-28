@@ -5,8 +5,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.project2.domain.likes.entity.Likes;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.global.entity.BaseTimeEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -44,6 +48,9 @@ public class Items extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)  // 외래 키 이름 일치
     private Member member;
+
+    @OneToMany(mappedBy = "items", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Likes> likes = new ArrayList<>();
 
     @Builder
     private Items(String name, String description, int price, String imageUrl,Member member) {
