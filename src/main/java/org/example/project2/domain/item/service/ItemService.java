@@ -40,7 +40,7 @@ public class ItemService {
     public ResponseDTO<Void> postItem(PrincipalDetails principalDetails
             , @Valid PostItemRequestDto postItemRequestDto) {
 
-        itemRepository.save(postItemRequestDto.toEntity());
+        itemRepository.save(postItemRequestDto.toEntity(principalDetails.getMember()));
         return ResponseDTO.ok();
     }
 }

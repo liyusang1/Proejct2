@@ -5,7 +5,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.project2.domain.item.entity.Items;
 import org.example.project2.global.entity.BaseTimeEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,6 +25,15 @@ public class Member extends BaseTimeEntity {
     protected MemberBase memberBase;
 
     private String provider;
+
+    /**
+     * orphanRemoval = true란?
+     * @OneToMany 또는 @OneToOne 관계에서 사용되며,
+     * 부모 엔티티 컬렉션에서 자식 엔티티를 제거(remove) 하면,
+     * 그 자식 엔티티는 자동으로 DB에서 삭제됩니다.
+     */
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Items> items = new ArrayList<>();
 
     @Builder
     private Member(String email, String nickname, String password, String authority,

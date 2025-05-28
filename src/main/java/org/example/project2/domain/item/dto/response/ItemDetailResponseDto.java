@@ -10,7 +10,8 @@ public record ItemDetailResponseDto(
         String description,
         int price,
         String imageUrl,
-        String createdAt
+        String createdAt,
+        String writer
 ) {
 
     public static ItemDetailResponseDto fromEntity(Items items) {
@@ -20,7 +21,8 @@ public record ItemDetailResponseDto(
                 items.getDescription(),
                 items.getPrice(),
                 items.getImageUrl(),
-                DataFormatter.getFormattedCreatedAt(items.getCreatedAt())
+                DataFormatter.getFormattedCreatedAt(items.getCreatedAt()),
+                items.getMember().getMemberBase().getNickname()
         );
     }
 }
