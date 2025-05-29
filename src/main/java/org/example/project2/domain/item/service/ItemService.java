@@ -25,7 +25,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final LikeRepository likeRepository;
 
-    public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable,Long userId) {
+    public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable, Long userId) {
         Page<Items> itemsPage = itemRepository.findAll(pageable);
 
         Page<ItemResponseDto> dtoPage = itemsPage.map(item -> {
@@ -37,7 +37,8 @@ public class ItemService {
                         .orElse(false);
             }
 
-            return ItemResponseDto.fromEntity(item, isLiked);
+            return ItemResponseDto.fromEntity(item, isLiked,
+                    likeRepository.countByItems_IdAndStatusTrue(item.getId()));
         });
 
         return ResponseDTO.okWithData(dtoPage);
@@ -48,7 +49,8 @@ public class ItemService {
         Items item = itemRepository.findById(itemId)
                 .orElseThrow(ItemIdIsInvalidException::new);
 
-        ItemDetailResponseDto itemDetailResponseDto = ItemDetailResponseDto.fromEntity(item);
+        ItemDetailResponseDto itemDetailResponseDto = ItemDetailResponseDto.fromEntity(item,
+                likeRepository.countByItems_IdAndStatusTrue(item.getId()));
         return ResponseDTO.okWithData(itemDetailResponseDto);
     }
 

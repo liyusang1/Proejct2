@@ -29,6 +29,11 @@ public class Member extends BaseTimeEntity {
 
     private String profileImage;
 
+    private String profileMessage;
+
+    @Column(nullable = false)
+    private Boolean writerBadge = false;
+
     /**
      * orphanRemoval = true란?
      * @OneToMany 또는 @OneToOne 관계에서 사용되며,

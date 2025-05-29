@@ -9,4 +9,6 @@ public interface LikeRepository
         extends JpaRepository<Likes, Long> {
 
     Optional<Likes> findByMember_IdAndItems_Id(Long memberId, Long itemId);
+
+    long countByItems_IdAndStatusTrue(Long itemId);
 }

@@ -4,6 +4,8 @@ package org.example.project2.domain.item.dto.response;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.global.util.DataFormatter;
 
+import static org.example.project2.domain.constant.itemConstantValue.BEST_LIKE_THRESHOLD;
+
 public record ItemResponseDto(
         Long id,
         String name,
@@ -13,9 +15,14 @@ public record ItemResponseDto(
         String createdAt,
         String writer,
         Boolean isLiked,
-        String writerProfileImage
+        String writerProfileImage,
+        String writerProfileMessage,
+        Boolean writerBadge,
+        Boolean isBest
 ) {
-    public static ItemResponseDto fromEntity(Items items, Boolean isLiked) {
+    public static ItemResponseDto fromEntity(Items items, Boolean isLiked, Long likeCount) {
+        boolean isBest = likeCount >= BEST_LIKE_THRESHOLD;
+
         return new ItemResponseDto(
                 items.getId(),
                 items.getName(),
@@ -25,7 +32,10 @@ public record ItemResponseDto(
                 DataFormatter.getFormattedCreatedAt(items.getCreatedAt()),
                 items.getMember().getMemberBase().getNickname(),
                 isLiked,
-                items.getMember().getProfileImage()
+                items.getMember().getProfileImage(),
+                items.getMember().getProfileMessage(),
+                items.getMember().getWriterBadge(),
+                isBest
         );
     }
 }
