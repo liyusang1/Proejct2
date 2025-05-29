@@ -72,6 +72,7 @@ public class SpringSecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/member/test/jwt")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/s3/upload")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/items/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/reply/item/**")).permitAll()
                 .anyRequest().authenticated());
 
         /**

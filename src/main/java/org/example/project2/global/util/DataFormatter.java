@@ -8,4 +8,9 @@ public class DataFormatter {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
         return createdAt.format(formatter);
     }
+
+    public static String getFormattedCreatedAtWithTime(LocalDateTime createdAt) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+        return createdAt.format(formatter);
+    }
 }

@@ -13,3 +13,6 @@ Content-Type: application/json
   "description": "test",
   "imageUrl": ""
 }
+
+### 리플조회
+GET http://localhost:8080/reply/item/42

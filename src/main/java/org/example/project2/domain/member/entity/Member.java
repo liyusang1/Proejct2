@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.domain.likes.entity.Likes;
+import org.example.project2.domain.reply.entity.Replies;
 import org.example.project2.global.entity.BaseTimeEntity;
 
 import java.util.ArrayList;
@@ -45,6 +46,9 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Likes> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Replies> Replies = new ArrayList<>();
 
     @Builder
     private Member(String email, String nickname, String password, String authority,
