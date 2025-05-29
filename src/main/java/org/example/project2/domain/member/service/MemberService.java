@@ -3,6 +3,7 @@ package org.example.project2.domain.member.service;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.member.dto.request.PasswordRequestDto;
 import org.example.project2.domain.member.dto.request.SignUpRequestDto;
+import org.example.project2.domain.member.dto.response.MemberInfoResponseDto;
 import org.example.project2.domain.member.dto.response.SignUpResponseDto;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.domain.member.exception.CurrentPasswordNotMatchException;
@@ -114,6 +115,11 @@ public class MemberService {
     public Member getLoginMember(PrincipalDetails principalDetails) {
         Member member = principalDetails.getMember();
         return member;
+    }
+
+    public MemberInfoResponseDto getUserInfo(PrincipalDetails principalDetails) {
+        return MemberInfoResponseDto.
+                fromEntity(principalDetails.getMember());
     }
 }
 

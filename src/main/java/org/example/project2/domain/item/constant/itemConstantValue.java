@@ -1,4 +1,4 @@
-package org.example.project2.domain.constant;
+package org.example.project2.domain.item.constant;
 
 public class itemConstantValue {
 

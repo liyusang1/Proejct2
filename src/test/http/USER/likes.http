@@ -27,3 +27,8 @@ Content-Type: application/json
 ### 상세조회 로그인
 GET http://localhost:8080/items
 Authorization: {{authToken}}
+
+### 유저정보 상세조회
+GET http://localhost:8080/member/info
+Authorization: {{authToken}}
+

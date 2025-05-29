@@ -4,7 +4,7 @@ package org.example.project2.domain.item.dto.response;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.global.util.DataFormatter;
 
-import static org.example.project2.domain.constant.itemConstantValue.BEST_LIKE_THRESHOLD;
+import static org.example.project2.domain.item.constant.itemConstantValue.BEST_LIKE_THRESHOLD;
 
 public record ItemResponseDto(
         Long id,
