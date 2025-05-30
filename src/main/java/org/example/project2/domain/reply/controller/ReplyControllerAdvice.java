@@ -1,5 +1,6 @@
 package org.example.project2.domain.reply.controller;
 
+import org.example.project2.domain.reply.exception.ReplyIdIsInvalidException;
 import org.example.project2.global.exception.ApplicationException;
 import org.example.project2.global.util.ResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ReplyControllerAdvice {
 
     @ExceptionHandler({
+            ReplyIdIsInvalidException.class
             //NewException.class,
             //NewException.class
     })

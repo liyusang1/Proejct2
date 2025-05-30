@@ -2,13 +2,16 @@ package org.example.project2.domain.member.dto.response;
 
 
 import org.example.project2.domain.member.entity.Member;
+import org.example.project2.global.util.DataFormatter;
 
 public record MemberInfoResponseDto(
 
         String email,
         String nickname,
         String profileImage,
-        Boolean writerBadge
+        Boolean writerBadge,
+        String profileMessage,
+        String createdAt
 ) {
 
     public static MemberInfoResponseDto fromEntity(Member member) {
@@ -16,7 +19,9 @@ public record MemberInfoResponseDto(
                 member.getMemberBase().getEmail(),
                 member.getMemberBase().getNickname(),
                 member.getProfileImage(),
-                member.getWriterBadge()
+                member.getWriterBadge(),
+                member.getProfileMessage(),
+                DataFormatter.getFormattedCreatedAt(member.getCreatedAt())
         );
     }
 }

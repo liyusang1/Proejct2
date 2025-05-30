@@ -1,0 +1,32 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email":"test1@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 댓글달기
+POST http://localhost:8080/reply
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId":42,
+  "reply":"댓글"
+}
+
+### 댓글삭제
+DELETE http://localhost:8080/reply/11
+Authorization: {{authToken}}
+Content-Type: application/json
+
