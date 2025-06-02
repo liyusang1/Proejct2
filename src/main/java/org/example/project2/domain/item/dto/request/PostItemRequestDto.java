@@ -9,14 +9,21 @@ public record PostItemRequestDto(
         String name,
         @NotNull(message = "description 필수값입니다")
         String description,
+        Integer price,
         String imageUrl
 ) {
+
+    public PostItemRequestDto {
+        if (price == null) {
+            price = 0;
+        }
+    }
 
     public Items toEntity(Member member) {
         return Items.builder()
                 .name(name)
                 .description(description)
-                .price(0)
+                .price(price)
                 .imageUrl(imageUrl)
                 .member(member)
                 .build();

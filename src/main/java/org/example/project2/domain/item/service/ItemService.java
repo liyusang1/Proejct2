@@ -10,6 +10,8 @@ import org.example.project2.domain.item.exception.ItemIdIsInvalidException;
 import org.example.project2.domain.item.repository.ItemRepository;
 import org.example.project2.domain.likes.entity.Likes;
 import org.example.project2.domain.likes.repository.LikeRepository;
+import org.example.project2.domain.member.entity.Member;
+import org.example.project2.global.exception.PermissionDeniedException;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
 import org.springframework.data.domain.Page;
@@ -58,6 +60,43 @@ public class ItemService {
             , @Valid PostItemRequestDto postItemRequestDto) {
 
         itemRepository.save(postItemRequestDto.toEntity(principalDetails.getMember()));
+        return ResponseDTO.ok();
+    }
+
+    public ResponseDTO<Void> deleteItem(PrincipalDetails principalDetails, long itemId) {
+
+        Member member = principalDetails.getMember();
+
+        Items item = itemRepository.findById(itemId)
+                .orElseThrow(ItemIdIsInvalidException::new);
+
+        if (!item.getMember().getId().equals(member.getId())) {
+            throw new PermissionDeniedException();
+        }
+
+        itemRepository.deleteById(itemId);
+
+        return ResponseDTO.ok();
+    }
+
+    public ResponseDTO<Void> updateItem(PrincipalDetails principalDetails,
+                                        long itemId,
+                                        @Valid PostItemRequestDto postItemRequestDto) {
+
+        Member member = principalDetails.getMember();
+
+        Items item = itemRepository.findById(itemId)
+                .orElseThrow(ItemIdIsInvalidException::new);
+
+        if (!item.getMember().getId().equals(member.getId())) {
+            throw new PermissionDeniedException();
+        }
+
+        item.updateItem(postItemRequestDto.name(),
+                postItemRequestDto.description(),
+                postItemRequestDto.price(),
+                postItemRequestDto.imageUrl());
+
         return ResponseDTO.ok();
     }
 }

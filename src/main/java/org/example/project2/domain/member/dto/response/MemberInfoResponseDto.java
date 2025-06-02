@@ -11,7 +11,8 @@ public record MemberInfoResponseDto(
         String profileImage,
         Boolean writerBadge,
         String profileMessage,
-        String createdAt
+        String createdAt,
+        Long userId
 ) {
 
     public static MemberInfoResponseDto fromEntity(Member member) {
@@ -21,7 +22,8 @@ public record MemberInfoResponseDto(
                 member.getProfileImage(),
                 member.getWriterBadge(),
                 member.getProfileMessage(),
-                DataFormatter.getFormattedCreatedAt(member.getCreatedAt())
+                DataFormatter.getFormattedCreatedAt(member.getCreatedAt()),
+                member.getId()
         );
     }
 }

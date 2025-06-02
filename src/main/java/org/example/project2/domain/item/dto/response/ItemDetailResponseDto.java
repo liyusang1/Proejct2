@@ -18,7 +18,8 @@ public record ItemDetailResponseDto(
         String writerProfileMessage,
         Boolean writerBadge,
         Boolean isBest,
-        Long likeCount
+        Long likeCount,
+        Long writerId
 ) {
 
     public static ItemDetailResponseDto fromEntity(Items items,Long likeCount) {
@@ -36,7 +37,8 @@ public record ItemDetailResponseDto(
                 items.getMember().getProfileMessage(),
                 items.getMember().getWriterBadge(),
                 isBest,
-                likeCount
+                likeCount,
+                items.getMember().getId()
         );
     }
 }

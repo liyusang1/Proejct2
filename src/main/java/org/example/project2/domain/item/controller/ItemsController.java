@@ -23,6 +23,9 @@ public class ItemsController {
 
     private final ItemService itemService;
 
+    /**
+     * 아이템 전체 조회
+     */
     @GetMapping("")
     public ResponseEntity<ResponseDTO<Page<ItemResponseDto>>> getAllItemList(
             @RequestParam(defaultValue = "0") int page,
@@ -38,13 +41,16 @@ public class ItemsController {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), sortBy));
         ResponseDTO<Page<ItemResponseDto>>
-                response = itemService.getAllItemList(pageable,userId);
+                response = itemService.getAllItemList(pageable, userId);
 
         return ResponseEntity
                 .status(response.getCode())
                 .body(response);
     }
 
+    /**
+     * 아이템 id로 상세 조회
+     */
     @GetMapping("/{itemId}")
     public ResponseEntity<ResponseDTO<ItemDetailResponseDto>> getItemDetail(
             @PathVariable long itemId) {
@@ -54,12 +60,38 @@ public class ItemsController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
+    /**
+     * 아이템 등록
+     */
     @PostMapping("")
     public ResponseEntity<ResponseDTO<Void>> postItem(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @Valid @RequestBody PostItemRequestDto postItemRequestDto) {
 
         ResponseDTO<Void> response = itemService.postItem(principalDetails, postItemRequestDto);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    /** 아이템 삭제 */
+    @DeleteMapping("/{itemId}")
+    public ResponseEntity<ResponseDTO<Void>> deleteItem(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @PathVariable long itemId) {
+
+        ResponseDTO<Void> response = itemService.deleteItem(principalDetails, itemId);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    /**
+     * 아이템 수정
+     */
+    @PutMapping("/{itemId}")
+    public ResponseEntity<ResponseDTO<Void>> updateItem(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @PathVariable long itemId,
+            @Valid @RequestBody PostItemRequestDto postItemRequestDto) {
+
+        ResponseDTO<Void> response = itemService.updateItem(principalDetails, itemId, postItemRequestDto);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 }
