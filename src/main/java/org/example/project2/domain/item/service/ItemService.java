@@ -27,8 +27,15 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final LikeRepository likeRepository;
 
-    public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable, Long userId) {
-        Page<Items> itemsPage = itemRepository.findAll(pageable);
+    public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable, Long userId, String search) {
+        Page<Items> itemsPage;
+
+        // 검색어가 있을 경우 검색, 없으면 전체 조회
+        if (search != null && !search.trim().isEmpty()) {
+            itemsPage = itemRepository.findByNameContainingIgnoreCase(search, pageable);
+        } else {
+            itemsPage = itemRepository.findAll(pageable);
+        }
 
         Page<ItemResponseDto> dtoPage = itemsPage.map(item -> {
             boolean isLiked = false;
@@ -38,9 +45,11 @@ public class ItemService {
                         .map(Likes::getStatus)
                         .orElse(false);
             }
-
-            return ItemResponseDto.fromEntity(item, isLiked,
-                    likeRepository.countByItems_IdAndStatusTrue(item.getId()));
+            return ItemResponseDto.fromEntity(
+                    item,
+                    isLiked,
+                    likeRepository.countByItems_IdAndStatusTrue(item.getId())
+            );
         });
 
         return ResponseDTO.okWithData(dtoPage);
@@ -50,6 +59,8 @@ public class ItemService {
 
         Items item = itemRepository.findById(itemId)
                 .orElseThrow(ItemIdIsInvalidException::new);
+
+        item.updateViewCount();
 
         ItemDetailResponseDto itemDetailResponseDto = ItemDetailResponseDto.fromEntity(item,
                 likeRepository.countByItems_IdAndStatusTrue(item.getId()));

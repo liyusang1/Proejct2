@@ -32,6 +32,7 @@ public class ItemsController {
             @RequestParam(defaultValue = "9") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String direction,
+            @RequestParam(required = false) String search,
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         Long userId = null;
@@ -41,7 +42,7 @@ public class ItemsController {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), sortBy));
         ResponseDTO<Page<ItemResponseDto>>
-                response = itemService.getAllItemList(pageable, userId);
+                response = itemService.getAllItemList(pageable, userId,search);
 
         return ResponseEntity
                 .status(response.getCode())

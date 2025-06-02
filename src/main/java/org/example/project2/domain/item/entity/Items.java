@@ -31,6 +31,8 @@ public class Items extends BaseTimeEntity {
 
     private String imageUrl;
 
+    private int viewCount;
+
     /**
      * 왜 @ManyToOne(fetch = FetchType.LAZY) 를 사용하는가?
      * 1. 성능 최적화 (쿼리 최소화)
@@ -63,6 +65,7 @@ public class Items extends BaseTimeEntity {
         this.price = price;
         this.imageUrl = imageUrl;
         this.member = member;
+        this.viewCount = 0;
     }
 
      public void updateItem(String name,String description,int price,String imageUrl) {
@@ -70,5 +73,9 @@ public class Items extends BaseTimeEntity {
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+    }
+
+    public void updateViewCount(){
+        this.viewCount++;
     }
 }

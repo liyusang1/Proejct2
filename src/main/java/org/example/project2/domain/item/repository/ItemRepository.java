@@ -9,4 +9,5 @@ public interface ItemRepository
         extends JpaRepository<Items, Long> {
 
     Page<Items> findAll(Pageable pageable);
+    Page<Items> findByNameContainingIgnoreCase(String Name, Pageable pageable);
 }
