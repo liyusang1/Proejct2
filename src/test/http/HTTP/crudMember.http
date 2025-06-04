@@ -4,7 +4,7 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "email":"test1@naver.com",
+  "email": "test99@naver.com",
   "password": 123456
 }
 > {%
@@ -15,18 +15,13 @@ Content-Type: application/json
     }
 %}
 
-### 댓글달기
-POST http://localhost:8080/reply
+### 멤버 정보 수정
+PUT http://localhost:8080/member/info
 Authorization: {{authToken}}
 Content-Type: application/json
 
 {
-  "itemId":42,
-  "reply":"댓글"
+  "profileImage": "https://gnews.gg.go.kr/OP_UPDATA/UP_DATA/_FILEZ/202112/20211227054431183687488.jpg",
+  "profileMessage": "어흥",
+  "nickname": "호랑이"
 }
-
-### 댓글삭제
-DELETE http://localhost:8080/reply/11
-Authorization: {{authToken}}
-Content-Type: application/json
-

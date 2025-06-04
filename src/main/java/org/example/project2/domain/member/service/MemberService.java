@@ -1,7 +1,9 @@
 package org.example.project2.domain.member.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.member.dto.request.PasswordRequestDto;
+import org.example.project2.domain.member.dto.request.PutMemberInfoRequestDto;
 import org.example.project2.domain.member.dto.request.SignUpRequestDto;
 import org.example.project2.domain.member.dto.response.MemberInfoResponseDto;
 import org.example.project2.domain.member.dto.response.SignUpResponseDto;
@@ -12,6 +14,7 @@ import org.example.project2.domain.member.exception.NewPasswordNotMatchException
 import org.example.project2.domain.member.exception.NewPasswordSameAsOldException;
 import org.example.project2.domain.member.repository.MemberRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
+import org.example.project2.global.util.ResponseDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,9 +120,25 @@ public class MemberService {
         return member;
     }
 
-    public MemberInfoResponseDto getUserInfo(PrincipalDetails principalDetails) {
+    public MemberInfoResponseDto getMemberInfo(PrincipalDetails principalDetails) {
         return MemberInfoResponseDto.
                 fromEntity(principalDetails.getMember());
+    }
+
+    public ResponseDTO<Void> putMemberInfo(PrincipalDetails principalDetails,
+                                           @Valid PutMemberInfoRequestDto putMemberInfoRequestDto) {
+
+        Member member = principalDetails.getMember();
+
+        member.updateMemberInfo(
+                putMemberInfoRequestDto.profileImage(),
+                putMemberInfoRequestDto.profileMessage(),
+                putMemberInfoRequestDto.nickname()
+                );
+
+        memberRepository.save(member);
+
+        return ResponseDTO.ok();
     }
 }
 

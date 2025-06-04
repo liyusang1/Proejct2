@@ -15,6 +15,12 @@ Content-Type: application/json
     }
 %}
 
+### 전체조회
+GET http://localhost:8080/items
+
+### 상세조회
+GET http://localhost:8080/items/2
+
 ### 상품등록
 POST http://localhost:8080/items
 Authorization: {{authToken}}

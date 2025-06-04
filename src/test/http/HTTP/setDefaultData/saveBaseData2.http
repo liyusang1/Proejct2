@@ -1,0 +1,83 @@
+### 회원가입
+POST http://localhost:8080/member/signup
+Content-Type: application/json
+
+{
+  "email": "test2@naver.com",
+  "password": "123456"
+}
+
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test2@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 멤버 정보 수정
+PUT http://localhost:8080/member/info
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "profileImage": "https://www.dizzotv.com/site/data/img_dir/2022/06/29/2022062980024_0.jpg",
+  "profileMessage": "사진보다 진짜 맛을 기록하는 사람.",
+  "nickname": "차은우"
+}
+
+### 댓글달기
+POST http://localhost:8080/reply
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 15,
+  "reply": "여름에 딱 어울리는 시원한 맛이에요! 청량감 최고 🍹🌊"
+}
+
+### 댓글달기
+POST http://localhost:8080/reply
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 14,
+  "reply": "복숭아 향이 진하고 달달해서 기분까지 좋아졌어요 🍑🍹"
+}
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 14
+}
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 15
+}
+
+
+
+
+
+
+
+
+

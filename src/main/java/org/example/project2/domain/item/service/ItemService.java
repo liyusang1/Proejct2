@@ -11,6 +11,7 @@ import org.example.project2.domain.item.repository.ItemRepository;
 import org.example.project2.domain.likes.entity.Likes;
 import org.example.project2.domain.likes.repository.LikeRepository;
 import org.example.project2.domain.member.entity.Member;
+import org.example.project2.domain.member.repository.MemberRepository;
 import org.example.project2.global.exception.PermissionDeniedException;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
@@ -26,6 +27,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
     private final LikeRepository likeRepository;
+    private final MemberRepository memberRepository;
 
     public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable, Long userId, String search) {
         Page<Items> itemsPage;
@@ -70,7 +72,15 @@ public class ItemService {
     public ResponseDTO<Void> postItem(PrincipalDetails principalDetails
             , @Valid PostItemRequestDto postItemRequestDto) {
 
-        itemRepository.save(postItemRequestDto.toEntity(principalDetails.getMember()));
+        Member member = principalDetails.getMember();
+        Member managedMember = memberRepository.findById(member.getId())
+                .orElseThrow(PermissionDeniedException::new);
+
+        itemRepository.save(postItemRequestDto.toEntity(member));
+        if(managedMember.getItems().size() > 5){
+            managedMember.updateWriterBadge();
+        }
+
         return ResponseDTO.ok();
     }
 

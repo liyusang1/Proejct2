@@ -3,6 +3,7 @@ package org.example.project2.domain.member.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.member.dto.request.PasswordRequestDto;
+import org.example.project2.domain.member.dto.request.PutMemberInfoRequestDto;
 import org.example.project2.domain.member.dto.request.SignUpRequestDto;
 import org.example.project2.domain.member.dto.response.LoginResponseDto;
 import org.example.project2.domain.member.dto.response.MemberInfoResponseDto;
@@ -92,11 +93,24 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<ResponseDTO<MemberInfoResponseDto>> getUserInfo(
+    public ResponseEntity<ResponseDTO<MemberInfoResponseDto>> getMemberInfo(
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         ResponseDTO<MemberInfoResponseDto> response = ResponseDTO.okWithData(
-                memberService.getUserInfo(principalDetails));
+                memberService.getMemberInfo(principalDetails));
+
+        return ResponseEntity
+                .status(response.getCode())
+                .body(response);
+    }
+
+    @PutMapping("/info")
+    public ResponseEntity<ResponseDTO<Void>> putMemberInfo(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @Valid @RequestBody PutMemberInfoRequestDto putMemberInfoRequestDto) {
+
+        ResponseDTO<Void> response =
+                memberService.putMemberInfo(principalDetails, putMemberInfoRequestDto);
 
         return ResponseEntity
                 .status(response.getCode())

@@ -37,6 +37,7 @@ public class Member extends BaseTimeEntity {
 
     /**
      * orphanRemoval = true란?
+     *
      * @OneToMany 또는 @OneToOne 관계에서 사용되며,
      * 부모 엔티티 컬렉션에서 자식 엔티티를 제거(remove) 하면,
      * 그 자식 엔티티는 자동으로 DB에서 삭제됩니다.
@@ -59,6 +60,19 @@ public class Member extends BaseTimeEntity {
         this.provider = provider;
     }
 
+    public void updateMemberInfo(String profileImage,
+                                 String profileMessage,
+                                 String nickname) {
+        this.profileImage = profileImage;
+        this.profileMessage = profileMessage;
+        this.memberBase.changeNickname(nickname);
+    }
+
+    public void updateWriterBadge() {
+            this.writerBadge = true;
+    }
+
     public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

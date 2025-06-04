@@ -1,0 +1,83 @@
+### 회원가입
+POST http://localhost:8080/member/signup
+Content-Type: application/json
+
+{
+  "email": "test3@naver.com",
+  "password": "123456"
+}
+
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test3@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 멤버 정보 수정
+PUT http://localhost:8080/member/info
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "profileImage": "https://biz.chosun.com/resizer/v2/VHUB7DOEAPYT2EPQHZFG4SJTJQ.jpg?auth=c7ba9f42eb26e509300b3d47377c51b3eedf7be74ba97b9161560fc7e0a00823&width=616",
+  "profileMessage": "매일 새로운 것에 도전하는 긍정 에너지 가득한 사람입니다",
+  "nickname": "이채영"
+}
+
+### 댓글달기
+POST http://localhost:8080/reply
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 14,
+  "reply": "딱 내가 원하는 정도의 단맛. 말 없이 한 잔 더 주문함."
+}
+
+### 댓글달기
+POST http://localhost:8080/reply
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 15,
+  "reply": "시끄러운 거 싫어해서 조용히 마셨는데, 이건 다시 생각나네."
+}
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 14
+}
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 15
+}
+
+
+
+
+
+
+
+
+
