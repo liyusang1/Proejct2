@@ -25,3 +25,8 @@ Content-Type: application/json
   "profileMessage": "어흥",
   "nickname": "호랑이"
 }
+
+### 멤버 정보 조회
+GET http://localhost:8080/member/info
+Authorization: {{authToken}}
+Content-Type: application/json
