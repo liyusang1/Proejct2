@@ -1,0 +1,95 @@
+### 회원가입
+POST http://localhost:8080/member/signup
+Content-Type: application/json
+
+{
+  "email": "test44@naver.com",
+  "password": "123456"
+}
+
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test44@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 멤버 정보 수정
+PUT http://localhost:8080/member/info
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "profileImage": "https://theviewers.co.kr/Files/30/News/202302/2890_20230217143158425.JPEG",
+  "profileMessage": "전국 방방곡곡 맛집을 찾아다니는 진짜 먹방 블로거입니다!",
+  "nickname": "진"
+}
+
+### 댓글달기
+POST http://localhost:8080/reply
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 14,
+  "reply": "한 모금 마시자마자 입안 가득 퍼지는 과일 향기... 더운 날씨에 딱이에요 🍊🍍"
+}
+
+### 댓글달기
+POST http://localhost:8080/reply
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 15,
+  "reply": "톡 쏘는 청량감에 스트레스도 날아가는 기분! 시원하게 한 캔 했습니다 🧊🥤"
+}
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 14
+}
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 15
+}
+
+### 레인보우 샤벳
+POST http://localhost:8080/items
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "육즙 가득 규카츠",
+  "description": "겉은 바삭, 속은 촉촉하게 레어로 익힌 풍미 가득한 소고기 돈카츠의 정석, 규카츠!",
+  "price": 21000,
+  "imageUrl": "https://cdn.imweb.me/upload/S201612185855798c0088d/5c9dc98cb8668.jpg"
+}
+
+
+
+
+
+
+
+
+

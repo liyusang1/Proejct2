@@ -120,7 +120,17 @@ public class ItemService {
         item.updateItem(postItemRequestDto.name(),
                 postItemRequestDto.description(),
                 postItemRequestDto.price(),
-                postItemRequestDto.imageUrl());
+                postItemRequestDto.imageUrl(),
+                postItemRequestDto.reaction1(),
+                postItemRequestDto.reaction2(),
+                postItemRequestDto.reaction3(),
+                postItemRequestDto.reaction4(),
+                postItemRequestDto.reaction5(),
+                postItemRequestDto.reaction6(),
+                postItemRequestDto.reaction7(),
+                postItemRequestDto.reaction8(),
+                postItemRequestDto.reaction9()
+                );
 
         return ResponseDTO.ok();
     }
