@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
@@ -94,5 +96,21 @@ public class ItemsController {
 
         ResponseDTO<Void> response = itemService.updateItem(principalDetails, itemId, postItemRequestDto);
         return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    /**
+     * 유저가 작성한 아이템 조회
+     */
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<ResponseDTO<List<ItemResponseDto>>> getMembersItemList(
+            @PathVariable long memberId
+    ) {
+
+        ResponseDTO<List<ItemResponseDto>>
+                response = itemService.getMembersItemList(memberId);
+
+        return ResponseEntity
+                .status(response.getCode())
+                .body(response);
     }
 }

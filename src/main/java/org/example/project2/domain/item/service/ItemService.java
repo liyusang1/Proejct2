@@ -11,6 +11,7 @@ import org.example.project2.domain.item.repository.ItemRepository;
 import org.example.project2.domain.likes.entity.Likes;
 import org.example.project2.domain.likes.repository.LikeRepository;
 import org.example.project2.domain.member.entity.Member;
+import org.example.project2.domain.member.exception.UserNotFoundException;
 import org.example.project2.domain.member.repository.MemberRepository;
 import org.example.project2.global.exception.PermissionDeniedException;
 import org.example.project2.global.springsecurity.PrincipalDetails;
@@ -19,6 +20,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -119,6 +123,26 @@ public class ItemService {
                 postItemRequestDto.imageUrl());
 
         return ResponseDTO.ok();
+    }
+
+    public ResponseDTO<List<ItemResponseDto>> getMembersItemList(long memberId) {
+
+        memberRepository.findById(memberId)
+                .orElseThrow(UserNotFoundException::new);
+
+        List<Items> items = itemRepository.findAllByMember_Id(memberId);
+        List<ItemResponseDto> itemResponseDtos = new ArrayList<>();
+        for (Items item : items) {
+            itemResponseDtos.add(
+                    ItemResponseDto.fromEntity(
+                            item,
+                            false,
+                            likeRepository.countByItems_IdAndStatusTrue(item.getId())
+                    )
+            );
+        }
+
+        return ResponseDTO.okWithData(itemResponseDtos);
     }
 }
 

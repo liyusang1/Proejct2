@@ -49,3 +49,6 @@ Content-Type: application/json
   "price": 777,
   "imageUrl": ""
 }
+
+### 멤버가 작성한 글 전체조회
+GET http://localhost:8080/items/member/1

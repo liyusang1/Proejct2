@@ -57,17 +57,6 @@ public class MemberController {
                 .body(response);
     }
 
-    @GetMapping("/oauth2/info")
-    public ResponseEntity<ResponseDTO<LoginResponseDto>> oauth2Test(
-            @RequestParam String token, @RequestParam String email, @RequestParam String name) {
-        LoginResponseDto loginResponseDto = new LoginResponseDto(email, name, token);
-
-        ResponseDTO<LoginResponseDto> response = ResponseDTO.okWithData(loginResponseDto);
-        return ResponseEntity
-                .status(response.getCode())
-                .body(response);
-    }
-
     @PatchMapping("/change-password")
     public ResponseEntity<ResponseDTO<Void>> changePassword(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
