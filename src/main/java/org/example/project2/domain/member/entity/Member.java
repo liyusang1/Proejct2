@@ -5,9 +5,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.project2.domain.freeBoards.entity.FreeBoards;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.domain.likes.entity.Likes;
+import org.example.project2.domain.recipes.entity.Recipes;
 import org.example.project2.domain.reply.entity.Replies;
+import org.example.project2.domain.restaurants.entity.Restaurants;
 import org.example.project2.global.entity.BaseTimeEntity;
 
 import java.util.ArrayList;
@@ -50,6 +53,16 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Replies> Replies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FreeBoards> freeBoards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recipes> recipes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Restaurants> restaurants = new ArrayList<>();
+
 
     @Builder
     private Member(String email, String nickname, String password, String authority,
