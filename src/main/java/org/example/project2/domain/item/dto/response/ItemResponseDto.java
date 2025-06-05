@@ -18,7 +18,8 @@ public record ItemResponseDto(
         String writerProfileImage,
         String writerProfileMessage,
         Boolean writerBadge,
-        Boolean isBest
+        Boolean isBest,
+        Long writerId
 ) {
     public static ItemResponseDto fromEntity(Items items, Boolean isLiked, Long likeCount) {
         boolean isBest = likeCount >= BEST_LIKE_THRESHOLD;
@@ -35,7 +36,8 @@ public record ItemResponseDto(
                 items.getMember().getProfileImage(),
                 items.getMember().getProfileMessage(),
                 items.getMember().getWriterBadge(),
-                isBest
+                isBest,
+                items.getMember().getId()
         );
     }
 }

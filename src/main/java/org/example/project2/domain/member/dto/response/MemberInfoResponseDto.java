@@ -12,10 +12,12 @@ public record MemberInfoResponseDto(
         Boolean writerBadge,
         String profileMessage,
         String createdAt,
-        Long userId
+        Long userId,
+        Integer postCount,
+        Integer likeCount
 ) {
 
-    public static MemberInfoResponseDto fromEntity(Member member) {
+    public static MemberInfoResponseDto fromEntity(Member member,int likeCount) {
         return new MemberInfoResponseDto(
                 member.getMemberBase().getEmail(),
                 member.getMemberBase().getNickname(),
@@ -23,7 +25,9 @@ public record MemberInfoResponseDto(
                 member.getWriterBadge(),
                 member.getProfileMessage(),
                 DataFormatter.getFormattedCreatedAt(member.getCreatedAt()),
-                member.getId()
+                member.getId(),
+                member.getItems().size(),
+                likeCount
         );
     }
 }

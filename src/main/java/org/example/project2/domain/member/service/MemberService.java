@@ -2,16 +2,14 @@ package org.example.project2.domain.member.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.project2.domain.likes.repository.LikeRepository;
 import org.example.project2.domain.member.dto.request.PasswordRequestDto;
 import org.example.project2.domain.member.dto.request.PutMemberInfoRequestDto;
 import org.example.project2.domain.member.dto.request.SignUpRequestDto;
 import org.example.project2.domain.member.dto.response.MemberInfoResponseDto;
 import org.example.project2.domain.member.dto.response.SignUpResponseDto;
 import org.example.project2.domain.member.entity.Member;
-import org.example.project2.domain.member.exception.CurrentPasswordNotMatchException;
-import org.example.project2.domain.member.exception.EmailDuplicateException;
-import org.example.project2.domain.member.exception.NewPasswordNotMatchException;
-import org.example.project2.domain.member.exception.NewPasswordSameAsOldException;
+import org.example.project2.domain.member.exception.*;
 import org.example.project2.domain.member.repository.MemberRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
@@ -29,6 +27,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final LikeRepository likeRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public SignUpResponseDto signup(SignUpRequestDto signUpRequestDto) {
@@ -121,8 +120,12 @@ public class MemberService {
     }
 
     public MemberInfoResponseDto getMemberInfo(PrincipalDetails principalDetails) {
+        Member member = memberRepository.findById(principalDetails.getMember().getId())
+                .orElseThrow(UserNotFoundException::new);
+
         return MemberInfoResponseDto.
-                fromEntity(principalDetails.getMember());
+                fromEntity(member,
+                        likeRepository.countByMember_IdAndStatusTrue(member.getId()));
     }
 
     public ResponseDTO<Void> putMemberInfo(PrincipalDetails principalDetails,
@@ -134,11 +137,21 @@ public class MemberService {
                 putMemberInfoRequestDto.profileImage(),
                 putMemberInfoRequestDto.profileMessage(),
                 putMemberInfoRequestDto.nickname()
-                );
+        );
 
         memberRepository.save(member);
 
         return ResponseDTO.ok();
+    }
+
+    public ResponseDTO<MemberInfoResponseDto> getMemberInfoByMemberId(Long memberId) {
+
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                UserNotFoundException::new
+        );
+
+        return ResponseDTO.okWithData(MemberInfoResponseDto.fromEntity(member,
+                likeRepository.countByMember_IdAndStatusTrue(member.getId())));
     }
 }
 

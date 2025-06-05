@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.member.dto.request.PasswordRequestDto;
 import org.example.project2.domain.member.dto.request.PutMemberInfoRequestDto;
 import org.example.project2.domain.member.dto.request.SignUpRequestDto;
-import org.example.project2.domain.member.dto.response.LoginResponseDto;
 import org.example.project2.domain.member.dto.response.MemberInfoResponseDto;
 import org.example.project2.domain.member.dto.response.SignUpResponseDto;
 import org.example.project2.domain.member.dto.response.TestUserResponseDto;
@@ -100,6 +99,18 @@ public class MemberController {
 
         ResponseDTO<Void> response =
                 memberService.putMemberInfo(principalDetails, putMemberInfoRequestDto);
+
+        return ResponseEntity
+                .status(response.getCode())
+                .body(response);
+    }
+
+    @GetMapping("/{memberId}")
+    public ResponseEntity<ResponseDTO<MemberInfoResponseDto>> getMemberInfoByMemberId(
+            @PathVariable Long memberId) {
+
+        ResponseDTO<MemberInfoResponseDto> response =
+                memberService.getMemberInfoByMemberId(memberId);
 
         return ResponseEntity
                 .status(response.getCode())

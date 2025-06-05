@@ -11,4 +11,6 @@ public interface LikeRepository
     Optional<Likes> findByMember_IdAndItems_Id(Long memberId, Long itemId);
 
     long countByItems_IdAndStatusTrue(Long itemId);
+
+    int countByMember_IdAndStatusTrue(Long memberId);
 }

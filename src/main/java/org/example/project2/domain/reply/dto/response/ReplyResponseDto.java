@@ -10,7 +10,8 @@ public record ReplyResponseDto(
         String writerProfileImage,
         String writerProfileMessage,
         Boolean writerBadge,
-        String createdAt
+        String createdAt,
+        Long writerId
 ) {
     public static ReplyResponseDto fromEntity(Replies reply) {
         return new ReplyResponseDto(
@@ -20,7 +21,8 @@ public record ReplyResponseDto(
                 reply.getMember().getProfileImage(),
                 reply.getMember().getProfileMessage(),
                 reply.getMember().getWriterBadge(),
-                DataFormatter.getFormattedCreatedAtWithTime(reply.getCreatedAt())
+                DataFormatter.getFormattedCreatedAtWithTime(reply.getCreatedAt()),
+                reply.getMember().getId()
         );
     }
 }

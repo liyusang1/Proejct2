@@ -74,6 +74,7 @@ public class SpringSecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/items/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/reply/item/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/member/item/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/member/{memberId}")).permitAll()
                 .anyRequest().authenticated());
 
         /**
