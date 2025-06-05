@@ -44,7 +44,16 @@ Content-Type: application/json
   "name": "레인보우 샤벳",
   "description": "다채로운 과일맛이 어우러진 무지개 색상의 상큼한 샤벳 아이스크림입니다.",
   "price": 3200,
-  "imageUrl": "https://masism.kr/wp-content/uploads/2023/04/%E1%84%85%E1%85%A600-1.jpg"
+  "imageUrl": "https://masism.kr/wp-content/uploads/2023/04/%E1%84%85%E1%85%A600-1.jpg",
+  "reaction1": true,
+  "reaction2": false,
+  "reaction3": true,
+  "reaction4": true,
+  "reaction5": false,
+  "reaction6": false,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": true
 }
 
 ### 초콜릿
@@ -56,7 +65,16 @@ Content-Type: application/json
   "name": "초콜릿",
   "description": "부드럽고 진한 맛의 밀크 초콜릿으로 언제 먹어도 달콤한 간식입니다.",
   "price": 1800,
-  "imageUrl": "https://i.namu.wiki/i/hdTS75xdf41WNvVbtt0h8vFOTX9Hl0L13IXtLcOJmG8NQ9usDA57kfiw3bI5m8I4nhUfphgGqwmRHcmcczHilQ.webp"
+  "imageUrl": "https://i.namu.wiki/i/hdTS75xdf41WNvVbtt0h8vFOTX9Hl0L13IXtLcOJmG8NQ9usDA57kfiw3bI5m8I4nhUfphgGqwmRHcmcczHilQ.webp",
+  "reaction1": false,
+  "reaction2": true,
+  "reaction3": false,
+  "reaction4": false,
+  "reaction5": true,
+  "reaction6": true,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": false
 }
 
 ### 아이스크림 세트
@@ -68,7 +86,16 @@ Content-Type: application/json
   "name": "아이스크림 세트",
   "description": "여러 가지 맛의 아이스크림이 포함된 실속 있는 패밀리 세트입니다.",
   "price": 8900,
-  "imageUrl": "https://i.namu.wiki/i/kzMFcl3KBAAY-owhXpMK2GJ4yxLDV-uQMiJzk3T1ELNo9AVIDGbmQ2CVcmUBSzfNi3T6CSFRpDmDrft7P7pxoA.webp"
+  "imageUrl": "https://i.namu.wiki/i/kzMFcl3KBAAY-owhXpMK2GJ4yxLDV-uQMiJzk3T1ELNo9AVIDGbmQ2CVcmUBSzfNi3T6CSFRpDmDrft7P7pxoA.webp",
+  "reaction1": true,
+  "reaction2": false,
+  "reaction3": true,
+  "reaction4": true,
+  "reaction5": false,
+  "reaction6": false,
+  "reaction7": true,
+  "reaction8": true,
+  "reaction9": false
 }
 
 ### 짜장면
@@ -80,7 +107,16 @@ Content-Type: application/json
   "name": "짜장면",
   "description": "춘장으로 볶아낸 진한 소스와 탱글한 면발의 조화로운 중식 메뉴입니다.",
   "price": 6900,
-  "imageUrl": "https://i.namu.wiki/i/j2AxLP9AtrcJebh4DVfGxowfXwI3a95dG_YZb_Ktczc6Ca7ACyd_NJL3YHQMw8SABGTQiJDwSpySOSSBLZVEZw.webp"
+  "imageUrl": "https://i.namu.wiki/i/j2AxLP9AtrcJebh4DVfGxowfXwI3a95dG_YZb_Ktczc6Ca7ACyd_NJL3YHQMw8SABGTQiJDwSpySOSSBLZVEZw.webp",
+  "reaction1": true,
+  "reaction2": false,
+  "reaction3": false,
+  "reaction4": false,
+  "reaction5": false,
+  "reaction6": true,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": true
 }
 
 ### 햄버거
@@ -92,7 +128,16 @@ Content-Type: application/json
   "name": "햄버거",
   "description": "육즙 가득한 패티와 신선한 야채가 어우러진 클래식 햄버거입니다.",
   "price": 5100,
-  "imageUrl": "https://health.chosun.com/site/data/img_dir/2024/04/19/2024041901914_0.jpg"
+  "imageUrl": "https://health.chosun.com/site/data/img_dir/2024/04/19/2024041901914_0.jpg",
+  "reaction1": true,
+  "reaction2": false,
+  "reaction3": true,
+  "reaction4": false,
+  "reaction5": false,
+  "reaction6": true,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": false
 }
 
 ### 당당치킨
@@ -104,7 +149,16 @@ Content-Type: application/json
   "name": "당당치킨",
   "description": "겉은 바삭하고 속은 촉촉한 인기 있는 튀김치킨 메뉴입니다.",
   "price": 7900,
-  "imageUrl": "https://cdn.womennews.co.kr/news/photo/202401/243973_401216_3716.jpg"
+  "imageUrl": "https://cdn.womennews.co.kr/news/photo/202401/243973_401216_3716.jpg",
+  "reaction1": true,
+  "reaction2": false,
+  "reaction3": false,
+  "reaction4": true,
+  "reaction5": true,
+  "reaction6": false,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": true
 }
 
 ### 페페로니 피자
@@ -116,7 +170,16 @@ Content-Type: application/json
   "name": "페페로니 피자",
   "description": "매콤한 페페로니와 치즈가 듬뿍 올라간 정통 스타일 피자입니다.",
   "price": 12900,
-  "imageUrl": "https://youngmanpizza.co.kr/upload/M_ori/6678cf42c5da9.jpg"
+  "imageUrl": "https://youngmanpizza.co.kr/upload/M_ori/6678cf42c5da9.jpg",
+  "reaction1": true,
+  "reaction2": true,
+  "reaction3": true,
+  "reaction4": false,
+  "reaction5": false,
+  "reaction6": true,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": true
 }
 
 ### 제육볶음
@@ -128,7 +191,16 @@ Content-Type: application/json
   "name": "제육볶음",
   "description": "매콤한 양념에 돼지고기를 볶아낸 한국의 대표 반찬입니다.",
   "price": 8500,
-  "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2024/06/06/bb480831398b5120ac555f58cdf7c80c1.jpg"
+  "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2024/06/06/bb480831398b5120ac555f58cdf7c80c1.jpg",
+  "reaction1": true,
+  "reaction2": true,
+  "reaction3": false,
+  "reaction4": true,
+  "reaction5": false,
+  "reaction6": false,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": false
 }
 
 ### 삼겹살
@@ -140,7 +212,16 @@ Content-Type: application/json
   "name": "삼겹살",
   "description": "두툼하고 고소한 국내산 삼겹살로 숯불 향이 살아있습니다.",
   "price": 13900,
-  "imageUrl": "https://flexible.img.hani.co.kr/flexible/normal/727/485/imgdb/original/2022/0518/20220518501614.jpg"
+  "imageUrl": "https://flexible.img.hani.co.kr/flexible/normal/727/485/imgdb/original/2022/0518/20220518501614.jpg",
+  "reaction1": false,
+  "reaction2": true,
+  "reaction3": false,
+  "reaction4": false,
+  "reaction5": true,
+  "reaction6": true,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": true
 }
 
 ### 맥주
@@ -152,7 +233,16 @@ Content-Type: application/json
   "name": "맥주",
   "description": "시원하고 청량한 목 넘김이 일품인 라거 맥주입니다.",
   "price": 4300,
-  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/392e5721-1img1.jpg"
+  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/392e5721-1img1.jpg",
+  "reaction1": false,
+  "reaction2": false,
+  "reaction3": true,
+  "reaction4": true,
+  "reaction5": true,
+  "reaction6": false,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": true
 }
 
 ### 일본라멘
@@ -164,7 +254,16 @@ Content-Type: application/json
   "name": "일본라멘",
   "description": "깊은 육수 맛과 쫄깃한 면발이 일품인 정통 일본 라멘입니다.",
   "price": 8500,
-  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/9b86120a-0img2.jpeg"
+  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/9b86120a-0img2.jpeg",
+  "reaction1": true,
+  "reaction2": true,
+  "reaction3": false,
+  "reaction4": false,
+  "reaction5": false,
+  "reaction6": true,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": true
 }
 
 ### 초밥
@@ -176,7 +275,16 @@ Content-Type: application/json
   "name": "초밥",
   "description": "신선한 생선과 부드러운 밥이 조화를 이루는 정갈한 스시 세트입니다.",
   "price": 12500,
-  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/21e85334-0img0.jpg"
+  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/21e85334-0img0.jpg",
+  "reaction1": true,
+  "reaction2": false,
+  "reaction3": true,
+  "reaction4": false,
+  "reaction5": true,
+  "reaction6": false,
+  "reaction7": true,
+  "reaction8": true,
+  "reaction9": false
 }
 
 ### 팬케익
@@ -188,7 +296,16 @@ Content-Type: application/json
   "name": "팬케익",
   "description": "폭신한 반죽 위에 시럽과 과일이 올라간 달콤한 디저트입니다.",
   "price": 6200,
-  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/4d7fd399-81.jpg"
+  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/4d7fd399-81.jpg",
+  "reaction1": false,
+  "reaction2": true,
+  "reaction3": false,
+  "reaction4": false,
+  "reaction5": false,
+  "reaction6": true,
+  "reaction7": true,
+  "reaction8": false,
+  "reaction9": true
 }
 
 ### 리얼피치 아이스티
@@ -200,7 +317,16 @@ Content-Type: application/json
   "name": "리얼피치 아이스티",
   "description": "복숭아 향 가득한 상큼한 맛의 시원한 아이스티입니다.",
   "price": 2700,
-  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/2565b2fe-509_%EB%A6%AC%EC%96%BC%ED%94%BC%EC%B9%98%EC%95%84%EC%9D%B4%EC%8A%A4%ED%8B%B0.jpg"
+  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/2565b2fe-509_%EB%A6%AC%EC%96%BC%ED%94%BC%EC%B9%98%EC%95%84%EC%9D%B4%EC%8A%A4%ED%8B%B0.jpg",
+  "reaction1": true,
+  "reaction2": false,
+  "reaction3": true,
+  "reaction4": false,
+  "reaction5": true,
+  "reaction6": true,
+  "reaction7": false,
+  "reaction8": true,
+  "reaction9": false
 }
 
 ### 블루하와이
@@ -212,7 +338,16 @@ Content-Type: application/json
   "name": "블루하와이",
   "description": "남국의 느낌이 물씬 나는 달콤하고 시원한 블루 칵테일입니다.",
   "price": 4900,
-  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/3a75e272-007.%EB%B8%94%EB%A3%A8%ED%95%98%EC%99%80%EC%9D%B4.jpg"
+  "imageUrl": "https://lys1awsbucket.s3.ap-southeast-2.amazonaws.com/3a75e272-007.%EB%B8%94%EB%A3%A8%ED%95%98%EC%99%80%EC%9D%B4.jpg",
+  "reaction1": true,
+  "reaction2": true,
+  "reaction3": false,
+  "reaction4": true,
+  "reaction5": false,
+  "reaction6": false,
+  "reaction7": true,
+  "reaction8": false,
+  "reaction9": true
 }
 
 ### 좋아요
