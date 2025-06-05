@@ -18,6 +18,15 @@ public class Recipes extends BaseTimeEntity {
     @Column(name = "recipe_id")
     private Long id;
 
+    private String recipeName; //레시피 이름
+
+    private String ingredients; //재료
+
+    private String imageUrl; //레시피 사진
+
+    private int viewCount; //조회수
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
