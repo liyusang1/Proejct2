@@ -18,6 +18,8 @@ public class FreeBoards extends BaseTimeEntity {
     @Column(name = "free_board_id")
     private Long id;
 
+    private String title;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)  // 외래 키 이름 일치
     private Member member;
