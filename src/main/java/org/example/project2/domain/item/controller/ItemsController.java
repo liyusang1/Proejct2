@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.item.dto.request.PostItemRequestDto;
 import org.example.project2.domain.item.dto.response.ItemDetailResponseDto;
+import org.example.project2.domain.item.dto.response.ItemRankResponseDto;
 import org.example.project2.domain.item.dto.response.ItemResponseDto;
 import org.example.project2.domain.item.service.ItemService;
 import org.example.project2.global.springsecurity.PrincipalDetails;
@@ -112,5 +113,15 @@ public class ItemsController {
         return ResponseEntity
                 .status(response.getCode())
                 .body(response);
+    }
+
+    /**
+     * 랭킹조회
+     */
+    @GetMapping("/rank")
+    public ResponseEntity<ResponseDTO<List<ItemRankResponseDto>>> getItemRanking() {
+
+        ResponseDTO<List<ItemRankResponseDto>> response = itemService.getItemRanking();
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.item.dto.request.PostItemRequestDto;
 import org.example.project2.domain.item.dto.response.ItemDetailResponseDto;
+import org.example.project2.domain.item.dto.response.ItemRankResponseDto;
 import org.example.project2.domain.item.dto.response.ItemResponseDto;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.domain.item.exception.ItemIdIsInvalidException;
@@ -81,7 +82,7 @@ public class ItemService {
                 .orElseThrow(PermissionDeniedException::new);
 
         itemRepository.save(postItemRequestDto.toEntity(member));
-        if(managedMember.getItems().size() > 5){
+        if (managedMember.getItems().size() > 5) {
             managedMember.updateWriterBadge();
         }
 
@@ -130,7 +131,7 @@ public class ItemService {
                 postItemRequestDto.reaction7(),
                 postItemRequestDto.reaction8(),
                 postItemRequestDto.reaction9()
-                );
+        );
 
         return ResponseDTO.ok();
     }
@@ -153,6 +154,21 @@ public class ItemService {
         }
 
         return ResponseDTO.okWithData(itemResponseDtos);
+    }
+
+    public ResponseDTO<List<ItemRankResponseDto>> getItemRanking() {
+
+        List<ItemRankResponseDto> itemRankResponseDtos = new ArrayList<>();
+
+        List<Items> itemsList =
+        itemRepository.findTop10ByLikesCount();
+
+        for(Items item : itemsList) {
+            itemRankResponseDtos.add(ItemRankResponseDto.fromEntity(item,
+                    itemRepository.countByItemIdAndStatusTrue(item.getId())));
+        }
+
+        return ResponseDTO.okWithData(itemRankResponseDtos);
     }
 }
 
