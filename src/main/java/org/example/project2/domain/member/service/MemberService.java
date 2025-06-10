@@ -125,7 +125,7 @@ public class MemberService {
 
         return MemberInfoResponseDto.
                 fromEntity(member,
-                        likeRepository.countByMember_IdAndStatusTrue(member.getId()));
+                        likeRepository.countTotalLikesReceivedByMember(member.getId()));
     }
 
     public ResponseDTO<Void> putMemberInfo(PrincipalDetails principalDetails,
@@ -151,7 +151,7 @@ public class MemberService {
         );
 
         return ResponseDTO.okWithData(MemberInfoResponseDto.fromEntity(member,
-                likeRepository.countByMember_IdAndStatusTrue(member.getId())));
+                likeRepository.countTotalLikesReceivedByMember(member.getId())));
     }
 }
 
