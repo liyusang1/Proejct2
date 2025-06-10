@@ -30,7 +30,16 @@ Content-Type: application/json
   "name": "테스트",
   "description": "test",
   "price": 100,
-  "imageUrl": ""
+  "imageUrl": "",
+  "reaction1": true,
+  "reaction2": true,
+  "reaction3": false,
+  "reaction4": true,
+  "reaction5": false,
+  "reaction6": false,
+  "reaction7": true,
+  "reaction8": false,
+  "reaction9": true
 }
 
 ### 상품삭제
