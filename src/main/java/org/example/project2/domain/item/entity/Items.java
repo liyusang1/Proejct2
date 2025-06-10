@@ -33,6 +33,8 @@ public class Items extends BaseTimeEntity {
 
     private int viewCount;
 
+    private int reportCount = 0;
+
     private boolean reaction1 = false;
     private boolean reaction2 = false;
     private boolean reaction3 = false;
@@ -89,6 +91,7 @@ public class Items extends BaseTimeEntity {
         this.reaction7 = reaction7;
         this.reaction8 = reaction8;
         this.reaction9 = reaction9;
+        this.reportCount = 0;
     }
 
     public void updateItem(String name, String description, int price, String imageUrl,
@@ -96,7 +99,7 @@ public class Items extends BaseTimeEntity {
                            boolean reaction4, boolean reaction5, boolean reaction6,
                            boolean reaction7, boolean reaction8, boolean reaction9
     ) {
-        
+
         this.name = name;
         this.description = description;
         this.price = price;
@@ -114,5 +117,9 @@ public class Items extends BaseTimeEntity {
 
     public void updateViewCount() {
         this.viewCount++;
+    }
+
+    public void updateReportCount() {
+        this.reportCount++;
     }
 }

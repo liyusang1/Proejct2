@@ -64,3 +64,8 @@ GET http://localhost:8080/items/member/1
 
 ### 랭킹
 GET http://localhost:8080/items/rank
+
+### 게시글 신고
+POST http://localhost:8080/report/2
+Authorization: {{authToken}}
+Content-Type: application/json

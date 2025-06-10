@@ -30,6 +30,9 @@ public enum ErrorCode {
     // ITEM
     ITEM_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 상품 입니다."),
 
+    // REPORT
+    DUPLICATE_REPORT(HttpStatus.BAD_REQUEST, "이미 신고한 게시글 입니다."),
+
     // REPLY
     REPLY_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 replyId 입니다."),
 
@@ -41,7 +44,7 @@ public enum ErrorCode {
     NEW_PASSWORD_SAME_AS_OLD(HttpStatus.BAD_REQUEST, "새 비밀번호가 기존 비밀번호와 동일합니다."),
     NEW_PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "변경을 위해 입력하신 비밀번호와 다릅니다."),
     EMAIL_NOT_MATCH(HttpStatus.BAD_REQUEST, "이메일이 일치하지 않습니다"),
-    NICKNAME_ALREADY_EXISTS(HttpStatus.BAD_REQUEST,"중복된 닉네임입니다."),
+    NICKNAME_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "중복된 닉네임입니다."),
     INTRODUCTION_TOO_LONG(HttpStatus.BAD_REQUEST, "소개는 20자 내로 작성해주세요."),
     NICKNAME_CHANGE_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "닉네임 변경 불가기간(6개월)이 지나지 않았습니다."),
 
