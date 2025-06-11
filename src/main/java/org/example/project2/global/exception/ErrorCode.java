@@ -33,6 +33,9 @@ public enum ErrorCode {
     // REPORT
     DUPLICATE_REPORT(HttpStatus.BAD_REQUEST, "이미 신고한 게시글 입니다."),
 
+    // NOTIFICATION
+    NOTIFICATION_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "유효하지 않은 알림id 입니다."),
+
     // REPLY
     REPLY_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 replyId 입니다."),
 
