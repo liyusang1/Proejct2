@@ -14,10 +14,11 @@ public record MemberInfoResponseDto(
         String createdAt,
         Long userId,
         Integer postCount,
-        Integer likeCount
+        Integer likeCount,
+        Boolean hasUnreadNotifications
 ) {
 
-    public static MemberInfoResponseDto fromEntity(Member member,int likeCount) {
+    public static MemberInfoResponseDto fromEntity(Member member,int likeCount, boolean hasUnreadNotifications) {
         return new MemberInfoResponseDto(
                 member.getMemberBase().getEmail(),
                 member.getMemberBase().getNickname(),
@@ -27,7 +28,8 @@ public record MemberInfoResponseDto(
                 DataFormatter.getFormattedCreatedAt(member.getCreatedAt()),
                 member.getId(),
                 member.getItems().size(),
-                likeCount
+                likeCount,
+                hasUnreadNotifications
         );
     }
 }

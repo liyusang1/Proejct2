@@ -24,4 +24,6 @@ public interface NotificationsRepository
     @Transactional
     @Query("DELETE FROM Notifications n WHERE n.member = :member AND n.isRead = TRUE")
     int deleteByMemberAndIsReadTrue(@Param("member") Member member);
+
+    boolean existsByMember_IdAndIsReadFalse(Long memberId);
 }
