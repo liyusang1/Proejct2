@@ -27,4 +27,8 @@ public interface ItemRepository
 
     @Query("SELECT COUNT(l) FROM Likes l WHERE l.items.id = :itemId AND l.status = true")
     Long countByItemIdAndStatusTrue(@Param("itemId") Long itemId);
+
+    int countAllBy();
+
+    int countAllByMember_Id(Long memberId);
 }

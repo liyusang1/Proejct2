@@ -69,3 +69,6 @@ GET http://localhost:8080/items/rank
 POST http://localhost:8080/report/2
 Authorization: {{authToken}}
 Content-Type: application/json
+
+### insight
+GET http://localhost:8080/items/insight

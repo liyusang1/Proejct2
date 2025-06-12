@@ -11,4 +11,6 @@ public interface MemberRepository
     Optional<Member> findByMemberBaseEmail(String email);
 
     Optional<Member> findByMemberBaseEmailAndProvider(String email, String provider);
+
+    int countAllBy();
 }

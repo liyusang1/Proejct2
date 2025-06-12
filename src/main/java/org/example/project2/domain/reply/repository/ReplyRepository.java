@@ -13,4 +13,8 @@ public interface ReplyRepository
 
     // 2. Member 엔티티의 id와 Items 엔티티의 id로 댓글을 가져오기
     List<Replies> findAllByItems_IdAndMember_Id(Long itemsId, Long memberId);
+
+    int countAllBy();
+
+    int countAllByMember_Id(Long memberId);
 }
