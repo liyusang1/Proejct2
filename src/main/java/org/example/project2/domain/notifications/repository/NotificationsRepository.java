@@ -13,7 +13,7 @@ import java.util.List;
 public interface NotificationsRepository
         extends JpaRepository<Notifications, Long> {
 
-    List<Notifications> findAllByMember_Id(Long memberId);
+    List<Notifications> findAllByMember_IdOrderByCreatedAtDesc(Long memberId);
 
     @Modifying
     @Transactional

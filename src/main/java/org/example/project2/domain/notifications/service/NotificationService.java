@@ -35,7 +35,7 @@ public class NotificationService {
         Member member = principalDetails.getMember();
         List<GetNotificationsResponseDto> responseDtos = new ArrayList<>();
 
-        List<Notifications> notifications = notificationsRepository.findAllByMember_Id(member.getId());
+        List<Notifications> notifications = notificationsRepository.findAllByMember_IdOrderByCreatedAtDesc(member.getId());
 
         for (Notifications notification : notifications) {
             responseDtos.add(GetNotificationsResponseDto.fromEntity(notification));
