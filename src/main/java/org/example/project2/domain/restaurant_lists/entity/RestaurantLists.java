@@ -1,4 +1,4 @@
-package org.example.project2.domain.restaurants.entity;
+package org.example.project2.domain.restaurant_lists.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -15,34 +15,28 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Restaurants extends BaseTimeEntity {
+public class RestaurantLists extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @Column(name = "restaurant_name", nullable = false)
-    private String name;
+    @Column(nullable = false)
+    private String title;
 
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "description")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
-    @OneToMany(mappedBy = "restaurants", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RestaurantMenus> restaurantMenus = new ArrayList<>();
+    @Column(nullable = false)
+    private boolean is_public;
 
     @Builder
-    private Restaurants(Member member) {
+    private RestaurantLists(Member member) {
         this.member = member;
     }
 }
