@@ -1,0 +1,32 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test1@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 알림 전체조회
+GET http://localhost:8080/notification
+Authorization: {{authToken}}
+
+### 알림 읽음처리
+PUT http://localhost:8080/notification/1
+Authorization: {{authToken}}
+
+### 전체 알림 읽음처리
+PUT http://localhost:8080/notification/read-all
+Authorization: {{authToken}}
+
+### 전체 알림 읽음처리
+DELETE http://localhost:8080/notification/delete-all
+Authorization: {{authToken}}

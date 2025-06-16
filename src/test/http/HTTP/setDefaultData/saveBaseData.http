@@ -368,6 +368,36 @@ Content-Type: application/json
   "itemId": 15
 }
 
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 13
+}
+
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 12
+}
+
+
+### 좋아요
+POST http://localhost:8080/likes
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "itemId": 11
+}
+
+
 
 
 

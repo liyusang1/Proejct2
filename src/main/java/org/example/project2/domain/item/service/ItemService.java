@@ -3,8 +3,7 @@ package org.example.project2.domain.item.service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.item.dto.request.PostItemRequestDto;
-import org.example.project2.domain.item.dto.response.ItemDetailResponseDto;
-import org.example.project2.domain.item.dto.response.ItemResponseDto;
+import org.example.project2.domain.item.dto.response.*;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.domain.item.exception.ItemIdIsInvalidException;
 import org.example.project2.domain.item.repository.ItemRepository;
@@ -13,6 +12,7 @@ import org.example.project2.domain.likes.repository.LikeRepository;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.domain.member.exception.UserNotFoundException;
 import org.example.project2.domain.member.repository.MemberRepository;
+import org.example.project2.domain.reply.repository.ReplyRepository;
 import org.example.project2.global.exception.PermissionDeniedException;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
@@ -32,6 +32,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final LikeRepository likeRepository;
     private final MemberRepository memberRepository;
+    private final ReplyRepository replyRepository;
 
     public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable, Long userId, String search) {
         Page<Items> itemsPage;
@@ -81,7 +82,7 @@ public class ItemService {
                 .orElseThrow(PermissionDeniedException::new);
 
         itemRepository.save(postItemRequestDto.toEntity(member));
-        if(managedMember.getItems().size() > 5){
+        if (managedMember.getItems().size() > 5) {
             managedMember.updateWriterBadge();
         }
 
@@ -130,7 +131,7 @@ public class ItemService {
                 postItemRequestDto.reaction7(),
                 postItemRequestDto.reaction8(),
                 postItemRequestDto.reaction9()
-                );
+        );
 
         return ResponseDTO.ok();
     }
@@ -153,6 +154,73 @@ public class ItemService {
         }
 
         return ResponseDTO.okWithData(itemResponseDtos);
+    }
+
+    public ResponseDTO<List<ItemRankResponseDto>> getItemRanking() {
+
+        List<ItemRankResponseDto> itemRankResponseDtos = new ArrayList<>();
+
+        List<Items> itemsList =
+                itemRepository.findTop10ByLikesCount();
+
+        for (Items item : itemsList) {
+            itemRankResponseDtos.add(ItemRankResponseDto.fromEntity(item,
+                    itemRepository.countByItemIdAndStatusTrue(item.getId())));
+        }
+
+        return ResponseDTO.okWithData(itemRankResponseDtos);
+    }
+
+    public ResponseDTO<InsightResponseDto> getInsights() {
+
+        int totalPostsCount, totalLikesCount, totalCommentsCount,
+                totalMembersCount, totalRestaurantPicksCount, totalRecipePicksCount;
+
+        totalPostsCount = itemRepository.countAllBy();
+        totalLikesCount = likeRepository.countAllByStatusTrue();
+        totalCommentsCount = replyRepository.countAllBy();
+        totalMembersCount = memberRepository.countAllBy();
+
+        //TODO 레시피픽 맛집픽 적용 후 적용
+        totalRestaurantPicksCount = 321;
+        totalRecipePicksCount = 666;
+
+
+        InsightResponseDto insightResponseDto = new InsightResponseDto(
+                totalPostsCount, totalLikesCount, totalCommentsCount, totalMembersCount,
+                totalRestaurantPicksCount,totalRecipePicksCount);
+
+        return ResponseDTO.okWithData(insightResponseDto);
+    }
+
+    public ResponseDTO<UsersInsightResponseDto> getUsersInsights(PrincipalDetails principalDetails) {
+
+        if(principalDetails == null) {
+            throw new UserNotFoundException();
+        }
+
+        Member member = principalDetails.getMember();
+
+        int myPostsCount, myLikesCount, myCommentsCount,
+                myRestaurantPicksCount, myRecipePicksCount;
+
+        myPostsCount = itemRepository.countAllByMember_Id(member.getId());
+        myLikesCount = likeRepository.countAllByMember_IdAndStatusTrue(member.getId());
+        myCommentsCount = replyRepository.countAllByMember_Id(member.getId());
+
+        //TODO 레시피픽 맛집픽 적용 후 적용
+        myRestaurantPicksCount = 12;
+        myRecipePicksCount = 4;
+
+        UsersInsightResponseDto usersInsightResponseDto = new UsersInsightResponseDto(
+                myPostsCount,
+                myLikesCount,
+                myCommentsCount,
+                myRestaurantPicksCount,
+                myRecipePicksCount
+        );
+
+        return ResponseDTO.okWithData(usersInsightResponseDto);
     }
 }
 
