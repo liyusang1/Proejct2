@@ -1,0 +1,59 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test2@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 레시피 목록 조회
+GET http://localhost:8080/recipe
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 레시피 상세 조회
+GET http://localhost:8080/recipe/6
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 레시피 등록
+POST http://localhost:8080/recipe
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "김치볶음밥",
+  "description": "매콤한 김치볶음밥",
+  "imageUrl": "url1",
+  "ingredients": ["김치", "밥", "참기름", "대파"],
+  "steps": ["김치를 썬다", "기름에 볶는다", "밥을 넣고 볶는다", "참기름을 두른다"]
+}
+
+### 레시피 수정
+PUT http://localhost:8080/recipe/6
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "수정된 김치볶음밥",
+  "description": "더 맛있게!",
+  "imageUrl": "url2",
+  "ingredients": ["김치", "밥", "참기름", "계란"],
+  "steps": ["김치를 자른다", "밥이랑 볶는다", "계란을 올린다"]
+}
+
+### 레시피 삭제
+DELETE http://localhost:8080/recipe/4
+Authorization: {{authToken}}
+Content-Type: application/json
+
+
