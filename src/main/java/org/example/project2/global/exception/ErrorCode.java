@@ -30,6 +30,10 @@ public enum ErrorCode {
     // ITEM
     ITEM_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 상품 입니다."),
 
+    // RECIPE
+    DESCRIPTION_LENGTH_EXCEEDED(HttpStatus.BAD_REQUEST, "레시피 설명이 너무 깁니다."),
+    RECIPE_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "유효하지 않은 recipeId 입니다."),
+
     // REPLY
     REPLY_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 replyId 입니다."),
 
