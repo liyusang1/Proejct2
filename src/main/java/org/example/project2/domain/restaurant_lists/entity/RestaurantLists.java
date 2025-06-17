@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.project2.domain.member.entity.Member;
-import org.example.project2.domain.restaurantMenus.entity.RestaurantMenus;
+import org.example.project2.domain.restaurants.entity.Restaurants;
 import org.example.project2.global.entity.BaseTimeEntity;
 
 import java.util.ArrayList;
@@ -33,10 +33,25 @@ public class RestaurantLists extends BaseTimeEntity {
     private String description;
 
     @Column(nullable = false)
-    private boolean is_public;
+    private boolean isPublic;
+
+    @OneToMany(mappedBy = "restaurantLists", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Restaurants> restaurants = new ArrayList<>();
 
     @Builder
-    private RestaurantLists(Member member) {
+    private RestaurantLists(Member member, String title, String description, boolean isPublic) {
         this.member = member;
+        this.title = title;
+        this.description = description;
+        this.isPublic = isPublic;
     }
+
+    public void updateLists(String title,
+                            String description,
+                            boolean isPublic) {
+        this.title = title;
+        this.description = description;
+        this.isPublic = isPublic;
+    }
+
 }
