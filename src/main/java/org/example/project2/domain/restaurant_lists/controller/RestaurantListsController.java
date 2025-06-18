@@ -14,13 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
-GET: 리소스 조회
-POST: 요청 데이터 처리, 주로 등록에 사용
-PUT: 리소스를 대체(덮어쓰기), 해당 리소스가 없으면 생성
-PATCH: 리소스 부분 변경 (PUT이 전체 변경, PATCH는 일부 변경)
-DELETE: 리소스 삭제
- */
 
 @Controller
 @RequestMapping(value = "/restaurants-list")
@@ -32,9 +25,8 @@ public class RestaurantListsController {
     @GetMapping("/my")
     public ResponseEntity<ResponseDTO<List<ListResponseDto>>> getMyRestaurantLists(
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        Long memberId = principalDetails.getMember().getId();
         ResponseDTO<List<ListResponseDto>>
-                response = restaurantListsService.getRestaurantListsByMemberId(memberId);
+                response = restaurantListsService.getRestaurantListsByMemberId(principalDetails);
 
         return ResponseEntity
                 .status(response.getCode())
@@ -63,11 +55,11 @@ public class RestaurantListsController {
 
     // 수정할 데이터 불러오기
     @GetMapping("/info/{listId}")
-    public ResponseEntity<ResponseDTO<List<ListResponseDto>>> getMyRestaurantListOne(
+    public ResponseEntity<ResponseDTO<List<ListResponseDto>>> getRestaurantListOne(
             @AuthenticationPrincipal PrincipalDetails principalDetails
-            , @RequestParam Long listId ) {
+            , @PathVariable Long listId ) {
         ResponseDTO<List<ListResponseDto>>
-                response = restaurantListsService.getRestaurantListById(listId);
+                response = restaurantListsService.getRestaurantListById(principalDetails, listId);
 
         return ResponseEntity
                 .status(response.getCode())

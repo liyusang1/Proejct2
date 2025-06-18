@@ -43,4 +43,11 @@ public class RestaurantDetails extends BaseTimeEntity {
         this.description = description;
         this.restaurants = restaurants;
     }
+
+    public void updateDetails(String name, int price, String imageUrl, String description) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.description = description;
+    }
 }

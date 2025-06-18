@@ -12,5 +12,5 @@ public interface RestaurantListsRepository extends JpaRepository<RestaurantLists
     List<RestaurantLists> findAllByMember_Id(Long memberId);
     List<RestaurantLists> findAllByIsPublicIsTrue();
 
-    RestaurantLists findRestaurantListsById(Long id);
+    Optional<RestaurantLists> findRestaurantListsById(Long id);
 }

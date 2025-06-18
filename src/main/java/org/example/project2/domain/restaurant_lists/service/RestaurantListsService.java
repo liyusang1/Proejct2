@@ -8,6 +8,7 @@ import org.example.project2.domain.restaurant_lists.dto.request.PutListRequestDt
 import org.example.project2.domain.restaurant_lists.dto.response.ListResponseDto;
 import org.example.project2.domain.restaurant_lists.entity.RestaurantLists;
 import org.example.project2.domain.restaurant_lists.exception.RestaurantListNotFoundException;
+import org.example.project2.domain.restaurant_lists.exception.UnloginException;
 import org.example.project2.domain.restaurant_lists.exception.UpdateAccessDenied;
 import org.example.project2.domain.restaurant_lists.repository.RestaurantListsRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
@@ -27,7 +28,11 @@ public class RestaurantListsService {
     private final RestaurantListsRepository restaurantListsRepository;
 
     // 개인 리스트 찾기
-    public ResponseDTO<List<ListResponseDto>> getRestaurantListsByMemberId(Long memberId) {
+    public ResponseDTO<List<ListResponseDto>> getRestaurantListsByMemberId(PrincipalDetails principalDetails) {
+        Long memberId = principalDetails.getMember().getId();
+        if(memberId == null) {
+            throw new UnloginException();
+        }
         List<RestaurantLists> restaurantLists = restaurantListsRepository.findAllByMember_Id(memberId);
 
         List<ListResponseDto> listResponseDtos = new ArrayList<>();
@@ -50,15 +55,21 @@ public class RestaurantListsService {
         return ResponseDTO.okWithData(listResponseDtos);
     }
 
-    // 하나의 리스트 번호로 찾기
-    public ResponseDTO<List<ListResponseDto>> getRestaurantListById(Long id) {
-       RestaurantLists restaurantLists = restaurantListsRepository.findRestaurantListsById(id);
+    // 수정하거나 삭제 시 하나의 리스트 번호로 찾기
+    public ResponseDTO<List<ListResponseDto>> getRestaurantListById(PrincipalDetails principalDetails,Long id) {
+        if (principalDetails == null) {
+            throw new UserNotFoundException();
+        }
+       RestaurantLists restaurantLists = restaurantListsRepository.findRestaurantListsById(id).orElseThrow(
+               RestaurantListNotFoundException::new
+       );
+       if(!restaurantLists.getMember().getId().equals(principalDetails.getMember().getId())) {
+           throw new UpdateAccessDenied();
+       }
 
        List<ListResponseDto> listResponseDtos = new ArrayList<>();
        listResponseDtos.add(ListResponseDto.from(restaurantLists));
-       if(listResponseDtos.isEmpty()) {
-           throw new RestaurantListNotFoundException();
-       }
+
        return ResponseDTO.okWithData(listResponseDtos);
     }
 
@@ -83,7 +94,9 @@ public class RestaurantListsService {
 
         Member member = principalDetails.getMember();
 
-        RestaurantLists updateRestaurantlist = restaurantListsRepository.findRestaurantListsById(request.id()) ;
+        RestaurantLists updateRestaurantlist = restaurantListsRepository.findRestaurantListsById(request.id()).orElseThrow(
+                RestaurantListNotFoundException::new
+        );
 
         if(!updateRestaurantlist.getMember().getId().equals(member.getId())) {
             throw new UpdateAccessDenied();
@@ -99,7 +112,9 @@ public class RestaurantListsService {
         if (principalDetails == null) {
             throw new UserNotFoundException();
         }
-        RestaurantLists restaurantLists = restaurantListsRepository.findRestaurantListsById(id);
+        RestaurantLists restaurantLists = restaurantListsRepository.findRestaurantListsById(id).orElseThrow(
+                RestaurantListNotFoundException::new
+        );
 
         if(!restaurantLists.getMember().getId().equals(principalDetails.getMember().getId())) {
             throw new UpdateAccessDenied();

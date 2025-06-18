@@ -75,6 +75,10 @@ public class SpringSecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/reply/item/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/member/item/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/member/{memberId}")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list/info/{listId:^-?\\d+$}")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list/{listId:^-?\\d+$}/restaurants")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("restaurants-list/restaurant/info/**")).permitAll()
                 .anyRequest().authenticated());
 
         /**

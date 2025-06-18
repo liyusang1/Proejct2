@@ -44,9 +44,9 @@ public class RestaurantsController {
     @DeleteMapping("/restaurant/{restaurantId}")
     public ResponseEntity<ResponseDTO<Void>> deleteRestaurant(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
-            @PathVariable long restaurantid) {
+            @PathVariable long restaurantId) {
 
-        restaurantsService.delete(principalDetails, restaurantid);
+        restaurantsService.delete(principalDetails, restaurantId);
 
         return ResponseEntity.ok(ResponseDTO.ok());
     }
