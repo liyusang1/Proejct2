@@ -38,6 +38,7 @@ public class SpringSecurityConfig {
                 .configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
                     configuration.applyPermitDefaultValues();
+                    configuration.setAllowCredentials(true);
                     configuration.addAllowedOriginPattern("");
                     configuration.addAllowedOriginPattern("http://localhost:8081");
                     configuration.setAllowedMethods(
@@ -73,6 +74,8 @@ public class SpringSecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/member/test/jwt")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/s3/upload")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/items/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/free-boards/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/reply/free-board/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/reply/item/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/member/item/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/member/{memberId}")).permitAll()

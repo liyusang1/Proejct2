@@ -1,0 +1,64 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test1@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 게시판 조회
+GET http://localhost:8080/free-boards
+
+### 댓글 생성
+POST http://localhost:8080/reply/free-board
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "freeBoardId": 1,
+  "reply": "맛있어ddddddd"
+}
+
+### 댓글 삭제
+DELETE http://localhost:8080/reply/free-board/3
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 댓글조회
+GET http://localhost:8080/reply/free-board/1
+
+### 글 생성
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title":"test",
+  "content": "te",
+  "category": "자유",
+  "emoji": "😎"
+}
+
+### 글 삭제
+DELETE http://localhost:8080/free-boards/13
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 게시글 추천
+POST http://localhost:8080/free-boards/1/like
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 게시글 비추천
+POST http://localhost:8080/free-boards/1/dislike
+Authorization: {{authToken}}
+Content-Type: application/json

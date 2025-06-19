@@ -48,6 +48,12 @@ public enum ErrorCode {
     // REPLY
     REPLY_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 replyId 입니다."),
 
+    // FREEBOARD
+    FREE_BOARD_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 freeBoardId 입니다."),
+
+    // FREEBOARDREPLY
+    FREE_BOARD_REPLY_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 freeBoardReplyId 입니다."),
+
     // AUTH
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 틀렸습니다."),
 
