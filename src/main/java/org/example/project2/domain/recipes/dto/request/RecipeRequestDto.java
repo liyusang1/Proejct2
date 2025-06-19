@@ -10,7 +10,9 @@ public record RecipeRequestDto(
         String description,
         String imageUrl,
         List<String> ingredients,
-        List<String> steps
+        List<String> steps,
+        int time,
+        String level
 ) {
     public Recipes toEntity(Member member) {
         return Recipes.builder()
@@ -20,6 +22,8 @@ public record RecipeRequestDto(
                 .ingredients(ingredients)
                 .imageUrl(imageUrl)
                 .steps(steps)
+                .time(time)
+                .level(level)
                 .build();
     }
 }

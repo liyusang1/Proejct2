@@ -6,6 +6,7 @@ import org.example.project2.domain.recipes.dto.response.RecipeDetailResponseDto;
 import org.example.project2.domain.recipes.dto.response.RecipeResponseDto;
 import org.example.project2.domain.recipes.service.RecipesService;
 import org.example.project2.global.springsecurity.PrincipalDetails;
+import org.example.project2.global.util.ResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,48 +24,58 @@ public class RecipeController {
 
     //레시피 리스트 조회
     @GetMapping("")
-    public ResponseEntity<Page<RecipeResponseDto>> getRecipeList(
-            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+    public ResponseEntity<ResponseDTO<Page<RecipeResponseDto>>> getRecipeList(
+            @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Page<RecipeResponseDto> recipes = recipeService.getRecipeList(pageable);
-        return ResponseEntity.ok(recipes);
+        ResponseDTO<Page<RecipeResponseDto>> responses = recipeService.getRecipeList(pageable);
+        return ResponseEntity
+                .status(responses.getCode())
+                .body(responses);
     }
 
     //레시피 id로 상세 조회
     @GetMapping("/{recipeId}")
-    public ResponseEntity<RecipeDetailResponseDto> getRecipeDetail(@PathVariable Long recipeId) {
-        RecipeDetailResponseDto recipeDetail = recipeService.getRecipeById(recipeId);
-        return ResponseEntity.ok(recipeDetail);
+    public ResponseEntity<ResponseDTO<RecipeDetailResponseDto>> getRecipeDetail(@PathVariable Long recipeId) {
+        ResponseDTO<RecipeDetailResponseDto> responses = recipeService.getRecipeById(recipeId);
+        return ResponseEntity
+                .status(responses.getCode())
+                .body(responses);
     }
 
     //레시피 등록
     @PostMapping("")
-    public ResponseEntity<?> createRecipe(@RequestBody RecipeRequestDto dto,
-                                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        Long recipeId = recipeService.createRecipe(principalDetails.getMember().getId(), dto);
-        return ResponseEntity.ok("레시피 등록 완료 (ID: " + recipeId + ")");
+    public ResponseEntity<ResponseDTO<Void>> createRecipe(@RequestBody RecipeRequestDto dto,
+                                                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        ResponseDTO<Void> responses = recipeService.createRecipe(principalDetails, dto);
+        return ResponseEntity
+                .status(responses.getCode())
+                .body(responses);
     }
 
     // 레시피 수정
     @PutMapping("/{recipeId}")
-    public ResponseEntity<String> updateRecipe(
+    public ResponseEntity<ResponseDTO<Void>> updateRecipe(
             @PathVariable Long recipeId,
             @RequestBody RecipeRequestDto requestDto,
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-        recipeService.updateRecipe(recipeId, requestDto, principalDetails.getMember());
-        return ResponseEntity.ok("레시피가 수정되었습니다");
+        ResponseDTO<Void> responses = recipeService.updateRecipe(
+                recipeId, requestDto, principalDetails);
+        return ResponseEntity
+                .status(responses.getCode())
+                .body(responses);
     }
 
     // 레시피 삭제
     @DeleteMapping("/{recipeId}")
-    public ResponseEntity<String> deleteRecipe(
+    public ResponseEntity<ResponseDTO<Void>> deleteRecipe(
             @PathVariable Long recipeId,
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-        recipeService.deleteRecipe(recipeId, principalDetails.getMember());
-        return ResponseEntity.ok("레시피가 삭제되었습니다.");
+        ResponseDTO<Void> response = recipeService.deleteRecipe(
+                recipeId,principalDetails);
+
+        return ResponseEntity.status(response.getCode())
+                .body(response);
     }
-
-
 }

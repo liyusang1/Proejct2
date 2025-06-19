@@ -8,7 +8,10 @@ public record RecipeResponseDto(
         String imageUrl,
         String userName,
         String userProfileImage,
-        int viewCount
+        int time,
+        String level,
+        int viewCount,
+        String description
 ) {
     public static RecipeResponseDto fromEntity(Recipes recipe) {
         return new RecipeResponseDto(
@@ -17,7 +20,10 @@ public record RecipeResponseDto(
                 recipe.getImageUrl(),
                 recipe.getMember().getMemberBase().getNickname(),
                 recipe.getMember().getProfileImage(),
-                recipe.getViewCount()
+                recipe.getTime(),
+                recipe.getLevel(),
+                recipe.getViewCount(),
+                recipe.getDescription()
         );
     }
 }
