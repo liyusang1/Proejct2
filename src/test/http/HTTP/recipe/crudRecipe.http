@@ -4,7 +4,7 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "email": "test2@naver.com",
+  "email": "test1@naver.com",
   "password": 123456
 }
 > {%
@@ -17,12 +17,10 @@ Content-Type: application/json
 
 ### 레시피 목록 조회
 GET http://localhost:8080/recipe
-Authorization: {{authToken}}
 Content-Type: application/json
 
 ### 레시피 상세 조회
-GET http://localhost:8080/recipe/6
-Authorization: {{authToken}}
+GET http://localhost:8080/recipe/25
 Content-Type: application/json
 
 ### 레시피 등록
@@ -35,11 +33,13 @@ Content-Type: application/json
   "description": "매콤한 김치볶음밥",
   "imageUrl": "url1",
   "ingredients": ["김치", "밥", "참기름", "대파"],
-  "steps": ["김치를 썬다", "기름에 볶는다", "밥을 넣고 볶는다", "참기름을 두른다"]
+  "steps": ["김치를 썬다", "기름에 볶는다", "밥을 넣고 볶는다", "참기름을 두른다"],
+  "time": "20",
+  "level": "하"
 }
 
 ### 레시피 수정
-PUT http://localhost:8080/recipe/6
+PUT http://localhost:8080/recipe/8
 Authorization: {{authToken}}
 Content-Type: application/json
 
@@ -52,7 +52,7 @@ Content-Type: application/json
 }
 
 ### 레시피 삭제
-DELETE http://localhost:8080/recipe/4
+DELETE http://localhost:8080/recipe/7
 Authorization: {{authToken}}
 Content-Type: application/json
 

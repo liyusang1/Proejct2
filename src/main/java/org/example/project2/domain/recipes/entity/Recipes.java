@@ -42,27 +42,35 @@ public class Recipes extends BaseTimeEntity {
     @Column(name = "step")
     private List<String> steps; //조리순서
 
+    private int time; //조리시간
+
+    private String level; //조리난이도
+
     @ManyToOne(fetch = FetchType.LAZY) //다대일 관계
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @Builder
     private Recipes(Member member, String title, String description,
-                    List<String> ingredients, String imageUrl, List<String> steps, int viewCount) {
+                    List<String> ingredients, String imageUrl, int time, String level, List<String> steps, int viewCount) {
         this.member = member;
         this.title = title;
         this.description = description;
         this.ingredients = ingredients;
         this.imageUrl = imageUrl;
+        this.time = time;
+        this.level = level;
         this.steps = steps;
         this.viewCount = 0;
     }
 
-    public void update(String title, String description, List<String> ingredients, String imageUrl, List<String> steps) {
+    public void update(String title, String description, List<String> ingredients, String imageUrl, int time, String level, List<String> steps) {
         this.title = title;
         this.description = description;
         this.ingredients = ingredients;
         this.imageUrl = imageUrl;
+        this.time = time;
+        this.level = level;
         this.steps = steps;
     }
 

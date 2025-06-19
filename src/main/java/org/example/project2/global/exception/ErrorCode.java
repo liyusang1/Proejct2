@@ -31,7 +31,9 @@ public enum ErrorCode {
     ITEM_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "잘못된 상품 입니다."),
 
     // RECIPE
+    TITLE_LENGTH_EXCEEDED(HttpStatus.BAD_REQUEST, "레시피 제목이 너무 깁니다."),
     DESCRIPTION_LENGTH_EXCEEDED(HttpStatus.BAD_REQUEST, "레시피 설명이 너무 깁니다."),
+    COOKING_TIME_TOO_SHORT(HttpStatus.BAD_REQUEST, "조리 시간은 1분 이상이어야 합니다."),
     RECIPE_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "유효하지 않은 recipeId 입니다."),
 
     // REPORT
