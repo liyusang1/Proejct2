@@ -23,6 +23,7 @@ public class RestaurantDetailsController {
 
     private final RestaurantDetailsService restaurantDetailsService;
 
+    // TODO 올바른 분기처리 하기
     @GetMapping("/{restaurantId}")
     public ResponseEntity<ResponseDTO<List<RestaurantDetailsResponseDto>>>
     getRestaurantDetails(@PathVariable Long restaurantId) {

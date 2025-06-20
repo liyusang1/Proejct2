@@ -11,8 +11,14 @@ import org.example.project2.domain.restaurant_lists.exception.RestaurantListNotF
 import org.example.project2.domain.restaurant_lists.exception.UnloginException;
 import org.example.project2.domain.restaurant_lists.exception.UpdateAccessDenied;
 import org.example.project2.domain.restaurant_lists.repository.RestaurantListsRepository;
+import org.example.project2.domain.restaurants.dto.response.RestaurantResponseDto;
+import org.example.project2.domain.restaurants.entity.Restaurants;
+import org.example.project2.domain.restaurants.exception.RestaurantNotFoundException;
+import org.example.project2.domain.restaurants.repository.RestaurantsRepository;
+import org.example.project2.domain.restaurants.service.RestaurantsService;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +32,7 @@ import java.util.List;
 public class RestaurantListsService {
 
     private final RestaurantListsRepository restaurantListsRepository;
+    private final RestaurantsRepository restaurantsRepository;
 
     // 개인 리스트 찾기
     public ResponseDTO<List<ListResponseDto>> getRestaurantListsByMemberId(PrincipalDetails principalDetails) {
@@ -36,8 +43,10 @@ public class RestaurantListsService {
         List<RestaurantLists> restaurantLists = restaurantListsRepository.findAllByMember_Id(memberId);
 
         List<ListResponseDto> listResponseDtos = new ArrayList<>();
+
         for (RestaurantLists restaurantList : restaurantLists) {
-            listResponseDtos.add(ListResponseDto.from(restaurantList));
+            List<RestaurantResponseDto> responseDtoList = findAllByRestaurantListId(restaurantList.getId());
+            listResponseDtos.add(ListResponseDto.from(restaurantList, responseDtoList));
         }
 
         return ResponseDTO.okWithData(listResponseDtos);
@@ -49,7 +58,8 @@ public class RestaurantListsService {
 
         List<ListResponseDto> listResponseDtos = new ArrayList<>();
         for (RestaurantLists restaurantList : restaurantLists) {
-            listResponseDtos.add(ListResponseDto.from(restaurantList));
+            List<RestaurantResponseDto> responseDtoList = findAllByRestaurantListId(restaurantList.getId());
+            listResponseDtos.add(ListResponseDto.from(restaurantList,responseDtoList));
         }
 
         return ResponseDTO.okWithData(listResponseDtos);
@@ -68,7 +78,8 @@ public class RestaurantListsService {
        }
 
        List<ListResponseDto> listResponseDtos = new ArrayList<>();
-       listResponseDtos.add(ListResponseDto.from(restaurantLists));
+       List<RestaurantResponseDto> responseDtoList = findAllByRestaurantListId(restaurantLists.getId());
+       listResponseDtos.add(ListResponseDto.from(restaurantLists,responseDtoList));
 
        return ResponseDTO.okWithData(listResponseDtos);
     }
@@ -121,6 +132,16 @@ public class RestaurantListsService {
         }
 
         restaurantListsRepository.delete(restaurantLists);
+    }
+
+    public List<RestaurantResponseDto> findAllByRestaurantListId(Long id) {
+        List<Restaurants> restaurants = restaurantsRepository.findAllByRestaurantLists_Id(id);
+
+        List<RestaurantResponseDto> restaurantResponseDto = new ArrayList<>();
+        for (Restaurants restaurant : restaurants) {
+            restaurantResponseDto.add(RestaurantResponseDto.from(restaurant));
+        }
+        return restaurantResponseDto;
     }
 
 }

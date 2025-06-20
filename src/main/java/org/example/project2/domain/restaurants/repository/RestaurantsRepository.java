@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface RestaurantsRepository extends JpaRepository<Restaurants, Long> {
 
     List<Restaurants> findAllByRestaurantLists_Id(Long restaurantListsId);
+//    List<Restaurants> findAllByRestaurantLists_IdAndIsPublicTrue(Long restaurantListsId);
 }

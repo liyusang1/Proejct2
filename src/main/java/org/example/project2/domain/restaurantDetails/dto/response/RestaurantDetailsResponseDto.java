@@ -6,6 +6,7 @@ import org.example.project2.domain.restaurant_lists.entity.RestaurantLists;
 import org.example.project2.domain.restaurants.entity.Restaurants;
 
 public record RestaurantDetailsResponseDto(
+        Long id,
         String name,
         int price,
         String imageUrl,
@@ -13,6 +14,7 @@ public record RestaurantDetailsResponseDto(
 ) {
     public static RestaurantDetailsResponseDto from(RestaurantDetails restaurantDetails) {
         return new RestaurantDetailsResponseDto(
+                restaurantDetails.getId(),
                   restaurantDetails.getName(),
                 restaurantDetails.getPrice(),
                 restaurantDetails.getImageUrl(),

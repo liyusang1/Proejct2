@@ -1,6 +1,7 @@
 package org.example.project2.domain.restaurants.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.project2.domain.member.exception.UserNotFoundException;
 import org.example.project2.domain.restaurantDetails.repository.RestaurantDetailsRepository;
 import org.example.project2.domain.restaurant_lists.entity.RestaurantLists;
@@ -16,13 +17,14 @@ import org.example.project2.domain.restaurants.exception.RestaurantNotFoundExcep
 import org.example.project2.domain.restaurants.repository.RestaurantsRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -37,22 +39,38 @@ public class RestaurantsService {
         return restaurantsRepository.findById(id).orElse(null);
     }
 
-    public ResponseDTO<List<RestaurantResponseDto>> findAllByRestaurantListId(Long id) {
-        List<Restaurants> restaurants = restaurantsRepository.findAllByRestaurantLists_Id(id);
-        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ResponseDTO<List<RestaurantResponseDto>> findAllByRestaurantListId(Long listId,PrincipalDetails principalDetails) {
 
-        // 리스트가 비었거나 리스트 자체가 비공개 상태일 경우
-        if (!restaurants.get(0).getRestaurantLists().isPublic() &&
-                !restaurants.get(0).getRestaurantLists().getMember().getId().equals(principalDetails.getMember().getId())) {
-            throw new RestaurantNotFoundException();
-//        } else if (restaurants.isEmpty()) {
-//            throw new RestaurantNotFoundException();
+        List<Restaurants> restaurants;
+
+        //TODO 올바른 분기처리
+        RestaurantLists checkRestaurant = listsRepository.findRestaurantListsById(listId).orElseThrow(
+                RestaurantListNotFoundException::new
+        );
+
+        if(principalDetails == null ) {
+            if(checkRestaurant.isPublic()) {
+                restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId);
+            }else{
+                throw new RestaurantNotFoundException();
+            }
+        }else{
+            if(checkRestaurant.isPublic()) {
+                restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId);
+            }else {
+                if (checkRestaurant.getMember().getId().equals(principalDetails.getMember().getId())){
+                    restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId);
+                }else {
+                    throw new RestaurantNotFoundException();
+                }
+            }
         }
 
         List<RestaurantResponseDto> restaurantResponseDto = new ArrayList<>();
         for (Restaurants restaurant : restaurants) {
             restaurantResponseDto.add(RestaurantResponseDto.from(restaurant));
         }
+
         return ResponseDTO.okWithData(restaurantResponseDto);
     }
 
@@ -102,5 +120,4 @@ public class RestaurantsService {
                                     request.description(),
                                     request.imageUrl());
     }
-
 }

@@ -21,11 +21,12 @@ public class RestaurantsController {
     private final RestaurantsService restaurantsService;
 
     @GetMapping("/{listId}/restaurants")
-    public ResponseEntity<ResponseDTO<List<RestaurantResponseDto>>> findAll(
-            @PathVariable long listId
+    public ResponseEntity<ResponseDTO<List<RestaurantResponseDto>>> getListInRestaurantByListId(
+            @PathVariable long listId,
+             @AuthenticationPrincipal PrincipalDetails principalDetails
             ) {
         ResponseDTO<List<RestaurantResponseDto>>
-                response = restaurantsService.findAllByRestaurantListId(listId);
+                response = restaurantsService.findAllByRestaurantListId(listId,principalDetails);
 
         return ResponseEntity
                 .status(response.getCode())
