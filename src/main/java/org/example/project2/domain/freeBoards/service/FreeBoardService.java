@@ -41,14 +41,25 @@ public class FreeBoardService {
      * @param search   검색어(제목)
      * @return 게시글 DTO 페이지
      */
-    public ResponseDTO<Page<FreeBoardResponseDto>> getAllBoards(Pageable pageable, String search) {
+    public ResponseDTO<Page<FreeBoardResponseDto>> getAllBoards(Pageable pageable, String search, String category) {
         Page<FreeBoards> boardsPage;
+        boolean hasCategory = category != null && !category.isEmpty();
+        boolean hasSearch = search != null && !search.trim().isEmpty();
 
-        // 검색어가 있으면 제목에 포함된 글만 조회, 없으면 전체 조회(공지글 제외)
-        if (search != null && !search.trim().isEmpty()) {
-            boardsPage = freeBoardRepository.findAllByTitleContainingIgnoreCase(search, pageable);
+        if (category != null && !category.isEmpty()) {
+            // 검색 + 카테고리
+            if (search != null && !search.trim().isEmpty()) {
+                boardsPage = freeBoardRepository.findAllByCategoryAndTitleContainingIgnoreCase(category, search, pageable);
+            } else {
+                boardsPage = freeBoardRepository.findAllByCategory(category, pageable);
+            }
         } else {
-            boardsPage = freeBoardRepository.findAllBy(pageable);
+            // 전체
+            if (search != null && !search.trim().isEmpty()) {
+                boardsPage = freeBoardRepository.findAllByTitleContainingIgnoreCase(search, pageable);
+            } else {
+                boardsPage = freeBoardRepository.findAllBy(pageable);
+            }
         }
 
         // Entity → DTO 매핑
@@ -137,6 +148,7 @@ public class FreeBoardService {
             throw new PermissionDeniedException();
         }
 
+        freeBoardViewRepository.deleteAllByFreeBoard(board);
         // 삭제
         freeBoardRepository.deleteById(boardId);
 

@@ -10,4 +10,5 @@ import java.time.LocalDate;
 public interface FreeBoardViewRepository extends JpaRepository<FreeBoardView, Long> {
     boolean existsByFreeBoardAndMemberAndViewedAt(FreeBoards board, Member member, LocalDate viewedAt);
     boolean existsByFreeBoardAndIpAddressAndViewedAt(FreeBoards board, String ipAddress, LocalDate viewedAt);
+    void deleteAllByFreeBoard(FreeBoards freeBoard);
 }

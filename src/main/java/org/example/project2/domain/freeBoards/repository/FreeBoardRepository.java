@@ -12,4 +12,6 @@ public interface FreeBoardRepository extends JpaRepository<FreeBoards, Long> {
 
     Page<FreeBoards> findAllByTitleContainingIgnoreCase(String title, Pageable pageable);
     Page<FreeBoards> findAllBy(Pageable pageable);
+    Page<FreeBoards> findAllByCategoryAndTitleContainingIgnoreCase(String category, String title, Pageable pageable);
+    Page<FreeBoards> findAllByCategory(String category, Pageable pageable);
 }

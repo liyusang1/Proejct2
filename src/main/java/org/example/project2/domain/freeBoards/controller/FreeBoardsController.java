@@ -36,10 +36,11 @@ public class FreeBoardsController {
             @RequestParam(defaultValue = "9") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String direction,
-            @RequestParam(required = false) String search
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String category
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), sortBy));
-        ResponseDTO<Page<FreeBoardResponseDto>> response = freeBoardService.getAllBoards(pageable, search);
+        ResponseDTO<Page<FreeBoardResponseDto>> response = freeBoardService.getAllBoards(pageable, search, category);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 

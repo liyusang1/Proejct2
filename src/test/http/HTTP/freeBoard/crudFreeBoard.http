@@ -36,6 +36,18 @@ Content-Type: application/json
 ### 댓글조회
 GET http://localhost:8080/reply/free-board/1
 
+### 글 생성
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title":"test",
+  "content": "te",
+  "category": "자유"
+
+}
+
 ### 글 삭제
 DELETE http://localhost:8080/free-boards/13
 Authorization: {{authToken}}
