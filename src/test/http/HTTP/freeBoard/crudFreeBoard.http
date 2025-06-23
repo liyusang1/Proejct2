@@ -44,8 +44,8 @@ Content-Type: application/json
 {
   "title":"test",
   "content": "te",
-  "category": "자유",
-  "emoji": "😎"
+  "category": "자유"
+
 }
 
 ### 글 삭제
