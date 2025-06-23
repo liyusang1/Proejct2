@@ -222,5 +222,26 @@ public class ItemService {
 
         return ResponseDTO.okWithData(usersInsightResponseDto);
     }
+
+    public ResponseDTO<List<ItemResponseDto>> getMembersLikeItemList(long memberId) {
+
+        memberRepository.findById(memberId)
+                .orElseThrow(UserNotFoundException::new);
+
+        List<Items> items = itemRepository.findLikedItemsByMemberIdAndStatusTrue(memberId);
+
+        List<ItemResponseDto> itemResponseDtos = new ArrayList<>();
+        for (Items item : items) {
+            itemResponseDtos.add(
+                    ItemResponseDto.fromEntity(
+                            item,
+                            false,
+                            likeRepository.countByItems_IdAndStatusTrue(item.getId())
+                    )
+            );
+        }
+
+        return ResponseDTO.okWithData(itemResponseDtos);
+    }
 }
 

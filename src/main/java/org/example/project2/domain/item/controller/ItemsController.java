@@ -144,4 +144,20 @@ public class ItemsController {
         ResponseDTO<UsersInsightResponseDto> response = itemService.getUsersInsights(principalDetails);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    /**
+     * 유저가 좋아요 누른 아이템 조회
+     */
+    @GetMapping("/member-like/{memberId}")
+    public ResponseEntity<ResponseDTO<List<ItemResponseDto>>> getMembersLikeItemList(
+            @PathVariable long memberId
+    ) {
+
+        ResponseDTO<List<ItemResponseDto>>
+                response = itemService.getMembersLikeItemList(memberId);
+
+        return ResponseEntity
+                .status(response.getCode())
+                .body(response);
+    }
 }
