@@ -7,6 +7,7 @@ import org.example.project2.domain.restaurants.dto.response.RestaurantResponseDt
 import org.example.project2.domain.restaurants.service.RestaurantsService;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,14 @@ public class RestaurantsController {
     private final RestaurantsService restaurantsService;
 
     @GetMapping("/{listId}/restaurants")
-    public ResponseEntity<ResponseDTO<List<RestaurantResponseDto>>> getListInRestaurantByListId(
+    public ResponseEntity<ResponseDTO<Page<RestaurantResponseDto>>> getListInRestaurantByListId(
             @PathVariable long listId,
+             @RequestParam(defaultValue = "0") int page,
+             @RequestParam(defaultValue = "6") int size,
              @AuthenticationPrincipal PrincipalDetails principalDetails
             ) {
-        ResponseDTO<List<RestaurantResponseDto>>
-                response = restaurantsService.findAllByRestaurantListId(listId,principalDetails);
+        ResponseDTO<Page<RestaurantResponseDto>>
+                response = restaurantsService.findAllByRestaurantListId(listId,principalDetails, page, size);
 
         return ResponseEntity
                 .status(response.getCode())

@@ -26,14 +26,8 @@ public class RestaurantDetailsController {
     // TODO 올바른 분기처리 하기
     @GetMapping("/{restaurantId}")
     public ResponseEntity<ResponseDTO<List<RestaurantDetailsResponseDto>>>
-    getRestaurantDetails(@PathVariable Long restaurantId) {
-        PrincipalDetails principalDetails = null;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated()
-                && authentication.getPrincipal() instanceof PrincipalDetails details) {
-            principalDetails = details;
-        }
+    getRestaurantDetails(@PathVariable Long restaurantId,
+                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         ResponseDTO<List<RestaurantDetailsResponseDto>> response =
                 restaurantDetailsService.getRestaurantDetailsById(restaurantId, principalDetails);

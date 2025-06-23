@@ -7,6 +7,7 @@ import org.example.project2.domain.restaurant_lists.dto.response.ListResponseDto
 import org.example.project2.domain.restaurant_lists.service.RestaurantListsService;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,12 @@ public class RestaurantListsController {
     private final RestaurantListsService restaurantListsService;
 
     @GetMapping("/my")
-    public ResponseEntity<ResponseDTO<List<ListResponseDto>>> getMyRestaurantLists(
-            @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        ResponseDTO<List<ListResponseDto>>
-                response = restaurantListsService.getRestaurantListsByMemberId(principalDetails);
+    public ResponseEntity<ResponseDTO<Page<ListResponseDto>>> getMyRestaurantLists(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        ResponseDTO<Page<ListResponseDto>>
+                response = restaurantListsService.getRestaurantListsByMemberId(principalDetails, page, size);
 
         return ResponseEntity
                 .status(response.getCode())
@@ -34,9 +37,10 @@ public class RestaurantListsController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseDTO<List<ListResponseDto>>> getOtherRestaurantLists(){
-        ResponseDTO<List<ListResponseDto>>
-                response = restaurantListsService.getRestaurantListsByIsPublicIsTrue();
+    public ResponseEntity<ResponseDTO<Page<ListResponseDto>>> getOtherRestaurantLists(@RequestParam(defaultValue = "0") int page,
+                                                                                      @RequestParam(defaultValue = "6") int size){
+        ResponseDTO<Page<ListResponseDto>>
+                response = restaurantListsService.getRestaurantListsByIsPublicIsTrue(page, size);
 
         return ResponseEntity
                 .status(response.getCode())

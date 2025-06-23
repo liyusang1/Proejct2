@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.project2.domain.member.exception.UserNotFoundException;
 import org.example.project2.domain.restaurantDetails.repository.RestaurantDetailsRepository;
+import org.example.project2.domain.restaurant_lists.dto.response.ListResponseDto;
 import org.example.project2.domain.restaurant_lists.entity.RestaurantLists;
 import org.example.project2.domain.restaurant_lists.exception.RestaurantListNotFoundException;
 import org.example.project2.domain.restaurant_lists.repository.RestaurantListsRepository;
@@ -17,6 +18,9 @@ import org.example.project2.domain.restaurants.exception.RestaurantNotFoundExcep
 import org.example.project2.domain.restaurants.repository.RestaurantsRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,39 +43,40 @@ public class RestaurantsService {
         return restaurantsRepository.findById(id).orElse(null);
     }
 
-    public ResponseDTO<List<RestaurantResponseDto>> findAllByRestaurantListId(Long listId,PrincipalDetails principalDetails) {
+    public ResponseDTO<Page<RestaurantResponseDto>> findAllByRestaurantListId(Long listId, PrincipalDetails principalDetails, int page, int size) {
 
-        List<Restaurants> restaurants;
+        Page<Restaurants> restaurants;
 
         //TODO 올바른 분기처리
         RestaurantLists checkRestaurant = listsRepository.findRestaurantListsById(listId).orElseThrow(
                 RestaurantListNotFoundException::new
         );
 
+        Pageable pageable = PageRequest.of(page, size); // 페이지 설정
+
         if(principalDetails == null ) {
             if(checkRestaurant.isPublic()) {
-                restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId);
+                restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId, pageable);
             }else{
                 throw new RestaurantNotFoundException();
             }
         }else{
             if(checkRestaurant.isPublic()) {
-                restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId);
+                restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId, pageable);
             }else {
                 if (checkRestaurant.getMember().getId().equals(principalDetails.getMember().getId())){
-                    restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId);
+                    restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId, pageable);
                 }else {
                     throw new RestaurantNotFoundException();
                 }
             }
         }
 
-        List<RestaurantResponseDto> restaurantResponseDto = new ArrayList<>();
-        for (Restaurants restaurant : restaurants) {
-            restaurantResponseDto.add(RestaurantResponseDto.from(restaurant));
-        }
+        Page<RestaurantResponseDto> restaurantResponseDtoPage = restaurants.map(restaurant -> {
+            return RestaurantResponseDto.from(restaurant); // RestaurantResponseDto로 변환
+        });
 
-        return ResponseDTO.okWithData(restaurantResponseDto);
+        return ResponseDTO.okWithData(restaurantResponseDtoPage);
     }
 
     public void postRestaurant(CreateRestaurantRequestDto request, Long listId) {

@@ -5,13 +5,13 @@ import org.example.project2.domain.restaurantDetails.dto.request.PutRestaurantDe
 import org.example.project2.domain.restaurantDetails.dto.request.PutRestaurantDetailsRequestDto;
 import org.example.project2.domain.restaurantDetails.dto.response.RestaurantDetailsResponseDto;
 import org.example.project2.domain.restaurantDetails.entity.RestaurantDetails;
-import org.example.project2.domain.restaurantDetails.exception.PrivateRestaurantException;
 import org.example.project2.domain.restaurantDetails.repository.RestaurantDetailsRepository;
+import org.example.project2.domain.restaurants.entity.Restaurants;
 import org.example.project2.domain.restaurants.exception.AccessDenied;
 import org.example.project2.domain.restaurants.exception.RestaurantNotFoundException;
+import org.example.project2.domain.restaurants.repository.RestaurantsRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,27 +24,53 @@ import java.util.List;
 public class RestaurantDetailsService {
 
     private final RestaurantDetailsRepository restaurantDetailsRepository;
+    private final RestaurantsRepository restaurantsRepository;
 
+    // TODO 올바른 분기처리
     public ResponseDTO<List<RestaurantDetailsResponseDto>> getRestaurantDetailsById(Long restaurantId, PrincipalDetails principalDetails) {
-        List<RestaurantDetails> details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
 
-        if (details.isEmpty()) {
+//        List<RestaurantDetails> details;
+//
+        Restaurants checkRestaurant = restaurantsRepository.findById(restaurantId).orElseThrow(
+                RestaurantNotFoundException::new
+        );
+//
+//        if(principalDetails == null ) {
+//            if(checkRestaurant.getRestaurantLists().isPublic()) {
+//                details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
+//            }else{
+//                throw new RestaurantNotFoundException();
+//            }
+//        }else{
+//            if(checkRestaurant.getRestaurantLists().isPublic()) {
+//                details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
+//            }else {
+//                if (checkRestaurant.getRestaurantLists().getMember().getId().equals(principalDetails.getMember().getId())){
+//                    details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
+//                }else {
+//                    throw new RestaurantNotFoundException();
+//                }
+//            }
+//        }
+
+        boolean isPublic = checkRestaurant.getRestaurantLists().isPublic();
+        boolean isOwner = principalDetails != null &&
+                checkRestaurant.getRestaurantLists().getMember().getId().equals(principalDetails.getMember().getId());
+
+        if (!isPublic && !isOwner) {
             throw new RestaurantNotFoundException();
         }
 
-        boolean isPublic = details.get(0).getRestaurants().getRestaurantLists().isPublic();
-        Long ownerId = details.get(0).getRestaurants().getRestaurantLists().getMember().getId();
+        List<RestaurantDetails> details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
 
-        if (!isPublic) {
-            if (principalDetails == null || !ownerId.equals(principalDetails.getMember().getId())) {
-                throw new PrivateRestaurantException();
-            }
+
+        List<RestaurantDetailsResponseDto> restaurantDetailsResponseDto = new ArrayList<>();
+        for (RestaurantDetails restaurant : details) {
+            List<Restaurants> restaurantResponseDto = restaurantsRepository.findAllByRestaurantLists_Id(restaurantId);
+            restaurantDetailsResponseDto.add(RestaurantDetailsResponseDto.from(restaurant));
         }
 
-        List<RestaurantDetailsResponseDto> dtos = details.stream()
-                .map(RestaurantDetailsResponseDto::from)
-                .toList();
-        return ResponseDTO.okWithData(dtos);
+        return ResponseDTO.okWithData(restaurantDetailsResponseDto);
     }
 
     public void putRestaurantDetails(PrincipalDetails principalDetails,

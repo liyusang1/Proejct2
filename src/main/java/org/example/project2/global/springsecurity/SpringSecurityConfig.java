@@ -38,7 +38,7 @@ public class SpringSecurityConfig {
                     CorsConfiguration configuration = new CorsConfiguration();
                     configuration.applyPermitDefaultValues();
                     configuration.addAllowedOriginPattern("");
-                    configuration.addAllowedOriginPattern("http://localhost:8081");
+                    configuration.addAllowedOriginPattern("http://localhost:8084");
                     configuration.setAllowedMethods(
                             Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"));
 
@@ -78,7 +78,7 @@ public class SpringSecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/restaurants-list")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/restaurants-list/info/{listId:^-?\\d+$}")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/restaurants-list/{listId:^-?\\d+$}/restaurants")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("restaurants-list/restaurant/info/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list/restaurant/{restaurantId:^-?\\d+$}")).permitAll()
                 .anyRequest().authenticated());
 
         /**

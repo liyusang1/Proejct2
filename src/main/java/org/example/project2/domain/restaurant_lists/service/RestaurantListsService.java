@@ -18,6 +18,9 @@ import org.example.project2.domain.restaurants.repository.RestaurantsRepository;
 import org.example.project2.domain.restaurants.service.RestaurantsService;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,32 +38,33 @@ public class RestaurantListsService {
     private final RestaurantsRepository restaurantsRepository;
 
     // 개인 리스트 찾기
-    public ResponseDTO<List<ListResponseDto>> getRestaurantListsByMemberId(PrincipalDetails principalDetails) {
+    public ResponseDTO<Page<ListResponseDto>> getRestaurantListsByMemberId(PrincipalDetails principalDetails, int page, int size) {
         Long memberId = principalDetails.getMember().getId();
         if(memberId == null) {
             throw new UnloginException();
         }
-        List<RestaurantLists> restaurantLists = restaurantListsRepository.findAllByMember_Id(memberId);
 
-        List<ListResponseDto> listResponseDtos = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size); // 페이지 설정
+        Page<RestaurantLists> restaurantListsPage = restaurantListsRepository.findAllByMember_Id(memberId, pageable);
 
-        for (RestaurantLists restaurantList : restaurantLists) {
+        Page<ListResponseDto> listResponseDtos =  restaurantListsPage.map(restaurantList -> {
             List<RestaurantResponseDto> responseDtoList = findAllByRestaurantListId(restaurantList.getId());
-            listResponseDtos.add(ListResponseDto.from(restaurantList, responseDtoList));
-        }
+            return ListResponseDto.from(restaurantList, responseDtoList);
+        });
 
         return ResponseDTO.okWithData(listResponseDtos);
     }
 
     // 공개된 리스트 모두 가져오기
-    public ResponseDTO<List<ListResponseDto>> getRestaurantListsByIsPublicIsTrue() {
-        List<RestaurantLists> restaurantLists = restaurantListsRepository.findAllByIsPublicIsTrue();
+    public ResponseDTO<Page<ListResponseDto>> getRestaurantListsByIsPublicIsTrue(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size); // 페이지 설정
+        Page<RestaurantLists> restaurantListsPage = restaurantListsRepository.findAllByIsPublicIsTrue(pageable);
 
-        List<ListResponseDto> listResponseDtos = new ArrayList<>();
-        for (RestaurantLists restaurantList : restaurantLists) {
+        // 리스트 변환
+        Page<ListResponseDto> listResponseDtos = restaurantListsPage.map(restaurantList -> {
             List<RestaurantResponseDto> responseDtoList = findAllByRestaurantListId(restaurantList.getId());
-            listResponseDtos.add(ListResponseDto.from(restaurantList,responseDtoList));
-        }
+            return ListResponseDto.from(restaurantList, responseDtoList);
+        });
 
         return ResponseDTO.okWithData(listResponseDtos);
     }
