@@ -1,0 +1,61 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test1@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+### 북마크 추가 또는 활성화 (POST)
+POST http://localhost:8080/bookmarks
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "recipeId": 104
+}
+
+### 이미 활성화된 북마크를 다시 추가 시도
+POST http://localhost:8080/bookmarks
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "recipeId": 85
+}
+
+### 북마크 비활성화 (DELETE - 논리적 삭제)
+DELETE http://localhost:8080/bookmarks/85
+Authorization: {{authToken}}
+#Content-Type: application/json
+
+### 이미 비활성화된 북마크를 다시 비활성화 시도
+DELETE http://localhost:8080/bookmarks/85
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 북마크 재활성화 (POST - 비활성화 후)
+POST http://localhost:8080/bookmarks
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "recipeId": 85
+}
+
+### 특정 레시피 북마크 여부 확인
+GET http://localhost:8080/bookmarks/104/status
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 로그인한 사용자의 활성 북마크 목록 조회 (페이징 포함)
+GET http://localhost:8080/bookmarks/mybookmark?page=0&size=5&sort=createdAt,desc
+Authorization: {{authToken}}

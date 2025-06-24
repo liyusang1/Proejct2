@@ -3,7 +3,6 @@ package org.example.project2.domain.recipes.service;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.domain.member.exception.UserNotFoundException;
-import org.example.project2.domain.member.repository.MemberRepository;
 import org.example.project2.domain.recipes.dto.request.RecipeRequestDto;
 import org.example.project2.domain.recipes.dto.response.RecipeDetailResponseDto;
 import org.example.project2.domain.recipes.dto.response.RecipeResponseDto;
@@ -27,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RecipesService {
     private final RecipesRepository recipesRepository;
-    private final MemberRepository memberRepository;
 
     //리스트 조회
     public ResponseDTO<Page<RecipeResponseDto>> getRecipeList(Pageable pageable) {
@@ -49,14 +47,15 @@ public class RecipesService {
     }
 
     //레시피 등록
-    public ResponseDTO<Void> createRecipe(PrincipalDetails principalDetails, RecipeRequestDto dto) {
+    public ResponseDTO<Void> createRecipe(PrincipalDetails principalDetails
+            , RecipeRequestDto dto) {
         if (principalDetails == null) {
             throw new UserNotFoundException();
         }
         if (dto.title() != null && dto.title().length() > 20) {
             throw new RecipeTitleLengthIsLongException();
         }
-        if (dto.description() != null && dto.description().length() > 25) {
+        if (dto.description() != null && dto.description().length() > 40) {
             throw new RecipeDescriptionLengthIsLongException();
         }
         if (dto.time() < 1) {
@@ -88,7 +87,7 @@ public class RecipesService {
         if (dto.title() != null && dto.title().length() > 20) {
             throw new RecipeTitleLengthIsLongException();
         }
-        if (dto.description() != null && dto.description().length() > 25) {
+        if (dto.description() != null && dto.description().length() > 40) {
             throw new RecipeDescriptionLengthIsLongException();
         }
         if (dto.time() < 1) {

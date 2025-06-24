@@ -36,6 +36,11 @@ public enum ErrorCode {
     COOKING_TIME_TOO_SHORT(HttpStatus.BAD_REQUEST, "조리 시간은 1분 이상이어야 합니다."),
     RECIPE_ID_IS_INVALID(HttpStatus.BAD_REQUEST, "유효하지 않은 recipeId 입니다."),
 
+    // RECIPE BOOKMARK
+    BOOKMARK_ALREADY_EXITS(HttpStatus.BAD_REQUEST, "이미 북마크된 레시피 입니다."),
+    BOOKMARK_NOT_FOUND(HttpStatus.BAD_REQUEST, "북마크를 찾을 수 없습니다"),
+    BOOKMARK_ALREADY_DEACTIVATED(HttpStatus.BAD_REQUEST, "이미 북마크가 비활성화 상태입니다."),
+
     // REPORT
     DUPLICATE_REPORT(HttpStatus.BAD_REQUEST, "이미 신고한 게시글 입니다."),
 
