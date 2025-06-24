@@ -92,7 +92,7 @@ public class RestaurantListsService {
     public void createRestaurantList(PrincipalDetails principalDetails, CreateListRequestDto request) {
 
         if (principalDetails == null) {
-            throw new UserNotFoundException();
+            throw new UnloginException();
         }
 
         Member member = principalDetails.getMember();

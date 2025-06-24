@@ -13,6 +13,7 @@ import org.example.project2.domain.restaurants.dto.request.PutRestaurantRequestD
 import org.example.project2.domain.restaurants.dto.response.RestaurantResponseDto;
 import org.example.project2.domain.restaurants.entity.Restaurants;
 import org.example.project2.domain.restaurants.exception.AccessDenied;
+import org.example.project2.domain.restaurants.exception.RestaurantListAccessDenied;
 import org.example.project2.domain.restaurants.exception.RestaurantNotFoundException;
 import org.example.project2.domain.restaurants.repository.RestaurantsRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
@@ -52,7 +53,7 @@ public class RestaurantsService {
             if(checkRestaurant.isPublic()) {
                 restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId, pageable);
             }else{
-                throw new RestaurantNotFoundException();
+                throw new RestaurantListAccessDenied();
             }
         }else{
             if(checkRestaurant.isPublic()) {
@@ -61,7 +62,7 @@ public class RestaurantsService {
                 if (checkRestaurant.getMember().getId().equals(principalDetails.getMember().getId())){
                     restaurants = restaurantsRepository.findAllByRestaurantLists_Id(listId, pageable);
                 }else {
-                    throw new RestaurantNotFoundException();
+                    throw new RestaurantListAccessDenied();
                 }
             }
         }
@@ -72,13 +73,16 @@ public class RestaurantsService {
         return ResponseDTO.okWithData(restaurantResponseDtoPage);
     }
 
-    public void postRestaurant(CreateRestaurantRequestDto request, Long listId) {
+    public void postRestaurant(PrincipalDetails principalDetails, CreateRestaurantRequestDto request, Long listId) {
+        if (principalDetails == null) {
+            throw new UnloginException();
+        }
         RestaurantLists restaurantLists = listsRepository.findRestaurantListsById(listId).orElseThrow(
                 RestaurantListNotFoundException::new
         );
 
         Restaurants savedRestaurant = request.toEntity(restaurantLists);
-        if(!restaurantLists.getId().equals(savedRestaurant.getRestaurantLists().getId())) {
+        if(!restaurantLists.getMember().getId().equals(principalDetails.getMember().getId())) {
             throw new AccessDenied();
         }
 
@@ -91,10 +95,12 @@ public class RestaurantsService {
 
     public void delete(PrincipalDetails principalDetails, Long restaurantId) {
         if (principalDetails == null) {
-            throw new UserNotFoundException();
+            throw new UnloginException();
         }
         Restaurants restaurants = findRestaurantById(restaurantId);
-
+        if (restaurants == null) {
+            throw new RestaurantNotFoundException();
+        }
         if(!restaurants.getRestaurantLists().getMember().getId().equals(principalDetails.getMember().getId())) {
             throw new AccessDenied();
         }

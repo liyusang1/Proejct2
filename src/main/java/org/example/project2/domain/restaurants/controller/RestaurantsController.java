@@ -38,9 +38,10 @@ public class RestaurantsController {
 
     @PostMapping("/{listId}/restaurants")
     public ResponseEntity<ResponseDTO<Void>> createRestaurant(@RequestBody CreateRestaurantRequestDto request,
+                                                              @AuthenticationPrincipal PrincipalDetails principalDetails,
                                                               @PathVariable long listId) {
 
-        restaurantsService.postRestaurant(request, listId);
+        restaurantsService.postRestaurant(principalDetails, request, listId);
 
         return ResponseEntity.ok(ResponseDTO.ok());
     }
