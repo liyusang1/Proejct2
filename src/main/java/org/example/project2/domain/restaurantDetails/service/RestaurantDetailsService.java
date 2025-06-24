@@ -29,29 +29,9 @@ public class RestaurantDetailsService {
     // TODO 올바른 분기처리
     public ResponseDTO<List<RestaurantDetailsResponseDto>> getRestaurantDetailsById(Long restaurantId, PrincipalDetails principalDetails) {
 
-//        List<RestaurantDetails> details;
-//
         Restaurants checkRestaurant = restaurantsRepository.findById(restaurantId).orElseThrow(
                 RestaurantNotFoundException::new
         );
-//
-//        if(principalDetails == null ) {
-//            if(checkRestaurant.getRestaurantLists().isPublic()) {
-//                details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
-//            }else{
-//                throw new RestaurantNotFoundException();
-//            }
-//        }else{
-//            if(checkRestaurant.getRestaurantLists().isPublic()) {
-//                details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
-//            }else {
-//                if (checkRestaurant.getRestaurantLists().getMember().getId().equals(principalDetails.getMember().getId())){
-//                    details = restaurantDetailsRepository.findAllByRestaurants_Id(restaurantId);
-//                }else {
-//                    throw new RestaurantNotFoundException();
-//                }
-//            }
-//        }
 
         boolean isPublic = checkRestaurant.getRestaurantLists().isPublic();
         boolean isOwner = principalDetails != null &&

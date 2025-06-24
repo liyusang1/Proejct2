@@ -1,12 +1,11 @@
 package org.example.project2.domain.restaurants.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.project2.domain.member.exception.UserNotFoundException;
 import org.example.project2.domain.restaurantDetails.repository.RestaurantDetailsRepository;
-import org.example.project2.domain.restaurant_lists.dto.response.ListResponseDto;
 import org.example.project2.domain.restaurant_lists.entity.RestaurantLists;
 import org.example.project2.domain.restaurant_lists.exception.RestaurantListNotFoundException;
+import org.example.project2.domain.restaurant_lists.exception.UnloginException;
 import org.example.project2.domain.restaurant_lists.repository.RestaurantListsRepository;
 import org.example.project2.domain.restaurants.dto.request.CreateRestaurantRequestDto;
 import org.example.project2.domain.restaurants.dto.request.PostRestaurantDetailRequestDto;
@@ -24,11 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -72,9 +66,8 @@ public class RestaurantsService {
             }
         }
 
-        Page<RestaurantResponseDto> restaurantResponseDtoPage = restaurants.map(restaurant -> {
-            return RestaurantResponseDto.from(restaurant); // RestaurantResponseDto로 변환
-        });
+        // RestaurantResponseDto로 변환
+        Page<RestaurantResponseDto> restaurantResponseDtoPage = restaurants.map(RestaurantResponseDto::from);
 
         return ResponseDTO.okWithData(restaurantResponseDtoPage);
     }
@@ -86,7 +79,7 @@ public class RestaurantsService {
 
         Restaurants savedRestaurant = request.toEntity(restaurantLists);
         if(!restaurantLists.getId().equals(savedRestaurant.getRestaurantLists().getId())) {
-            throw new RestaurantNotFoundException();
+            throw new AccessDenied();
         }
 
         restaurantsRepository.save(savedRestaurant);
@@ -111,7 +104,7 @@ public class RestaurantsService {
 
     public void putRestaurant(PrincipalDetails principalDetails, PutRestaurantRequestDto request, Long restaurantId) {
         if (principalDetails == null) {
-            throw new UserNotFoundException();
+            throw new UnloginException();
         }
         Restaurants restaurants = findRestaurantById(restaurantId);
         if(restaurants == null) {
