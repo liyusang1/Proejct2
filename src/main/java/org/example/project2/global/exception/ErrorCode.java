@@ -71,6 +71,15 @@ public enum ErrorCode {
     INTRODUCTION_TOO_LONG(HttpStatus.BAD_REQUEST, "소개는 20자 내로 작성해주세요."),
     NICKNAME_CHANGE_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "닉네임 변경 불가기간(6개월)이 지나지 않았습니다."),
 
+    // restaurant
+    ACCESS_REJECT(HttpStatus.FORBIDDEN, "해당 작업에 접근 할 수 없습니다."),
+    NOT_LOGIN_STATUS(HttpStatus.FORBIDDEN, "로그인 후 사용 가능합니다."),
+    RESTAURANT_NOT_FOUND(HttpStatus.BAD_REQUEST, "요청한 식당이 존재하지 않거나 찾을 수 없습니다."),
+    RESTAURANT_LIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 리스트를 찾을 수 없습니다."),
+    RESTAURANT_LIST_ACCESS_DENIED(HttpStatus.FORBIDDEN, "요청한 리스트에 대해 접근 할 수 없습니다."),
+    THIS_RESTAURANT_PRIVATE(HttpStatus.BAD_REQUEST, "해당 식당정보는 비공개입니다."),
+
+
     // 5xx
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러");
 

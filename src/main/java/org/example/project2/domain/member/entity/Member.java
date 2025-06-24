@@ -14,6 +14,7 @@ import org.example.project2.domain.recipes.entity.Bookmark;
 import org.example.project2.domain.recipes.entity.Recipes;
 import org.example.project2.domain.reply.entity.Replies;
 import org.example.project2.domain.reports.entity.Reports;
+import org.example.project2.domain.restaurant_lists.entity.RestaurantLists;
 import org.example.project2.domain.restaurants.entity.Restaurants;
 import org.example.project2.global.entity.BaseTimeEntity;
 
@@ -65,7 +66,7 @@ public class Member extends BaseTimeEntity {
     private List<Recipes> recipes = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Restaurants> restaurants = new ArrayList<>();
+    private List<RestaurantLists> restaurantLists = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reports> reports = new ArrayList<>();

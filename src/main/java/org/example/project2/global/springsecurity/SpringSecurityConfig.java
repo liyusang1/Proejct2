@@ -82,6 +82,10 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/recipe", "/recipe/**").permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/follow/follower/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/follow/following/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list/info/{listId:^-?\\d+$}")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list/{listId:^-?\\d+$}/restaurants")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/restaurants-list/restaurant/{restaurantId:^-?\\d+$}")).permitAll()
                 .anyRequest().authenticated());
 
         /**
