@@ -72,3 +72,6 @@ Content-Type: application/json
 
 ### insight
 GET http://localhost:8080/items/insight
+
+### 멤버가 좋아요 한 글 전체조회
+GET http://localhost:8080/items/member-like/1

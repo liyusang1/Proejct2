@@ -1,0 +1,196 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test1@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 글 생성 1
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "안녕하세요, 새롭게 가입했습니다!",
+  "content": "자유게시판에 처음 글을 남겨봅니다. 잘 부탁드려요~",
+  "category": "자유",
+  "emoji": "👋"
+}
+
+### 글 생성 2
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "오늘 점심 메뉴 추천받아요!",
+  "content": "근처에 맛있는 식당 아시는 분 계신가요? 메뉴 고민이네요 ㅠㅠ",
+  "category": "자유",
+  "emoji": "🍔"
+}
+
+### 글 생성 3
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "주말에 뭐 하시나요?",
+  "content": "다들 주말 계획 있으신가요? 저는 집에서 쉴 예정이에요.",
+  "category": "자유",
+  "emoji": "🏡"
+}
+
+### 글 생성 4
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "취미 공유해요!",
+  "content": "혹시 요즘 재밌게 하고 있는 취미 있으신가요? 저는 뜨개질에 빠졌어요!",
+  "category": "자유",
+  "emoji": "🧶"
+}
+
+### 글 생성 5
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "날씨가 정말 좋네요!",
+  "content": "오늘 날씨가 정말 화창해서 기분이 좋습니다. 다들 좋은 하루 보내세요!",
+  "category": "자유",
+  "emoji": "☀️"
+}
+
+### 글 생성 6
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "오늘 저녁 메뉴 추천받아요!",
+  "content": "뭐 먹을지 고민이네요. 혹시 맛있는 집 아시는 분 계신가요?",
+  "category": "자유",
+  "emoji": "🍽️"
+}
+
+### 글 생성 7
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "주말에 다들 뭐 하실 예정인가요?",
+  "content": "저는 집에서 푹 쉴 계획이에요. 좋은 계획 있으시면 공유해주세요!",
+  "category": "자유",
+  "emoji": "🛋️"
+}
+
+### 글 생성 8
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "요즘 읽고 있는 책 추천해주세요!",
+  "content": "읽을 책이 없어서 고민이에요. 장르 상관없이 추천 부탁드립니다!",
+  "category": "자유",
+  "emoji": "📚"
+}
+
+### 글 생성 9
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "새로운 취미를 찾고 있어요!",
+  "content": "뭔가 새로운 걸 시작해보고 싶은데, 추천해주실 만한 취미가 있을까요?",
+  "category": "자유",
+  "emoji": "🤔"
+}
+
+### 글 생성 10
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "운동 같이 하실 분?",
+  "content": "혼자 운동하기 심심한데, 같이 운동하실 분 찾아요! (산책, 헬스 등)",
+  "category": "자유",
+  "emoji": "🏃‍♀️"
+}
+
+### 글 생성 11
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "좋아하는 영화나 드라마 추천해주세요!",
+  "content": "요즘 볼 게 없어서 방황 중이에요. 인생작 있으시면 알려주세요!",
+  "category": "자유",
+  "emoji": "🎬"
+}
+
+### 글 생성 12
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "간단한 요리 레시피 공유해요!",
+  "content": "쉽고 맛있는 자취 요리 레시피 있으시면 공유해주세요~",
+  "category": "자유",
+  "emoji": "🧑‍🍳"
+}
+
+### 글 생성 13
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "오늘 하루도 수고 많으셨습니다!",
+  "content": "다들 오늘 하루 마무리 잘 하시고, 편안한 저녁 되세요!",
+  "category": "자유",
+  "emoji": "🌙"
+}
+
+### 글 생성 14
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "IT 관련 질문이요!",
+  "content": "혹시 개발자분들 계신가요? 코딩 문제로 막혔는데 도움 주실 분!",
+  "category": "자유",
+  "emoji": "💻"
+}
+
+### 글 생성 15
+POST http://localhost:8080/free-boards
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "퇴근길 풍경이 예쁘네요!",
+  "content": "오늘 노을이 너무 예뻐서 사진 한 장 남겨요. 다들 힘내세요!",
+  "category": "자유",
+  "emoji": "🌆"
+}
