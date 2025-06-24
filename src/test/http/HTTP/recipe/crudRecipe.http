@@ -20,7 +20,7 @@ GET http://localhost:8080/recipe
 Content-Type: application/json
 
 ### 레시피 상세 조회
-GET http://localhost:8080/recipe/25
+GET http://localhost:8080/recipe/105
 Content-Type: application/json
 
 ### 레시피 등록
@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 ### 레시피 수정
-PUT http://localhost:8080/recipe/8
+PUT http://localhost:8080/recipe/117
 Authorization: {{authToken}}
 Content-Type: application/json
 
@@ -48,11 +48,13 @@ Content-Type: application/json
   "description": "더 맛있게!",
   "imageUrl": "url2",
   "ingredients": ["김치", "밥", "참기름", "계란"],
-  "steps": ["김치를 자른다", "밥이랑 볶는다", "계란을 올린다"]
+  "steps": ["김치를 자른다", "밥이랑 볶는다", "계란을 올린다"],
+  "time": "20",
+  "level": "하"
 }
 
 ### 레시피 삭제
-DELETE http://localhost:8080/recipe/7
+DELETE http://localhost:8080/recipe/117
 Authorization: {{authToken}}
 Content-Type: application/json
 

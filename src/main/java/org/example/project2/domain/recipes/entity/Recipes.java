@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.global.entity.BaseTimeEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,17 +31,15 @@ public class Recipes extends BaseTimeEntity {
 
     private int viewCount; //조회수
 
-    //JPA가 자동으로 테이블 관리 - DB에 나타나지 않음
     @ElementCollection
     @CollectionTable(name = "recipe_ingredients", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "ingredient")
-    private List<String> ingredients; //재료
+    private List<String> ingredients = new ArrayList<>(); //재료
 
-    //JPA가 자동으로 테이블 관리 - DB에 나타나지 않음
     @ElementCollection
     @CollectionTable(name = "recipe_steps", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "step")
-    private List<String> steps; //조리순서
+    private List<String> steps = new ArrayList<>(); //조리순서
 
     private int time; //조리시간
 
@@ -50,28 +49,41 @@ public class Recipes extends BaseTimeEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
     @Builder
     private Recipes(Member member, String title, String description,
                     List<String> ingredients, String imageUrl, int time, String level, List<String> steps, int viewCount) {
         this.member = member;
         this.title = title;
         this.description = description;
-        this.ingredients = ingredients;
+        this.ingredients = ingredients != null ? new ArrayList<>(ingredients) : new ArrayList<>();
         this.imageUrl = imageUrl;
         this.time = time;
         this.level = level;
-        this.steps = steps;
+        this.steps = steps != null ? new ArrayList<>(steps) : new ArrayList<>();
         this.viewCount = 0;
     }
 
     public void update(String title, String description, List<String> ingredients, String imageUrl, int time, String level, List<String> steps) {
         this.title = title;
         this.description = description;
-        this.ingredients = ingredients;
+
+        // 기존 재료 및 스텝 리스트를 비우고 새 리스트로 업데이트
+        this.ingredients.clear();
+        if (ingredients != null) {
+            this.ingredients.addAll(ingredients);
+        }
+
         this.imageUrl = imageUrl;
         this.time = time;
         this.level = level;
-        this.steps = steps;
+
+        this.steps.clear();
+        if (steps != null) {
+            this.steps.addAll(steps);
+        }
     }
 
     public void updateViewCount() {
