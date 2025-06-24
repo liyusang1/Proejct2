@@ -18,4 +18,8 @@ public interface LikeRepository
 
     @Query("SELECT COUNT(l) FROM Likes l WHERE l.status = true AND l.items.member.id = :memberId")
     int countTotalLikesReceivedByMember(@Param("memberId") Long memberId);
+
+    int countAllByStatusTrue();
+
+    int countAllByMember_IdAndStatusTrue(Long member_id);
 }

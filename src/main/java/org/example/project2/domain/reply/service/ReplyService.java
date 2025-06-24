@@ -5,6 +5,8 @@ import org.example.project2.domain.item.entity.Items;
 import org.example.project2.domain.item.exception.ItemIdIsInvalidException;
 import org.example.project2.domain.item.repository.ItemRepository;
 import org.example.project2.domain.member.entity.Member;
+import org.example.project2.domain.notifications.entity.Notifications;
+import org.example.project2.domain.notifications.repository.NotificationsRepository;
 import org.example.project2.domain.reply.dto.request.PostReplyRequestDto;
 import org.example.project2.domain.reply.dto.response.ReplyResponseDto;
 import org.example.project2.domain.reply.entity.Replies;
@@ -28,6 +30,7 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final ItemRepository itemRepository;
+    private final NotificationsRepository notificationsRepository;
 
     public ResponseDTO<List<ReplyResponseDto>> getAllReplies(long itemId) {
 
@@ -57,6 +60,16 @@ public class ReplyService {
 
         replyRepository.save(postReplyRequestDto.toEntity(member,
                 itemsOptional.get()));
+
+        Long itemId = postReplyRequestDto.itemId();
+        Notifications notification = Notifications.builder()
+                .title("새로운 댓글이 달렸습니다! 💬")
+                .link("item/"+itemId)
+                .content("회원님의 게시물 '"+itemsOptional.get().getName()+"'에 "+member.getMemberBase().getNickname()
+                        +"님의 새로운 댓글이 달렸습니다!")
+                .member(itemsOptional.get().getMember())
+                .build();
+        notificationsRepository.save(notification);
 
         return ResponseDTO.ok();
     }

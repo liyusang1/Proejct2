@@ -6,6 +6,7 @@ import org.example.project2.global.jwt.JwtAuthorizationFilter;
 import org.example.project2.global.util.CustomResponseUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -37,6 +38,7 @@ public class SpringSecurityConfig {
                 .configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
                     configuration.applyPermitDefaultValues();
+                    configuration.setAllowCredentials(true);
                     configuration.addAllowedOriginPattern("");
                     configuration.addAllowedOriginPattern("http://localhost:8081");
                     configuration.setAllowedMethods(
@@ -72,9 +74,14 @@ public class SpringSecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/member/test/jwt")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/s3/upload")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/items/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/free-boards/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/reply/free-board/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/reply/item/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/member/item/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/member/{memberId}")).permitAll()
+                .requestMatchers(HttpMethod.GET, "/recipe", "/recipe/**").permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/follow/follower/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/follow/following/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/restaurants-list")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/restaurants-list/info/{listId:^-?\\d+$}")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/restaurants-list/{listId:^-?\\d+$}/restaurants")).permitAll()

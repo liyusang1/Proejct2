@@ -1,0 +1,31 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test2@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 팔로우
+POST http://localhost:8080/follow/1
+Authorization: {{authToken}}
+Content-Type: application/json
+
+### 팔로워조회
+GET http://localhost:8080/follow/follower/2
+
+### 팔로잉조회
+GET http://localhost:8080/follow/following/1
+
+### 팔로잉인지 조회
+GET http://localhost:8080/follow/is-following/1
+Authorization: {{authToken}}

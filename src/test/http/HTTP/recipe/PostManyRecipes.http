@@ -1,0 +1,331 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test3@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+### 레시피 등록 1
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "김치볶음밥",
+  "description": "매콤하고 맛있는 김치볶음밥 레시피입니다.",
+  "imageUrl": "https://img.cjthemarket.com/images/file/product/833/20240625112013818.jpg?SF=webp&RS=550x550",
+  "ingredients": ["김치", "밥", "참기름", "대파"],
+  "steps": [
+    "김치를 잘게 썬다.",
+    "팬에 기름을 두르고 김치를 볶는다.",
+    "밥을 넣고 김치와 함께 잘 볶는다.",
+    "참기름을 두르고 한 번 더 볶아 마무리한다."
+  ],
+  "time": "20",
+  "level": "하"
+}
+
+
+### 레시피 등록 2
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "불고기",
+  "description": "달콤 짭조름한 한국식 전통 불고기 레시피.",
+  "imageUrl": "http://db.kookje.co.kr/news2000/photo/2021/0611/L20210611.22014003298i1.jpg",
+  "ingredients": ["소고기", "간장", "설탕", "마늘", "참기름"],
+  "steps": [
+    "고기를 얇게 썬다.",
+    "양념을 만든다.",
+    "고기를 양념에 재운다.",
+    "팬에 고기를 볶아 익힌다."
+  ],
+  "time": "30",
+  "level": "중"
+}
+
+### 레시피 등록 3
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "구수한 된장찌개",
+  "description": "깊고 구수한 맛이 일품인 된장찌개 끓이는 법.",
+  "imageUrl": "https://static.wtable.co.kr/image/production/service/recipe/2611/0ecd826c-34d0-409d-96f8-d3dc50aae4f5.jpg?size=800x800",
+  "ingredients": ["된장", "두부", "호박", "감자", "대파"],
+  "steps": [
+    "육수를 끓인다.",
+    "재료를 넣는다.",
+    "된장을 풀어 넣는다.",
+    "끓여서 마무리한다."
+  ],
+  "time": "25",
+  "level": "하"
+}
+
+### 레시피 등록 4
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "맛있는 비빔밥",
+  "description": "다양한 재료를 한 그릇에 담아 비벼 먹는 비빔밥.",
+  "imageUrl": "https://i.namu.wiki/i/vLHY6yfSElqEocKsGRUEtRYLOXJnjoh8MhrUhtHrwR4qZTkrVSJWJn4Qov-w8Rm9qSOeHhL-A36keI-PBW8DVGMic0smjZ2KYTqrcr-8BDr9bTCtMfDqYHFdrR-tkErKawOnbqpak9YXWdPFGGPwjw.jpg",
+  "ingredients": ["밥", "나물", "고추장", "계란", "참기름"],
+  "steps": [
+    "밥을 준비한다.",
+    "나물을 데친다.",
+    "계란 프라이를 한다.",
+    "모든 재료를 담고 고추장과 참기름을 넣어 비빈다."
+  ],
+  "time": "20",
+  "level": "중"
+}
+
+
+### 레시피 등록 5
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "달콤한 잡채",
+  "description": "잔치상에 빠질 수 없는 달콤 쫄깃한 잡채 레시피.",
+  "imageUrl": "https://nofat.kr/column-images/%EC%9E%A1%EC%B1%84-%EC%B9%BC%EB%A1%9C%EB%A6%AC.jpg",
+  "ingredients": ["당면", "시금치", "당근", "간장", "참기름"],
+  "steps": [
+    "당면을 불린다.",
+    "재료를 볶는다.",
+    "당면을 넣고 함께 볶는다.",
+    "간장으로 간을 맞춘다."
+  ],
+  "time": "40",
+  "level": "중"
+}
+
+
+### 레시피 등록 6
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "부드러운 계란찜",
+  "description": "입안에서 사르르 녹는 부드러운 계란찜 만들기.",
+  "imageUrl": "https://img.sbs.co.kr/newimg/news/20240820/201975028_1280.jpg",
+  "ingredients": ["계란", "물", "소금", "파"],
+  "steps": [
+    "계란을 푼다.",
+    "물을 넣고 잘 섞는다.",
+    "찜기에 넣어 쪄낸다.",
+    "파를 넣어 마무리한다."
+  ],
+  "time": "15",
+  "level": "하"
+}
+
+
+### 레시피 등록 7
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "간단한 김밥",
+  "description": "집에서 손쉽게 만드는 간단하고 맛있는 김밥.",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Gimbap_%28pixabay%29.jpg/500px-Gimbap_%28pixabay%29.jpg",
+  "ingredients": ["김", "밥", "단무지", "시금치", "계란"],
+  "steps": [
+    "재료를 준비한다.",
+    "밥을 김 위에 펼친다.",
+    "재료를 올리고 김밥을 만다.",
+    "썰어서 완성한다."
+  ],
+  "time": "25",
+  "level": "중"
+}
+
+
+### 레시피 등록 8
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "매콤한 떡볶이",
+  "description": "스트레스 해소에 최고! 매콤 달콤한 떡볶이.",
+  "imageUrl": "https://i.namu.wiki/i/BwMwflq5umoUuzVlqGuL7bHHr2LgI6Ite6ww1_5Ph_c1BfqPekMMU2tB33h6SF-9RMcTxBbn9gEwnOKGV2FcglMzrMC2-2aX6nUHwImTjdFF4t8mQpoXdNbFdaDy1RnEAyatFv5NL1Ch9iNbTB-cRg.webp",
+  "ingredients": ["떡", "고추장", "설탕", "어묵", "대파"],
+  "steps": [
+    "떡을 데친다.",
+    "양념장을 만든다.",
+    "모든 재료를 넣고 볶는다.",
+    "끓여서 완성한다."
+  ],
+  "time": "20",
+  "level": "하"
+}
+
+
+### 레시피 등록 9
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "부드러운 갈비찜",
+  "description": "온 가족이 좋아하는 부드러운 소갈비찜 레시피.",
+  "imageUrl": "https://static.wtable.co.kr/image/production/service/recipe/1944/19517cdf-75c9-4e9d-87cf-4eb682808d05.jpg?size=800x800",
+  "ingredients": ["갈비", "간장", "설탕", "마늘", "당근"],
+  "steps": [
+    "갈비를 데친다.",
+    "양념에 재운다.",
+    "찜통에 넣고 끓인다.",
+    "익으면 완성한다."
+  ],
+  "time": "120",
+  "level": "상"
+}
+
+
+### 레시피 등록 10
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "얼큰한 김치찌개",
+  "description": "한국인의 소울 푸드! 얼큰하고 깊은 맛의 김치찌개.",
+  "imageUrl": "https://img.bizthenaum.co.kr/data/img/1000000869/ori/1000000869_11.jpg",
+  "ingredients": ["김치", "돼지고기", "두부", "대파", "고춧가루"],
+  "steps": [
+    "김치를 볶는다.",
+    "돼지고기를 넣고 익힌다.",
+    "물과 양념을 넣고 끓인다.",
+    "두부와 대파를 넣어 마무리한다."
+  ],
+  "time": "30",
+  "level": "중"
+}
+
+
+### 레시피 등록 11
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "쫄깃한 칼국수",
+  "description": "쫄깃한 면발과 시원한 육수가 일품인 칼국수 레시피.",
+  "imageUrl": "https://static.wtable.co.kr/image/production/service/recipe/2189/4737ac66-caf0-4df7-a6fc-82409e70d148.jpg?size=800x800",
+  "ingredients": ["칼국수면", "멸치육수", "호박", "감자", "대파"],
+  "steps": [
+    "육수를 끓인다.",
+    "야채를 썬다.",
+    "칼국수면을 넣고 익힌다.",
+    "야채를 넣고 마무리한다."
+  ],
+  "time": "40",
+  "level": "중"
+}
+
+
+### 레시피 등록 12
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "맛있는 부대찌개",
+  "description": "햄, 소시지 듬뿍! 얼큰하고 푸짐한 부대찌개 만들기.",
+  "imageUrl": "https://img.cjthemarket.com/images/file/product/564/20250114102535527.jpg?SF=webp&RS=550x550",
+  "ingredients": ["햄", "소시지", "두부", "김치", "라면사리"],
+  "steps": [
+    "육수를 끓인다.",
+    "햄과 소시지를 넣는다.",
+    "김치와 두부를 넣고 끓인다.",
+    "라면사리를 넣고 익힌다."
+  ],
+  "time": "35",
+  "level": "중"
+}
+
+
+### 레시피 등록 13
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "시원한 콩나물국",
+  "description": "해장국으로 최고! 속까지 시원한 콩나물국 레시피.",
+  "imageUrl": "https://cdn.kormedi.com/wp-content/uploads/2023/02/unnamed-file-27.jpg.webp",
+  "ingredients": ["콩나물", "멸치육수", "대파", "마늘"],
+  "steps": [
+    "육수를 끓인다.",
+    "콩나물을 넣고 익힌다.",
+    "마늘과 대파를 넣고 마무리한다."
+  ],
+  "time": "20",
+  "level": "하"
+}
+
+
+### 레시피 등록 14
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "콘치즈 불닭면",
+  "description": "불닭 개발자의 황금 레시피! 콘치즈 불닭볶음면.",
+  "imageUrl": "https://pbs.twimg.com/media/FOgQSwVaAAsqhZU?format=jpg&name=large",
+  "ingredients": ["라면", "불닭소스", "대파", "계란", "치즈"],
+  "steps": ["콘, 마요네즈, 설탕, 치즈를 섞는다", "면을 삶는다", "소스를 넣고 볶는다", "섞어놓은 콘치즈를 라면 위에 올리고 전자레인지에 30초 돌린다"],
+  "time": "15",
+  "level": "하"
+}
+
+### 레시피 등록 15
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "찹스테이크",
+  "description": "삼시세끼 Light 차승원 찹스테이크 레시피입니다.",
+  "imageUrl": "https://www.omealdang.com/fserver//files/goods/202319/1683513584_860.jpg",
+  "ingredients": ["소고기", "양파", "파프리카", "양송이버섯", "버터", "후추", "마늘", "올리브오일", "케찹", "돈까스소스", "올리고당", "물"],
+  "steps": ["소고기 밑간을 합니다", "야채를 썬다", "소스를 만든다", "소고기를 굽는다", "올리브 오일, 마늘, 버터를 넣는다", "소스를 졸인다"],
+  "time": "20",
+  "level": "하"
+}
+
+### 레시피 등록 16
+POST http://localhost:8080/recipe
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "호텔 간짜파게티",
+  "description": "최현석 셰프의 짜파게티 활용 호텔 간짜파게티 레시피.",
+  "imageUrl": "https://thumb.mt.co.kr/06/2025/03/2025031809243632223_1.jpg/dims/optimize/",
+  "ingredients": ["짜파게티", "양파", "오징어", "다시다", "올리브유", "새우", "물", "설탕"],
+  "steps": ["면을 80%을 익힌다", "야채를 썬다", "다시다 물을 만든다", "양파를 볶는다", "새우, 오징어를 볶는다", "다시다물, 건더기스프, 분말스프, 설탕을 넣고 끓인다", "면을 넣어 볶는다", "올리브유를 넣어 버무린다"],
+  "time": "20",
+  "level": "하"
+}
