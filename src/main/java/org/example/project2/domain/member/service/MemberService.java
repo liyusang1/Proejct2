@@ -11,6 +11,7 @@ import org.example.project2.domain.member.dto.response.SignUpResponseDto;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.domain.member.exception.*;
 import org.example.project2.domain.member.repository.MemberRepository;
+import org.example.project2.domain.notifications.repository.NotificationsRepository;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,6 +30,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final LikeRepository likeRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final NotificationsRepository notificationsRepository;
 
     public SignUpResponseDto signup(SignUpRequestDto signUpRequestDto) {
 
@@ -123,9 +125,13 @@ public class MemberService {
         Member member = memberRepository.findById(principalDetails.getMember().getId())
                 .orElseThrow(UserNotFoundException::new);
 
+        notificationsRepository.existsByMember_IdAndIsReadFalse(member.getId());
+
         return MemberInfoResponseDto.
                 fromEntity(member,
-                        likeRepository.countByMember_IdAndStatusTrue(member.getId()));
+                        likeRepository.countTotalLikesReceivedByMember(member.getId()),
+                        notificationsRepository.existsByMember_IdAndIsReadFalse(member.getId())
+                );
     }
 
     public ResponseDTO<Void> putMemberInfo(PrincipalDetails principalDetails,
@@ -151,7 +157,9 @@ public class MemberService {
         );
 
         return ResponseDTO.okWithData(MemberInfoResponseDto.fromEntity(member,
-                likeRepository.countByMember_IdAndStatusTrue(member.getId())));
+                likeRepository.countTotalLikesReceivedByMember(member.getId()),
+                notificationsRepository.existsByMember_IdAndIsReadFalse(member.getId())
+        ));
     }
 }
 

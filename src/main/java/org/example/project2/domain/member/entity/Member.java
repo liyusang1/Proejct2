@@ -5,11 +5,16 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.project2.domain.follow.entity.Follow;
 import org.example.project2.domain.freeBoards.entity.FreeBoards;
 import org.example.project2.domain.item.entity.Items;
 import org.example.project2.domain.likes.entity.Likes;
+import org.example.project2.domain.notifications.entity.Notifications;
+import org.example.project2.domain.recipes.entity.Bookmark;
 import org.example.project2.domain.recipes.entity.Recipes;
 import org.example.project2.domain.reply.entity.Replies;
+import org.example.project2.domain.reports.entity.Reports;
+import org.example.project2.domain.restaurant_lists.entity.RestaurantLists;
 import org.example.project2.domain.restaurants.entity.Restaurants;
 import org.example.project2.global.entity.BaseTimeEntity;
 
@@ -61,8 +66,22 @@ public class Member extends BaseTimeEntity {
     private List<Recipes> recipes = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Restaurants> restaurants = new ArrayList<>();
+    private List<RestaurantLists> restaurantLists = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reports> reports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notifications> notifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     @Builder
     private Member(String email, String nickname, String password, String authority,

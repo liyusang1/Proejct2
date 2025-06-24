@@ -3,8 +3,7 @@ package org.example.project2.domain.item.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.item.dto.request.PostItemRequestDto;
-import org.example.project2.domain.item.dto.response.ItemDetailResponseDto;
-import org.example.project2.domain.item.dto.response.ItemResponseDto;
+import org.example.project2.domain.item.dto.response.*;
 import org.example.project2.domain.item.service.ItemService;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
@@ -108,6 +107,54 @@ public class ItemsController {
 
         ResponseDTO<List<ItemResponseDto>>
                 response = itemService.getMembersItemList(memberId);
+
+        return ResponseEntity
+                .status(response.getCode())
+                .body(response);
+    }
+
+    /**
+     * 랭킹조회
+     */
+    @GetMapping("/rank")
+    public ResponseEntity<ResponseDTO<List<ItemRankResponseDto>>> getItemRanking() {
+
+        ResponseDTO<List<ItemRankResponseDto>> response = itemService.getItemRanking();
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    /**
+     * 인사이트 조회
+     */
+    @GetMapping("/insight")
+    public ResponseEntity<ResponseDTO<InsightResponseDto>> getInsights() {
+
+        ResponseDTO<InsightResponseDto> response = itemService.getInsights();
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    /**
+     * 인사이트 조회
+     */
+    @GetMapping("/users-insight")
+    public ResponseEntity<ResponseDTO<UsersInsightResponseDto>> getUsersInsights(
+            @AuthenticationPrincipal PrincipalDetails principalDetails
+    ) {
+
+        ResponseDTO<UsersInsightResponseDto> response = itemService.getUsersInsights(principalDetails);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    /**
+     * 유저가 좋아요 누른 아이템 조회
+     */
+    @GetMapping("/member-like/{memberId}")
+    public ResponseEntity<ResponseDTO<List<ItemResponseDto>>> getMembersLikeItemList(
+            @PathVariable long memberId
+    ) {
+
+        ResponseDTO<List<ItemResponseDto>>
+                response = itemService.getMembersLikeItemList(memberId);
 
         return ResponseEntity
                 .status(response.getCode())
