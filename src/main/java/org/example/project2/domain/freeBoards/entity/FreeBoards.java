@@ -36,6 +36,9 @@ public class FreeBoards extends BaseTimeEntity {
     @OneToMany(mappedBy = "freeBoards", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FreeBoardReplies> Replies = new ArrayList<>();
 
+    @OneToMany(mappedBy = "freeBoard", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FreeBoardLike> FreeBoardLikes = new ArrayList<>();
+
     @Builder
     private FreeBoards(String title, String content, String category, String emoji, Member member) {
         this.member = member;

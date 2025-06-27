@@ -41,6 +41,7 @@ public class SpringSecurityConfig {
                     configuration.setAllowCredentials(true);
                     configuration.addAllowedOriginPattern("");
                     configuration.addAllowedOriginPattern("http://localhost:8081");
+                    configuration.addAllowedOriginPattern("http://192.168.230.30:8081");
                     configuration.setAllowedMethods(
                             Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"));
 
