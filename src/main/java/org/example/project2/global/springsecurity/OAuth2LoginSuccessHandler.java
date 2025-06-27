@@ -34,14 +34,17 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         String token = jwtProvider.createToken(principalDetails.getMember());
-        String email = principalDetails.getEmail();
+        Long memberId = principalDetails.getMember().getId();
+
+/*        String email = principalDetails.getEmail();
         String name = principalDetails.getUsername();
 
         //한국어 인코딩 설정
-        String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8.toString());
+        String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8.toString());*/
+        // https://5b26-115-90-99-121.ngrok-free.app
+        // String redirectUrl = "http://192.168.230.30:8081/auth/social?token="+token+"&memberId="+memberId;
 
-        String redirectUrl = "https://tripcometrue.vercel.app/auth/social?token=" + token
-            + "&email=" + email + "&name=" + encodedName;
+        String redirectUrl = "https://3c78-115-90-99-121.ngrok-free.app/auth/social?token="+token+"&memberId="+memberId;
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
 }

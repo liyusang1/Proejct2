@@ -42,6 +42,7 @@ public class SpringSecurityConfig {
                     configuration.addAllowedOriginPattern("");
                     configuration.addAllowedOriginPattern("http://localhost:8081");
                     configuration.addAllowedOriginPattern("http://192.168.230.30:8081");
+                    configuration.addAllowedOriginPattern("https://3c78-115-90-99-121.ngrok-free.app");
                     configuration.setAllowedMethods(
                             Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"));
 
@@ -96,11 +97,11 @@ public class SpringSecurityConfig {
          * OAuth 완료가 되면 엑세스토큰 + 사용자 프로필 정보를 한번에 받음 로그인 성공시 principalOauth2UserService에서 처리 후
          * oAuth2LoginSuccessHandler에서 리디렉트 처리
          */
-       /* http.oauth2Login(oauth2 -> oauth2
+        http.oauth2Login(oauth2 -> oauth2
             .userInfoEndpoint(
                 userInfoEndpoint -> userInfoEndpoint.userService(principalOauth2UserService))
             .successHandler(oAuth2LoginSuccessHandler)
-        );*/
+        );
 
         http.exceptionHandling(exceptionHandling -> {
             exceptionHandling.authenticationEntryPoint(
