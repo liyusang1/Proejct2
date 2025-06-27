@@ -29,11 +29,34 @@ Authorization: {{authToken}}
 Content-Type: application/json
 
 {
-  "title": "김치볶음밥",
-  "description": "매콤한 김치볶음밥",
-  "imageUrl": "url1",
-  "ingredients": ["김치", "밥", "참기름", "대파"],
-  "steps": ["김치를 썬다", "기름에 볶는다", "밥을 넣고 볶는다", "참기름을 두른다"],
+  "title": "환상의 맛, 김치볶음밥 황금",
+  "description": "실패 없는 매콤새콤 김치볶음밥 황금 레시피!",
+  "imageUrl": "https://i.namu.wiki/i/P8SpSYka9WlDGjmTRSvYnyK5afG8jLTEJ8ig4b6Ng2RuPcZORMaWTJVGheh9AUnXJS9cDSMAs_2GiYMMpekSTBd07kLhsq_MHiSv0nKFJRZpGA1cd3jyaYRKLQraoioAUDUS64DHo6IvjWnuajernA.webp",
+  "ingredients": [
+    "잘 익은 김치 1/4포기",
+    "밥 2공기",
+    "돼지고기 또는 스팸 100g",
+    "대파 1/2대",
+    "양파 1/4개",
+    "계란 1개",
+    "식용유 2큰술",
+    "고추장 1큰술",
+    "설탕 1/2큰술",
+    "간장 1/2큰술",
+    "참기름 1큰술",
+    "김가루 약간"
+  ],
+  "steps": [
+    "잘 익은 김치는 송송 썰고, 돼지고기, 대파, 양파는 잘게 다져 준비합니다.",
+    "팬에 식용유를 두르고 대파를 먼저 볶아 파기름을 냅니다.",
+    "향긋한 파향이 올라오면 돼지고기를 넣고 노릇하게 볶아줍니다.",
+    "김치와 양파를 넣고 김치가 투명해질 때까지 충분히 볶습니다.",
+    "고추장, 설탕, 간장을 넣어 양념이 고루 배도록 저어가며 볶아줍니다.",
+    "밥을 넣고 주걱으로 으깨듯이 양념과 잘 섞이도록 볶습니다.",
+    "밥알 하나하나 양념이 스며들게 약 3분간 더 볶아줍니다.",
+    "불을 끄고 참기름을 두른 후 잔열로 가볍게 섞어줍니다.",
+    "그릇에 담고 계란 프라이와 김가루를 올려 완성합니다."
+  ],
   "time": "20",
   "level": "하"
 }
@@ -44,13 +67,36 @@ Authorization: {{authToken}}
 Content-Type: application/json
 
 {
-  "title": "수정된 김치볶음밥",
-  "description": "더 맛있게!",
-  "imageUrl": "url2",
-  "ingredients": ["김치", "밥", "참기름", "계란"],
-  "steps": ["김치를 자른다", "밥이랑 볶는다", "계란을 올린다"],
-  "time": "20",
-  "level": "하"
+  "title": "감칠맛 폭발! 궁중 불고기",
+  "description": "달콤 짭조름한 소고기 특제 양념 불고기!",
+  "imageUrl": "http://db.kookje.co.kr/news2000/photo/2021/0611/L20210611.22014003298i1.jpg",
+  "ingredients": [
+    "소고기 500g",
+    "양파 1/2개",
+    "대파 1대",
+    "새송이버섯 1개",
+    "당근 1/4개",
+    "간장 5큰술",
+    "설탕 2큰술",
+    "다진 마늘 1.5큰술",
+    "참기름 1큰술",
+    "배즙 또는 사과즙 3큰술",
+    "맛술 2큰술",
+    "후추 약간",
+    "통깨 약간"
+  ],
+  "steps": [
+    "소고기는 키친타월로 핏물을 제거하고 먹기 좋은 크기로 썰어줍니다.",
+    "양파, 대파, 새송이버섯, 당근은 채 썰어 준비합니다.",
+    "볼에 간장, 설탕, 다진 마늘, 참기름, 배즙, 맛술, 후추를 넣고 설탕이 녹을 때까지 잘 저어 양념장을 만듭니다.",
+    "준비된 소고기와 채 썰어 놓은 채소를 양념장에 넣고 손으로 조물조물 버무려 30분 이상 냉장고에서 재워둡니다.",
+    "달궈진 팬에 양념된 불고기를 올리고 중불에서 고기가 익을 때까지 볶아줍니다.",
+    "이때 채소에서 수분이 나와 자작해집니다.",
+    "고기가 완전히 익고 양념이 졸아들면 불을 끄고 통깨를 솔솔 뿌려줍니다.",
+    "따뜻한 밥과 함께 곁들여 맛있게 드세요."
+  ],
+  "time": "30",
+  "level": "중"
 }
 
 ### 레시피 삭제
@@ -58,4 +104,12 @@ DELETE http://localhost:8080/recipe/117
 Authorization: {{authToken}}
 Content-Type: application/json
 
+### 내가 쓴 레시피 리스트 조회
+GET http://localhost:8080/recipe/postlist
+Authorization: {{authToken}}
+Content-Type: application/json
 
+### 내가 쓴 레시피 리스트 조회 (페이지네이션 및 정렬 파라미터 포함)
+GET http://localhost:8080/recipe/postlist?page=0&size=6&sort=createdAt,desc
+Authorization: {{authToken}}
+Content-Type: application/json
