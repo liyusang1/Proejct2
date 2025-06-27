@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.domain.member.exception.UserNotFoundException;
 import org.example.project2.domain.recipes.dto.request.RecipeRequestDto;
+import org.example.project2.domain.recipes.dto.response.MyRecipeListResponseDto;
 import org.example.project2.domain.recipes.dto.response.RecipeDetailResponseDto;
 import org.example.project2.domain.recipes.dto.response.RecipeResponseDto;
 import org.example.project2.domain.recipes.entity.Recipes;
@@ -117,5 +118,21 @@ public class RecipesService {
         }
         recipesRepository.delete(recipe);
         return ResponseDTO.ok();
+    }
+
+    //내가 쓴 레시피 조회
+    @Transactional(readOnly = true)
+    public ResponseDTO<MyRecipeListResponseDto> findMyRecipes(PrincipalDetails principalDetails, Pageable pageable) {
+        if (principalDetails == null) {
+            throw new UserNotFoundException();
+        }
+        Member member = principalDetails.getMember();
+
+        Page<Recipes> recipesPage = recipesRepository.findByMember(member, pageable);
+
+        Page<RecipeDetailResponseDto> recipeDetailDtoPage = recipesPage.map(RecipeDetailResponseDto::fromEntity);
+        MyRecipeListResponseDto myRecipes = MyRecipeListResponseDto.fromPage(recipeDetailDtoPage);
+
+        return ResponseDTO.okWithData(myRecipes);
     }
 }
