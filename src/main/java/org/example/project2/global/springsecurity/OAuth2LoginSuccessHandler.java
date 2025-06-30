@@ -35,6 +35,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         String token = jwtProvider.createToken(principalDetails.getMember());
         Long memberId = principalDetails.getMember().getId();
+        String profileImage = principalDetails.getMember().getProfileImage();
 
 /*        String email = principalDetails.getEmail();
         String name = principalDetails.getUsername();
@@ -44,7 +45,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         // https://5b26-115-90-99-121.ngrok-free.app
         // String redirectUrl = "http://192.168.230.30:8081/auth/social?token="+token+"&memberId="+memberId;
 
-        String redirectUrl = "https://3c78-115-90-99-121.ngrok-free.app/auth/social?token="+token+"&memberId="+memberId;
+        String redirectUrl = "https://8d96-115-90-99-121.ngrok-free.app/auth/social?token="+token+"&memberId="+memberId
+                +"&profileImage="+profileImage;
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
 }
