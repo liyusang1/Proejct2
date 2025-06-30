@@ -85,11 +85,14 @@ public class Member extends BaseTimeEntity {
 
     @Builder
     private Member(String email, String nickname, String password, String authority,
-                   String provider) {
+                   String provider, String profileImage) {
         this.memberBase = new MemberBase(email, nickname, password, authority);
         //default image
-        this.profileImage = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        if(provider == null) {
+            this.profileImage = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        }
         this.provider = provider;
+        this.profileImage = profileImage;
     }
 
     public void updateMemberInfo(String profileImage,
