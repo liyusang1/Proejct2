@@ -37,7 +37,7 @@ GET http://localhost:8080/restaurants-list
 Content-Type: application/json
 
 ### 수정할 레스토랑 리스트 조회
-GET http://localhost:8080/restaurants-list/info/1
+GET http://localhost:8080/restaurants-list/info/2
 Authorization: {{authToken}}
 Content-Type: application/json
 
@@ -118,11 +118,11 @@ Content-Type: application/json
 }
 
 ### 등록된 식당 자세히 보기 - 공개
-GET http://localhost:8080/restaurants-list/restaurant/3
+GET http://localhost:8080/restaurants-list/restaurant/1
 Content-Type: application/json
 
 ### 등록된 식당 자세히 보기 - 비공개
-GET http://localhost:8080/restaurants-list/restaurant/4
+GET http://localhost:8080/restaurants-list/restaurant/1
 Authorization: {{authToken}}
 Content-Type: application/json
 
