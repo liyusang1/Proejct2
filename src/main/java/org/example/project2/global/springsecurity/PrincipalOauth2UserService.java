@@ -44,12 +44,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }
 
         Optional<Member> user = memberRepository.findByMemberBaseEmailAndProvider(
-            oauth2Userinfo.getEmail(), oauth2Userinfo.getProvider());
+            oauth2Userinfo.getEmail().replace("GoogleOAuth2",""),
+                oauth2Userinfo.getProvider());
 
         //이미 소셜로그인을 한적이 있는지 없는지
         if (user.isEmpty()) {
             Member newUser = Member.builder()
-                .email(oauth2Userinfo.getEmail())
+                .email(oauth2Userinfo.getEmail().replace("GoogleOAuth2",""))
                 .nickname(oauth2Userinfo.getName())
                 .password("OAuth2")  //Oauth2로 로그인을 해서 패스워드는 의미없음.
                 .authority("ROLE_USER")
