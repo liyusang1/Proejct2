@@ -12,7 +12,9 @@ import org.example.project2.domain.likes.repository.LikeRepository;
 import org.example.project2.domain.member.entity.Member;
 import org.example.project2.domain.member.exception.UserNotFoundException;
 import org.example.project2.domain.member.repository.MemberRepository;
+import org.example.project2.domain.recipes.repository.RecipesRepository;
 import org.example.project2.domain.reply.repository.ReplyRepository;
+import org.example.project2.domain.restaurants.repository.RestaurantsRepository;
 import org.example.project2.global.exception.PermissionDeniedException;
 import org.example.project2.global.springsecurity.PrincipalDetails;
 import org.example.project2.global.util.ResponseDTO;
@@ -33,6 +35,8 @@ public class ItemService {
     private final LikeRepository likeRepository;
     private final MemberRepository memberRepository;
     private final ReplyRepository replyRepository;
+    private final RestaurantsRepository restaurantsRepository;
+    private final RecipesRepository recipesRepository;
 
     public ResponseDTO<Page<ItemResponseDto>> getAllItemList(Pageable pageable, Long userId, String search) {
         Page<Items> itemsPage;
@@ -181,10 +185,8 @@ public class ItemService {
         totalCommentsCount = replyRepository.countAllBy();
         totalMembersCount = memberRepository.countAllBy();
 
-        //TODO 레시피픽 맛집픽 적용 후 적용
-        totalRestaurantPicksCount = 321;
-        totalRecipePicksCount = 666;
-
+        totalRestaurantPicksCount = restaurantsRepository.countAllBy();
+        totalRecipePicksCount = recipesRepository.countAllBy();
 
         InsightResponseDto insightResponseDto = new InsightResponseDto(
                 totalPostsCount, totalLikesCount, totalCommentsCount, totalMembersCount,
@@ -208,9 +210,8 @@ public class ItemService {
         myLikesCount = likeRepository.countAllByMember_IdAndStatusTrue(member.getId());
         myCommentsCount = replyRepository.countAllByMember_Id(member.getId());
 
-        //TODO 레시피픽 맛집픽 적용 후 적용
-        myRestaurantPicksCount = 12;
-        myRecipePicksCount = 4;
+        myRestaurantPicksCount = restaurantsRepository.countAllByRestaurantList_Member_Id(member.getId());
+        myRecipePicksCount = recipesRepository.countAllByMember_Id(member.getId());
 
         UsersInsightResponseDto usersInsightResponseDto = new UsersInsightResponseDto(
                 myPostsCount,

@@ -9,4 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RecipesRepository extends JpaRepository<Recipes, Long> {
     Page<Recipes> findByMember(Member member, Pageable pageable);
+
+    int countAllBy();
+
+    int countAllByMember_Id(Long id);
 }
