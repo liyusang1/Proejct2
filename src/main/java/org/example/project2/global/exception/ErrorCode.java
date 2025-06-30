@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     // Permission
-    PERMISSION_DENIED(HttpStatus.FORBIDDEN, "해당 작업을 수행할 권한이 업습니다."),
+    PERMISSION_DENIED(HttpStatus.FORBIDDEN, "해당 작업을 수행할 권한이 없습니다."),
 
     // S3
     S3_ERROR(HttpStatus.FORBIDDEN, "이미지 업로드 중 오류가 발생했습니다."),
