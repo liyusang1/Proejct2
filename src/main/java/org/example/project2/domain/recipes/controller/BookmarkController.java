@@ -58,7 +58,7 @@ public class BookmarkController {
     }
 
     // 로그인한 사용자의 북마크된 레시피 목록 조회
-    @GetMapping("/mybookmark")
+    @GetMapping
     public ResponseEntity<ResponseDTO<Page<BookmarkResponseDto>>> getMyBookmarks(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {

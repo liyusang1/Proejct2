@@ -4,7 +4,7 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "email": "test2@naver.com",
+  "email": "test1@naver.com",
   "password": 123456
 }
 > {%
@@ -21,7 +21,7 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-  "title": "환상의 맛, 김치볶음밥 황금",
+  "title": "환상의 맛, 김치볶음밥 황금레시피",
   "description": "실패 없는 매콤새콤 김치볶음밥 황금 레시피!",
   "imageUrl": "https://i.namu.wiki/i/P8SpSYka9WlDGjmTRSvYnyK5afG8jLTEJ8ig4b6Ng2RuPcZORMaWTJVGheh9AUnXJS9cDSMAs_2GiYMMpekSTBd07kLhsq_MHiSv0nKFJRZpGA1cd3jyaYRKLQraoioAUDUS64DHo6IvjWnuajernA.webp",
   "ingredients": [
