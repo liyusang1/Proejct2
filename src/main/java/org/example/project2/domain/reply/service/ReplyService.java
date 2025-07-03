@@ -61,12 +61,16 @@ public class ReplyService {
         replyRepository.save(postReplyRequestDto.toEntity(member,
                 itemsOptional.get()));
 
+        if (itemsOptional.get().getMember().getId() == member.getId()) {
+            return ResponseDTO.ok();
+        }
+
         Long itemId = postReplyRequestDto.itemId();
         Notifications notification = Notifications.builder()
                 .title("새로운 댓글이 달렸습니다! 💬")
-                .link("item/"+itemId)
-                .content("회원님의 게시물 '"+itemsOptional.get().getName()+"'에 "+member.getMemberBase().getNickname()
-                        +"님의 새로운 댓글이 달렸습니다!")
+                .link("item/" + itemId)
+                .content("회원님의 게시물 '" + itemsOptional.get().getName() + "'에 " + member.getMemberBase().getNickname()
+                        + "님의 새로운 댓글이 달렸습니다!")
                 .member(itemsOptional.get().getMember())
                 .build();
         notificationsRepository.save(notification);
@@ -83,7 +87,7 @@ public class ReplyService {
             throw new ReplyIdIsInvalidException();
         }
 
-        if(!Objects.equals(member.getId(), repliesOptional.get().getMember().getId())) {
+        if (!Objects.equals(member.getId(), repliesOptional.get().getMember().getId())) {
             throw new PermissionDeniedException();
         }
 
