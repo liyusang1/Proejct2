@@ -55,8 +55,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                 .password("OAuth2")  //Oauth2로 로그인을 해서 패스워드는 의미없음.
                 .authority("ROLE_USER")
                 .provider(provider)
-                    .profileImage(oauth2Userinfo.getProfileImage())
                 .build();
+            newUser.updateProfileImage(oauth2Userinfo.getProfileImage());
             if (provider.equals("kakao")) {
                 newUser.updateProfileImage(oauth2Userinfo.getProfileImage());
             }

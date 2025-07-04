@@ -45,7 +45,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         // https://5b26-115-90-99-121.ngrok-free.app
         // String redirectUrl = "http://192.168.230.30:8081/auth/social?token="+token+"&memberId="+memberId;
 
-        String redirectUrl = "https://8d96-115-90-99-121.ngrok-free.app/auth/social?token="+token+"&memberId="+memberId
+        String redirectUrl = "https://4b32-115-90-99-121.ngrok-free.app/auth/social?token="+token+"&memberId="+memberId
                 +"&profileImage="+profileImage;
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }

@@ -42,7 +42,7 @@ public class SpringSecurityConfig {
                     configuration.addAllowedOriginPattern("");
                     configuration.addAllowedOriginPattern("http://localhost:8081");
                     configuration.addAllowedOriginPattern("http://192.168.230.30:8081");
-                    configuration.addAllowedOriginPattern("https://3c78-115-90-99-121.ngrok-free.app");
+                    configuration.addAllowedOriginPattern("https://4b32-115-90-99-121.ngrok-free.app");
                     configuration.setAllowedMethods(
                             Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"));
 

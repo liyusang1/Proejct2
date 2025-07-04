@@ -14,4 +14,7 @@ spring:
             scope:
               - email
               - profile
-            redirect-uri: "https://8f98-115-90-99-121.ngrok-free.app/login/oauth2/code/google"
+            redirect-uri: "https://4abc-115-90-99-121.ngrok-free.app/login/oauth2/code/google"
+  servlet:
+    multipart:
+      max-file-size: 5MB
