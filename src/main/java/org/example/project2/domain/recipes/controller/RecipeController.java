@@ -2,6 +2,7 @@ package org.example.project2.domain.recipes.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.project2.domain.recipes.dto.request.RecipeRequestDto;
+import org.example.project2.domain.recipes.dto.response.MyRecipeListResponseDto;
 import org.example.project2.domain.recipes.dto.response.RecipeDetailResponseDto;
 import org.example.project2.domain.recipes.dto.response.RecipeResponseDto;
 import org.example.project2.domain.recipes.service.RecipesService;
@@ -25,7 +26,7 @@ public class RecipeController {
     //레시피 리스트 조회
     @GetMapping("")
     public ResponseEntity<ResponseDTO<Page<RecipeResponseDto>>> getRecipeList(
-            @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 9, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         ResponseDTO<Page<RecipeResponseDto>> responses = recipeService.getRecipeList(pageable);
         return ResponseEntity
@@ -76,6 +77,19 @@ public class RecipeController {
                 recipeId,principalDetails);
 
         return ResponseEntity.status(response.getCode())
+                .body(response);
+    }
+
+    //내가 쓴 레시피 조회
+    @GetMapping("/postlist")
+    public ResponseEntity<ResponseDTO<MyRecipeListResponseDto>> findMyRecipes(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @PageableDefault(size = 6, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        ResponseDTO<MyRecipeListResponseDto> response = recipeService.findMyRecipes(principalDetails, pageable);
+
+        return ResponseEntity
+                .status(response.getCode())
                 .body(response);
     }
 }

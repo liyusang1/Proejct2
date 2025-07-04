@@ -58,6 +58,10 @@ public class LikeService {
             likeRepository.save(postLikeRequestDto.toEntity(principalDetails.getMember(), items));
         }
 
+        if (items.getMember().getId() == member.getId()) {
+            return ResponseDTO.ok();
+        }
+
         if(displayNotification){
             Long itemId = postLikeRequestDto.itemId();
             Notifications notification = Notifications.builder()

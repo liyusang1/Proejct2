@@ -8,7 +8,10 @@ public record RestaurantResponseDto(
         String address,
         String description,
         String imageUrl,
-        Long listId
+        Long listId,
+        String memberName,
+        String memberProfileImageUrl,
+        Long memberId
 ) {
     public static RestaurantResponseDto from(Restaurants restaurants) {
         return new RestaurantResponseDto(
@@ -17,7 +20,10 @@ public record RestaurantResponseDto(
                 restaurants.getAddress(),
                 restaurants.getDescription(),
                 restaurants.getImageUrl(),
-                restaurants.getRestaurantLists().getId()
+                restaurants.getRestaurantLists().getId(),
+                restaurants.getRestaurantLists().getMember().getMemberBase().getNickname(),
+                restaurants.getRestaurantLists().getMember().getProfileImage(),
+                restaurants.getRestaurantLists().getMember().getId()
 
         );
     }

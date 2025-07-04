@@ -1,0 +1,1292 @@
+### 로그인
+# @name login_2fa
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test1@naver.com",
+  "password": 123456
+}
+> {%
+    if (response.body && response.body.data) {
+        client.global.set("authToken", response.body.data.token)
+    } else {
+        client.global.set("authToken", "")
+    }
+%}
+
+
+### 레스토랑 리스트 생성 - 1
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "강남역 맛집",
+  "description" : "강남역 주변 추천 맛집 모음",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "제순식당",
+  "description": "제육도 순두부찌개도 맛있다.",
+  "address": "서울특별시 강남구 역삼동 123-45",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npLFYVRJfN5pPxRqifAt8iY6Y7vIlF5k6W1px3P0_UhABQ4pOoooJn_9Fw-gTG1mTII-TwNOULw-rtwBUUtPzGrLgrLYjMLBJOQSQ1C5AIGFji_GjLlHOz2RGkYMyD_en0OOdLN=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "제육볶음",
+      "price": 10000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npD4NbU5DLMAe1d8RHKhZ5W1-O7u8Hv7Pf2c5WG8kxAYIXdickd4Zwq6UHQMGLSPepRngn-cYERRT2i_wuYSIwfeKu79f6wo25ulg0RPyQJN1-T0LMoZ-hfvQIbhpfzCt31lLA75-udKjI=s1360-w1360-h1020-rw",
+      "description": "불향이 엄청난 제육볶음"
+    },
+    {
+      "name": "순두부찌개",
+      "price": 8000,
+      "imageUrl": "https://semie.cooking/image/contents/recipe/ae/uz/zxrrvdmf/IRD/121449914xvwx.jpg",
+      "description": "깊고 진한 순두부찌개"
+    },
+    {
+      "name": "된장찌개",
+      "price": 8000,
+      "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2023/01/04/4b577bb2d8e62cbf4513769a394848461.jpg",
+      "description": "매콤한 김치찌개"
+    },
+    {
+      "name": "고등어구이",
+      "price": 10000,
+      "imageUrl": "https://i.namu.wiki/i/7URwu8QHWS9V4sUvGaBOHW7gL1S1RDIfvE1dYeB2lZsEa53--LqZaJdA7I65us_VzVmP9SnvDKlQ2K037PHt8g.webp",
+      "description": "고소하고 기름진 고등어구이"
+    },
+    {
+      "name": "간장불고기",
+      "price": 10000,
+      "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2021/03/22/8848957e5c06b656228f98dd79e72ea21.jpg",
+      "description": "간장 베이스의 달달한 불고기"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "스시소우카이",
+  "description": "초밥 맛집",
+  "address": "서울특별시 강남구 삼성로 85길 10",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrw8UIExJ70T8_Zvz8bh3szPw0o-S58bTkfxiURlrSDNFFkdSXQ5lpotwvgmQQ_kS3tq6uwLKmMxb3H4QxisZx5ox3BcT4qgsUDEiZIjh9zKSzhkJbi7SUVeWu6nGqSOZ9qsJsF=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "초밥 세트",
+      "price": 25000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr--4AqYTe4eUws37vFZyT0bVSxDawtZkGddZJD2SIfIASxfqNnQdZ1k1UFAMAQ0nKSIK1qWEG3x8f7p90iq9Nv4qWCgAuvEQlM1__dAGHhLRFE0lKVaMPGuBLu4q3SiBZE9ng-Nw=s1360-w1360-h1020-rw",
+      "description": "회와 초밥이 함께 나오는 세트"
+    },
+    {
+      "name": "모듬 사시미",
+      "price": 50000,
+      "imageUrl": "https://ecimg.cafe24img.com/pg1028b53686167074/lishu38483/web/product/medium/20240616/166d5ff8ab03eb71a5f79a648b852688.jpg",
+      "description": "싱싱한 사시미"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "마초쉐프",
+  "description": "스테이크 맛집",
+  "address": "서울특별시 강남구 청담동 12-34",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrvXbB9G0dlTU2rxkmQXECok8x5F59QBNzVehT3VuxRirc2n7FBHnrozFXuZhsyDD0eRPM0s50XZC4PEs8QSxtS8lAySu38HXl3RvMD8MqPaL4BdnW4zDEZOqlsicBnVUSwmA54=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "티본 스테이크",
+      "price": 22000,
+      "imageUrl": "https://media.timeout.com/images/103504187/750/422/image.jpg",
+      "description": "두툼한 티본 스테이크. 가격은 100g당 기준"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "여로집",
+  "description": "해산물 전문 식당",
+  "address": "서울특별시 여의도 34-12",
+  "imageUrl": "https://thingool123.godohosting.com/data/goods/editor/221124/B_144219.png",
+  "detailList": [
+    {
+      "name": "오징어 볶음",
+      "price": 12000,
+      "imageUrl": "https://i.ytimg.com/vi/YOpKQzfQAhg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAcMQWv6j4OqzWZdFbrMZjV-IDu1Q",
+      "description": "매운 오징어 볶음"
+    }
+  ]
+}
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "로쏘 1924",
+  "description": "피자 전문점",
+  "address": "서울특별시 종로구 신문로 1가 2-3",
+  "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/24/d5/c4/caption.jpg?w=700&h=-1&s=1",
+  "detailList": [
+    {
+      "name": "마르게리타 피자",
+      "price": 17000,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/960px-Eq_it-na_pizza-margherita_sep2005_sml.jpg",
+      "description": "신선한 토마토와 모짜렐라"
+    },
+    {
+      "name": "페퍼로니 피자",
+      "price": 18000,
+      "imageUrl": "https://gopizza.kr/images/menu/detail/large/large7x2.webp",
+      "description": "페퍼로니가 왕창 들어간 피자"
+    }
+    ]
+}
+
+### 레스토랑 리스트 생성 - 2
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "홍대 숨은 맛집",
+  "description" : "홍대에서만 찾을 수 있는 맛집 리스트",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 2
+POST http://localhost:8080/restaurants-list/2/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "오레노카츠",
+  "description": "돈까스 맛집",
+  "address": "서울특별시 마포구 홍대입구 10-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no48bX2Dsa8tTopBs578MT0uDjOGHlDKZ55PA9aDN12uB6sogeRuYOZ30YF8lTOnkUSPI_iDoyBPrbwDk-mqGfTGpilbENTsz7BFaIW0kxqvmzNvDUsvEnBgUpk5Eam5eh2QxXw=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "돈까스",
+      "price": 16000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqOWPsAnzfMnspYB02lpeCcsETpdKI9Tkl_7BsdCsemSxXAVhV-YzAywVFfT78GuO6h8AdHhpE1kxtDoB95haiPtadb2sVXJ-_3ocfjrIISJhBhFOHt_XXqxGOv4BXrXPYDUaxP=s1360-w1360-h1020-rw",
+      "description": "훌륭한 바삭한 돈까스"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 3
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "이태원 맛집",
+  "description" : "이태원의 유명한 맛집",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 3
+POST http://localhost:8080/restaurants-list/3/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "칸다소바",
+  "description": "아부라 소바가 맛있는 곳",
+  "address": "서울특별시 용산구 이태원 1-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNf7H5P50O4UGv2-sl6Va47pz_5FYCcoEV2fHPnYWiEglMNaDgFPzy0XIJU26EDnBdpX_FZG5nLgHfN-7reZatp2MTHJuF5tsu1ioLdH6S0S4oAHUbXZefP9YTCRY2U5IfiUJ1=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "소바",
+      "price": 13000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrf9-4J2pFQSxTGybnQNFXDQIXI8vAcEVTHnsiopSb4cQKkFUtI6PabWjUzDIKMWyoW_R47chVLkLqEe4KZdBndO262cM67BDv-4-3A8W6ih2GpYfcpkaZk2D-XLu9x9Ig1eFrd=s1360-w1360-h1020-rw",
+      "description": "부드러운 소바"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 4
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 베스트 디저트",
+  "description" : "서울에서 먹을 수 있는 최고의 디저트 맛집들",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 4
+POST http://localhost:8080/restaurants-list/4/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "디저트 카페",
+  "description": "달콤한 디저트를 제공하는 카페",
+  "address": "서울특별시 강남구 신사동 8-1",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq0fAACW0cN8Kli3eRW3Z14sWr2F-k-hke4FuSgcuyR3q_ATLfDoLM4-s2ZFBMXD2_ghRUm_JUAmRHsHyhurKUgJRrGAo86gqXN4v8XdtcbXrZ6h7gQfyGnQSTDxU-fvxjAhpod=w129-h130-n-k-no",
+  "detailList": [
+    {
+      "name": "티라미수",
+      "price": 8000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nozYhhvAcEt85TeWPq0pU-nOhyh4UmS56GjlfA3zNAQ2XkQE_-SbAyl_xyVGT9rKe4xmQx5QeLLAs_Ig4S0o0p4QPrOQIv71adYIXTAPV0Wh25F78uR9iVRCpLoyEZC013rC7lH=s1360-w1360-h1020-rw",
+      "description": "부드러운 티라미수"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 5
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "부산 해산물 맛집",
+  "description" : "부산의 신선한 해산물을 제공하는 맛집 리스트",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 5
+POST http://localhost:8080/restaurants-list/5/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "해물상회",
+  "description": "신선한 해산물을 제공하는 레스토랑",
+  "address": "부산광역시 해운대구 15-6",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqU0V6En-wuhi-EIxIUK4jquWUSmQdF6OZQAhvRrBPDJcUcZwVfwqNYgskHryeJHrwlWe8-_ysjH3Fb-rI5xBtCZjOuYmU4YYwLVE44UJAcUsAoJH4zKsJxcsK2pZgFFpwVHaioYg=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "새우튀김",
+      "price": 10000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npRJ0Pk0d7Fqa1WCttV-LngQKjICkMOaysDTDBN8c8TMDv75ktnQrfozUB605lPU3Jb43k3vHgFVYdEBPySNHdyoiWS_S1LLDXLKSkLq0dy6volIYpieBmf0U04FiaWuHTp-CQa=s1360-w1360-h1020-rw",
+      "description": "바삭한 새우튀김"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 6
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 베스트 커피숍",
+  "description" : "서울에서 최고의 커피를 제공하는 커피숍",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 6
+POST http://localhost:8080/restaurants-list/6/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "커피하우스",
+  "description": "서울에서 유명한 커피숍",
+  "address": "서울특별시 종로구 1-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npSXJ3NCWh198HTThPC32_gRT_qk6jZLBzKuM5Z9bMHq-HMA-CEGMrxA5qp5zUdOa5483gy1vDFq5IjeEO11MUd8KMrcvBn8QWZV_73sxibNrc9FVdL5XdTGNL0Kw8HF17Nl5uu=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "크림라떼",
+      "price": 6000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no7EliKGRzPw_kRKFj1813ludVgCl7DYQlCK6yctQk5tnq2UDePRXCWFfvhQ6PF6GxzUM6n6ae08-xBtIbBsRA9KDUE-QBvuZFeZLvT5-smKI6HWC82Lplu7oyLXiefC74Fv34D=s1360-w1360-h1020-rw",
+      "description": "바디감 훌륭하고 크림때문에 목넘김이 매우 부드럽다"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 7
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집 투어",
+  "description" : "서울 전역에서 맛볼 수 있는 맛집 리스트",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 7
+POST http://localhost:8080/restaurants-list/7/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "모던식당",
+  "description": "모던한 분위기의 식당",
+  "address": "서울특별시 강남구 30-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqzKaGok0E0XSq35dvAKLqm7C3D3MMtabhjxDfyL73vpduU-3hp13i2JNO2SI4IqpiUc0txPcuvXH6uUbe_Lp0IW1qQ9ljW3rx8dqupxU2sANWZiPod3amTYMqR_kBZLReS8vz3-g=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "한우 스테이크",
+      "price": 35000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nreCKv4J6k-nQ98A0GLqJH3pWKRMxKmHDXA9hqxl2yQbUjSm-6YpKM1Q-UpRy8fglvVY5x3FgFFLdzZvsRf9LCv1CieCgDntPrjNUFl0VNO8Uybv92qxlaFj4poWrH-4d_bsnbT=s1360-w1360-h1020-rw",
+      "description": "풍미 깊은 한우 스테이크"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 8
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 명동 맛집",
+  "description" : "명동에서 맛볼 수 있는 최고의 맛집들",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 8
+POST http://localhost:8080/restaurants-list/8/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "욘카츠",
+  "description": "부드럽고 맛있는 돈까스를 제공하는 집",
+  "address": "서울특별시 중구 명동 12-1",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npsKnPbWDZQYmMBSg_WzRA4f76mL2LLXx_ioiqwX2LPn7STwRHiHVLS5qf0AbZ5SnUCH0wqgvMi-PJfwYEBoCuPOAbCVIEEP-twhQFHQzWjBrFaKt-qHB4ZlOdk-b4d4kP9mQU=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "돈까스",
+      "price": 15000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npwp-mAumKbR3QUInfItiQ0gcVL2h0SpK61ofp_18XWfuiD2_8WguSApFDqCD7x7PLBZuT9iwqauFi1RahAYGPu3csxOc6yv6Fm_GfLxhg9RcG31FsC5jFFV8QnK-OSRuvNf-rZXg=s1360-w1360-h1020-rw",
+      "description": "부드러운 안심을 사용한 바삭한 돈까스"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 9
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집 24시",
+  "description" : "서울에서 24시간 영업하는 맛집들",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 9
+POST http://localhost:8080/restaurants-list/9/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "봉할매 김치찌개",
+  "description": "24시간 운영되는 맛집",
+  "address": "서울특별시 강남구 50-7",
+  "imageUrl": "https://lh3.googleusercontent.com/p/AF1QipMVoesWy4r_gDfLWK0-f05mUZf0CUI7TIZpeDDz=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "김치찌개",
+      "price": 7000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noJm8UR7uh4o57u0P2GqlX1WdffcEH-ReZGxnzb0NjGUAj4u8C9dopjKa6h5aDxbAD_ydw9fQ9f65xYscSmVkS0qlFYDP3JNlDJUgkyzXF7VK6dcP5wgdm2ZEdFcxg-eeZ1tF02=s1360-w1360-h1020-rw",
+      "description": "얼큰하고 맛있는 김치찌개"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 10
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집",
+  "description" : "서울에서 오믈렛을 맛있게 먹을 수 있는 곳들",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 10
+POST http://localhost:8080/restaurants-list/10/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "마이란",
+  "description": "오믈렛 전문점",
+  "address": "서울특별시 서초구 23-5",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqesSguHpAkYQt0urmlguL2GaDSYA-ckQL67_S0zGQHxTWWjnN-hwmXFGG1hxnuJZwR2UXcLXi6O6HLYEhmChtDku0LLsu5up_U1ZmDvWfeuvQsARgtuHw0hy0OT3RhD_0SXX2u7Q=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "오믈렛",
+      "price": 12000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq1BeWXJtuhHHQ8iucK3kMD-hkJWfkMKlM28mSggJGe3CCX8bbooVKu7UBjo3kKg8lyLK1ptPnbmw_nN1p6iF7UFs_sJ5VfGZf2rDYn8M675N1iclERn4nVv5LksTIlVtpoPiXNPg=s1360-w1360-h1020-rw",
+      "description": "부드러운 오믈렛"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 1
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "강남역 맛집",
+  "description" : "강남역 주변 추천 맛집 모음",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "제순식당",
+  "description": "제육도 순두부찌개도 맛있다.",
+  "address": "서울특별시 강남구 역삼동 123-45",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npLFYVRJfN5pPxRqifAt8iY6Y7vIlF5k6W1px3P0_UhABQ4pOoooJn_9Fw-gTG1mTII-TwNOULw-rtwBUUtPzGrLgrLYjMLBJOQSQ1C5AIGFji_GjLlHOz2RGkYMyD_en0OOdLN=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "제육볶음",
+      "price": 10000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npD4NbU5DLMAe1d8RHKhZ5W1-O7u8Hv7Pf2c5WG8kxAYIXdickd4Zwq6UHQMGLSPepRngn-cYERRT2i_wuYSIwfeKu79f6wo25ulg0RPyQJN1-T0LMoZ-hfvQIbhpfzCt31lLA75-udKjI=s1360-w1360-h1020-rw",
+      "description": "불향이 엄청난 제육볶음"
+    },
+    {
+      "name": "순두부찌개",
+      "price": 8000,
+      "imageUrl": "https://semie.cooking/image/contents/recipe/ae/uz/zxrrvdmf/IRD/121449914xvwx.jpg",
+      "description": "깊고 진한 순두부찌개"
+    },
+    {
+      "name": "된장찌개",
+      "price": 8000,
+      "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2023/01/04/4b577bb2d8e62cbf4513769a394848461.jpg",
+      "description": "매콤한 김치찌개"
+    },
+    {
+      "name": "고등어구이",
+      "price": 10000,
+      "imageUrl": "https://i.namu.wiki/i/7URwu8QHWS9V4sUvGaBOHW7gL1S1RDIfvE1dYeB2lZsEa53--LqZaJdA7I65us_VzVmP9SnvDKlQ2K037PHt8g.webp",
+      "description": "고소하고 기름진 고등어구이"
+    },
+    {
+      "name": "간장불고기",
+      "price": 10000,
+      "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2021/03/22/8848957e5c06b656228f98dd79e72ea21.jpg",
+      "description": "간장 베이스의 달달한 불고기"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "스시소우카이",
+  "description": "초밥 맛집",
+  "address": "서울특별시 강남구 삼성로 85길 10",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrw8UIExJ70T8_Zvz8bh3szPw0o-S58bTkfxiURlrSDNFFkdSXQ5lpotwvgmQQ_kS3tq6uwLKmMxb3H4QxisZx5ox3BcT4qgsUDEiZIjh9zKSzhkJbi7SUVeWu6nGqSOZ9qsJsF=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "초밥 세트",
+      "price": 25000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr--4AqYTe4eUws37vFZyT0bVSxDawtZkGddZJD2SIfIASxfqNnQdZ1k1UFAMAQ0nKSIK1qWEG3x8f7p90iq9Nv4qWCgAuvEQlM1__dAGHhLRFE0lKVaMPGuBLu4q3SiBZE9ng-Nw=s1360-w1360-h1020-rw",
+      "description": "회와 초밥이 함께 나오는 세트"
+    },
+    {
+      "name": "모듬 사시미",
+      "price": 50000,
+      "imageUrl": "https://ecimg.cafe24img.com/pg1028b53686167074/lishu38483/web/product/medium/20240616/166d5ff8ab03eb71a5f79a648b852688.jpg",
+      "description": "싱싱한 사시미"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "마초쉐프",
+  "description": "스테이크 맛집",
+  "address": "서울특별시 강남구 청담동 12-34",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrvXbB9G0dlTU2rxkmQXECok8x5F59QBNzVehT3VuxRirc2n7FBHnrozFXuZhsyDD0eRPM0s50XZC4PEs8QSxtS8lAySu38HXl3RvMD8MqPaL4BdnW4zDEZOqlsicBnVUSwmA54=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "티본 스테이크",
+      "price": 22000,
+      "imageUrl": "https://media.timeout.com/images/103504187/750/422/image.jpg",
+      "description": "두툼한 티본 스테이크. 가격은 100g당 기준"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "여로집",
+  "description": "해산물 전문 식당",
+  "address": "서울특별시 여의도 34-12",
+  "imageUrl": "https://thingool123.godohosting.com/data/goods/editor/221124/B_144219.png",
+  "detailList": [
+    {
+      "name": "오징어 볶음",
+      "price": 12000,
+      "imageUrl": "https://i.ytimg.com/vi/YOpKQzfQAhg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAcMQWv6j4OqzWZdFbrMZjV-IDu1Q",
+      "description": "매운 오징어 볶음"
+    }
+  ]
+}
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "로쏘 1924",
+  "description": "피자 전문점",
+  "address": "서울특별시 종로구 신문로 1가 2-3",
+  "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/24/d5/c4/caption.jpg?w=700&h=-1&s=1",
+  "detailList": [
+    {
+      "name": "마르게리타 피자",
+      "price": 17000,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/960px-Eq_it-na_pizza-margherita_sep2005_sml.jpg",
+      "description": "신선한 토마토와 모짜렐라"
+    },
+    {
+      "name": "페퍼로니 피자",
+      "price": 18000,
+      "imageUrl": "https://gopizza.kr/images/menu/detail/large/large7x2.webp",
+      "description": "페퍼로니가 왕창 들어간 피자"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 12
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "홍대 숨은 맛집",
+  "description" : "홍대에서만 찾을 수 있는 맛집 리스트",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 12
+POST http://localhost:8080/restaurants-list/12/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "오레노카츠",
+  "description": "돈까스 맛집",
+  "address": "서울특별시 마포구 홍대입구 10-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no48bX2Dsa8tTopBs578MT0uDjOGHlDKZ55PA9aDN12uB6sogeRuYOZ30YF8lTOnkUSPI_iDoyBPrbwDk-mqGfTGpilbENTsz7BFaIW0kxqvmzNvDUsvEnBgUpk5Eam5eh2QxXw=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "돈까스",
+      "price": 16000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqOWPsAnzfMnspYB02lpeCcsETpdKI9Tkl_7BsdCsemSxXAVhV-YzAywVFfT78GuO6h8AdHhpE1kxtDoB95haiPtadb2sVXJ-_3ocfjrIISJhBhFOHt_XXqxGOv4BXrXPYDUaxP=s1360-w1360-h1020-rw",
+      "description": "훌륭한 바삭한 돈까스"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 13
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "이태원 맛집",
+  "description" : "이태원 주변 추천 맛집 모음",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 13
+POST http://localhost:8080/restaurants-list/13/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "칸다소바",
+  "description": "아부라 소바가 맛있는 곳",
+  "address": "서울특별시 용산구 이태원 1-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNf7H5P50O4UGv2-sl6Va47pz_5FYCcoEV2fHPnYWiEglMNaDgFPzy0XIJU26EDnBdpX_FZG5nLgHfN-7reZatp2MTHJuF5tsu1ioLdH6S0S4oAHUbXZefP9YTCRY2U5IfiUJ1=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "소바",
+      "price": 13000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrf9-4J2pFQSxTGybnQNFXDQIXI8vAcEVTHnsiopSb4cQKkFUtI6PabWjUzDIKMWyoW_R47chVLkLqEe4KZdBndO262cM67BDv-4-3A8W6ih2GpYfcpkaZk2D-XLu9x9Ig1eFrd=s1360-w1360-h1020-rw",
+      "description": "부드러운 소바"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 14
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 베스트 디저트",
+  "description" : "서울에서 먹을 수 있는 최고의 디저트 맛집들",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 14
+POST http://localhost:8080/restaurants-list/14/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "디저트 카페",
+  "description": "달콤한 디저트를 제공하는 카페",
+  "address": "서울특별시 강남구 신사동 8-1",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq0fAACW0cN8Kli3eRW3Z14sWr2F-k-hke4FuSgcuyR3q_ATLfDoLM4-s2ZFBMXD2_ghRUm_JUAmRHsHyhurKUgJRrGAo86gqXN4v8XdtcbXrZ6h7gQfyGnQSTDxU-fvxjAhpod=w129-h130-n-k-no",
+  "detailList": [
+    {
+      "name": "티라미수",
+      "price": 8000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nozYhhvAcEt85TeWPq0pU-nOhyh4UmS56GjlfA3zNAQ2XkQE_-SbAyl_xyVGT9rKe4xmQx5QeLLAs_Ig4S0o0p4QPrOQIv71adYIXTAPV0Wh25F78uR9iVRCpLoyEZC013rC7lH=s1360-w1360-h1020-rw",
+      "description": "부드러운 티라미수"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 15
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "부산 해산물 맛집",
+  "description" : "부산의 신선한 해산물을 제공하는 맛집 리스트",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 15
+POST http://localhost:8080/restaurants-list/15/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "해물상회",
+  "description": "신선한 해산물을 제공하는 레스토랑",
+  "address": "부산광역시 해운대구 15-6",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqU0V6En-wuhi-EIxIUK4jquWUSmQdF6OZQAhvRrBPDJcUcZwVfwqNYgskHryeJHrwlWe8-_ysjH3Fb-rI5xBtCZjOuYmU4YYwLVE44UJAcUsAoJH4zKsJxcsK2pZgFFpwVHaioYg=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "새우튀김",
+      "price": 10000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npRJ0Pk0d7Fqa1WCttV-LngQKjICkMOaysDTDBN8c8TMDv75ktnQrfozUB605lPU3Jb43k3vHgFVYdEBPySNHdyoiWS_S1LLDXLKSkLq0dy6volIYpieBmf0U04FiaWuHTp-CQa=s1360-w1360-h1020-rw",
+      "description": "바삭한 새우튀김"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 16
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 베스트 커피숍",
+  "description" : "서울에서 최고의 커피를 제공하는 커피숍",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 16
+POST http://localhost:8080/restaurants-list/16/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "커피하우스",
+  "description": "서울에서 유명한 커피숍",
+  "address": "서울특별시 종로구 1-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npSXJ3NCWh198HTThPC32_gRT_qk6jZLBzKuM5Z9bMHq-HMA-CEGMrxA5qp5zUdOa5483gy1vDFq5IjeEO11MUd8KMrcvBn8QWZV_73sxibNrc9FVdL5XdTGNL0Kw8HF17Nl5uu=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "크림라떼",
+      "price": 6000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no7EliKGRzPw_kRKFj1813ludVgCl7DYQlCK6yctQk5tnq2UDePRXCWFfvhQ6PF6GxzUM6n6ae08-xBtIbBsRA9KDUE-QBvuZFeZLvT5-smKI6HWC82Lplu7oyLXiefC74Fv34D=s1360-w1360-h1020-rw",
+      "description": "바디감 훌륭하고 크림때문에 목넘김이 매우 부드럽다"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 17
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집 투어",
+  "description" : "서울 전역에서 맛볼 수 있는 맛집 리스트",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 17
+POST http://localhost:8080/restaurants-list/17/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "모던식당",
+  "description": "모던한 분위기의 식당",
+  "address": "서울특별시 강남구 30-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqzKaGok0E0XSq35dvAKLqm7C3D3MMtabhjxDfyL73vpduU-3hp13i2JNO2SI4IqpiUc0txPcuvXH6uUbe_Lp0IW1qQ9ljW3rx8dqupxU2sANWZiPod3amTYMqR_kBZLReS8vz3-g=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "한우 스테이크",
+      "price": 35000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nreCKv4J6k-nQ98A0GLqJH3pWKRMxKmHDXA9hqxl2yQbUjSm-6YpKM1Q-UpRy8fglvVY5x3FgFFLdzZvsRf9LCv1CieCgDntPrjNUFl0VNO8Uybv92qxlaFj4poWrH-4d_bsnbT=s1360-w1360-h1020-rw",
+      "description": "풍미 깊은 한우 스테이크"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 18
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 명동 맛집",
+  "description" : "명동에서 맛볼 수 있는 최고의 맛집들",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 18
+POST http://localhost:8080/restaurants-list/18/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "욘카츠",
+  "description": "부드럽고 맛있는 돈까스를 제공하는 집",
+  "address": "서울특별시 중구 명동 12-1",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npsKnPbWDZQYmMBSg_WzRA4f76mL2LLXx_ioiqwX2LPn7STwRHiHVLS5qf0AbZ5SnUCH0wqgvMi-PJfwYEBoCuPOAbCVIEEP-twhQFHQzWjBrFaKt-qHB4ZlOdk-b4d4kP9mQU=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "돈까스",
+      "price": 15000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npwp-mAumKbR3QUInfItiQ0gcVL2h0SpK61ofp_18XWfuiD2_8WguSApFDqCD7x7PLBZuT9iwqauFi1RahAYGPu3csxOc6yv6Fm_GfLxhg9RcG31FsC5jFFV8QnK-OSRuvNf-rZXg=s1360-w1360-h1020-rw",
+      "description": "부드러운 안심을 사용한 바삭한 돈까스"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 19
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집 24시",
+  "description" : "서울에서 24시간 영업하는 맛집들",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 19
+POST http://localhost:8080/restaurants-list/19/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "봉할매 김치찌개",
+  "description": "24시간 운영되는 맛집",
+  "address": "서울특별시 강남구 50-7",
+  "imageUrl": "https://lh3.googleusercontent.com/p/AF1QipMVoesWy4r_gDfLWK0-f05mUZf0CUI7TIZpeDDz=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "김치찌개",
+      "price": 7000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noJm8UR7uh4o57u0P2GqlX1WdffcEH-ReZGxnzb0NjGUAj4u8C9dopjKa6h5aDxbAD_ydw9fQ9f65xYscSmVkS0qlFYDP3JNlDJUgkyzXF7VK6dcP5wgdm2ZEdFcxg-eeZ1tF02=s1360-w1360-h1020-rw",
+      "description": "얼큰하고 맛있는 김치찌개"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 20
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집",
+  "description" : "서울에서 오믈렛을 맛있게 먹을 수 있는 곳들",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 20
+POST http://localhost:8080/restaurants-list/20/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "마이란",
+  "description": "오믈렛 전문점",
+  "address": "서울특별시 서초구 23-5",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqesSguHpAkYQt0urmlguL2GaDSYA-ckQL67_S0zGQHxTWWjnN-hwmXFGG1hxnuJZwR2UXcLXi6O6HLYEhmChtDku0LLsu5up_U1ZmDvWfeuvQsARgtuHw0hy0OT3RhD_0SXX2u7Q=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "오믈렛",
+      "price": 12000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq1BeWXJtuhHHQ8iucK3kMD-hkJWfkMKlM28mSggJGe3CCX8bbooVKu7UBjo3kKg8lyLK1ptPnbmw_nN1p6iF7UFs_sJ5VfGZf2rDYn8M675N1iclERn4nVv5LksTIlVtpoPiXNPg=s1360-w1360-h1020-rw",
+      "description": "부드러운 오믈렛"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 1
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "강남역 맛집",
+  "description" : "강남역 주변 추천 맛집 모음",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "제순식당",
+  "description": "제육도 순두부찌개도 맛있다.",
+  "address": "서울특별시 강남구 역삼동 123-45",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npLFYVRJfN5pPxRqifAt8iY6Y7vIlF5k6W1px3P0_UhABQ4pOoooJn_9Fw-gTG1mTII-TwNOULw-rtwBUUtPzGrLgrLYjMLBJOQSQ1C5AIGFji_GjLlHOz2RGkYMyD_en0OOdLN=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "제육볶음",
+      "price": 10000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npD4NbU5DLMAe1d8RHKhZ5W1-O7u8Hv7Pf2c5WG8kxAYIXdickd4Zwq6UHQMGLSPepRngn-cYERRT2i_wuYSIwfeKu79f6wo25ulg0RPyQJN1-T0LMoZ-hfvQIbhpfzCt31lLA75-udKjI=s1360-w1360-h1020-rw",
+      "description": "불향이 엄청난 제육볶음"
+    },
+    {
+      "name": "순두부찌개",
+      "price": 8000,
+      "imageUrl": "https://semie.cooking/image/contents/recipe/ae/uz/zxrrvdmf/IRD/121449914xvwx.jpg",
+      "description": "깊고 진한 순두부찌개"
+    },
+    {
+      "name": "된장찌개",
+      "price": 8000,
+      "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2023/01/04/4b577bb2d8e62cbf4513769a394848461.jpg",
+      "description": "매콤한 김치찌개"
+    },
+    {
+      "name": "고등어구이",
+      "price": 10000,
+      "imageUrl": "https://i.namu.wiki/i/7URwu8QHWS9V4sUvGaBOHW7gL1S1RDIfvE1dYeB2lZsEa53--LqZaJdA7I65us_VzVmP9SnvDKlQ2K037PHt8g.webp",
+      "description": "고소하고 기름진 고등어구이"
+    },
+    {
+      "name": "간장불고기",
+      "price": 10000,
+      "imageUrl": "https://recipe1.ezmember.co.kr/cache/recipe/2021/03/22/8848957e5c06b656228f98dd79e72ea21.jpg",
+      "description": "간장 베이스의 달달한 불고기"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "스시소우카이",
+  "description": "초밥 맛집",
+  "address": "서울특별시 강남구 삼성로 85길 10",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrw8UIExJ70T8_Zvz8bh3szPw0o-S58bTkfxiURlrSDNFFkdSXQ5lpotwvgmQQ_kS3tq6uwLKmMxb3H4QxisZx5ox3BcT4qgsUDEiZIjh9zKSzhkJbi7SUVeWu6nGqSOZ9qsJsF=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "초밥 세트",
+      "price": 25000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr--4AqYTe4eUws37vFZyT0bVSxDawtZkGddZJD2SIfIASxfqNnQdZ1k1UFAMAQ0nKSIK1qWEG3x8f7p90iq9Nv4qWCgAuvEQlM1__dAGHhLRFE0lKVaMPGuBLu4q3SiBZE9ng-Nw=s1360-w1360-h1020-rw",
+      "description": "회와 초밥이 함께 나오는 세트"
+    },
+    {
+      "name": "모듬 사시미",
+      "price": 50000,
+      "imageUrl": "https://ecimg.cafe24img.com/pg1028b53686167074/lishu38483/web/product/medium/20240616/166d5ff8ab03eb71a5f79a648b852688.jpg",
+      "description": "싱싱한 사시미"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "마초쉐프",
+  "description": "스테이크 맛집",
+  "address": "서울특별시 강남구 청담동 12-34",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrvXbB9G0dlTU2rxkmQXECok8x5F59QBNzVehT3VuxRirc2n7FBHnrozFXuZhsyDD0eRPM0s50XZC4PEs8QSxtS8lAySu38HXl3RvMD8MqPaL4BdnW4zDEZOqlsicBnVUSwmA54=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "티본 스테이크",
+      "price": 22000,
+      "imageUrl": "https://media.timeout.com/images/103504187/750/422/image.jpg",
+      "description": "두툼한 티본 스테이크. 가격은 100g당 기준"
+    }
+  ]
+}
+
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "여로집",
+  "description": "해산물 전문 식당",
+  "address": "서울특별시 여의도 34-12",
+  "imageUrl": "https://thingool123.godohosting.com/data/goods/editor/221124/B_144219.png",
+  "detailList": [
+    {
+      "name": "오징어 볶음",
+      "price": 12000,
+      "imageUrl": "https://i.ytimg.com/vi/YOpKQzfQAhg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAcMQWv6j4OqzWZdFbrMZjV-IDu1Q",
+      "description": "매운 오징어 볶음"
+    }
+  ]
+}
+### 레스토랑 리스트에 식당 등록 - 1
+POST http://localhost:8080/restaurants-list/1/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "로쏘 1924",
+  "description": "피자 전문점",
+  "address": "서울특별시 종로구 신문로 1가 2-3",
+  "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/24/d5/c4/caption.jpg?w=700&h=-1&s=1",
+  "detailList": [
+    {
+      "name": "마르게리타 피자",
+      "price": 17000,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/960px-Eq_it-na_pizza-margherita_sep2005_sml.jpg",
+      "description": "신선한 토마토와 모짜렐라"
+    },
+    {
+      "name": "페퍼로니 피자",
+      "price": 18000,
+      "imageUrl": "https://gopizza.kr/images/menu/detail/large/large7x2.webp",
+      "description": "페퍼로니가 왕창 들어간 피자"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 22
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "홍대 숨은 맛집",
+  "description" : "홍대에서만 찾을 수 있는 맛집 리스트",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 22
+POST http://localhost:8080/restaurants-list/22/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "오레노카츠",
+  "description": "돈까스 맛집",
+  "address": "서울특별시 마포구 홍대입구 10-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no48bX2Dsa8tTopBs578MT0uDjOGHlDKZ55PA9aDN12uB6sogeRuYOZ30YF8lTOnkUSPI_iDoyBPrbwDk-mqGfTGpilbENTsz7BFaIW0kxqvmzNvDUsvEnBgUpk5Eam5eh2QxXw=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "돈까스",
+      "price": 16000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqOWPsAnzfMnspYB02lpeCcsETpdKI9Tkl_7BsdCsemSxXAVhV-YzAywVFfT78GuO6h8AdHhpE1kxtDoB95haiPtadb2sVXJ-_3ocfjrIISJhBhFOHt_XXqxGOv4BXrXPYDUaxP=s1360-w1360-h1020-rw",
+      "description": "훌륭한 바삭한 돈까스"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 23
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "이태원 맛집",
+  "description" : "이태원 주변 추천 맛집 모음",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 23
+POST http://localhost:8080/restaurants-list/23/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "칸다소바",
+  "description": "아부라 소바가 맛있는 곳",
+  "address": "서울특별시 용산구 이태원 1-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNf7H5P50O4UGv2-sl6Va47pz_5FYCcoEV2fHPnYWiEglMNaDgFPzy0XIJU26EDnBdpX_FZG5nLgHfN-7reZatp2MTHJuF5tsu1ioLdH6S0S4oAHUbXZefP9YTCRY2U5IfiUJ1=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "소바",
+      "price": 13000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrf9-4J2pFQSxTGybnQNFXDQIXI8vAcEVTHnsiopSb4cQKkFUtI6PabWjUzDIKMWyoW_R47chVLkLqEe4KZdBndO262cM67BDv-4-3A8W6ih2GpYfcpkaZk2D-XLu9x9Ig1eFrd=s1360-w1360-h1020-rw",
+      "description": "부드러운 소바"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 24
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 베스트 디저트",
+  "description" : "서울에서 먹을 수 있는 최고의 디저트 맛집들",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 -2 4
+POST http://localhost:8080/restaurants-list/24/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "디저트 카페",
+  "description": "달콤한 디저트를 제공하는 카페",
+  "address": "서울특별시 강남구 신사동 8-1",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq0fAACW0cN8Kli3eRW3Z14sWr2F-k-hke4FuSgcuyR3q_ATLfDoLM4-s2ZFBMXD2_ghRUm_JUAmRHsHyhurKUgJRrGAo86gqXN4v8XdtcbXrZ6h7gQfyGnQSTDxU-fvxjAhpod=w129-h130-n-k-no",
+  "detailList": [
+    {
+      "name": "티라미수",
+      "price": 8000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nozYhhvAcEt85TeWPq0pU-nOhyh4UmS56GjlfA3zNAQ2XkQE_-SbAyl_xyVGT9rKe4xmQx5QeLLAs_Ig4S0o0p4QPrOQIv71adYIXTAPV0Wh25F78uR9iVRCpLoyEZC013rC7lH=s1360-w1360-h1020-rw",
+      "description": "부드러운 티라미수"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 25
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "부산 해산물 맛집",
+  "description" : "부산의 신선한 해산물을 제공하는 맛집 리스트",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 25
+POST http://localhost:8080/restaurants-list/25/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "해물상회",
+  "description": "신선한 해산물을 제공하는 레스토랑",
+  "address": "부산광역시 해운대구 15-6",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqU0V6En-wuhi-EIxIUK4jquWUSmQdF6OZQAhvRrBPDJcUcZwVfwqNYgskHryeJHrwlWe8-_ysjH3Fb-rI5xBtCZjOuYmU4YYwLVE44UJAcUsAoJH4zKsJxcsK2pZgFFpwVHaioYg=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "새우튀김",
+      "price": 10000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npRJ0Pk0d7Fqa1WCttV-LngQKjICkMOaysDTDBN8c8TMDv75ktnQrfozUB605lPU3Jb43k3vHgFVYdEBPySNHdyoiWS_S1LLDXLKSkLq0dy6volIYpieBmf0U04FiaWuHTp-CQa=s1360-w1360-h1020-rw",
+      "description": "바삭한 새우튀김"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 26
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 베스트 커피숍",
+  "description" : "서울에서 최고의 커피를 제공하는 커피숍",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 26
+POST http://localhost:8080/restaurants-list/26/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "커피하우스",
+  "description": "서울에서 유명한 커피숍",
+  "address": "서울특별시 종로구 1-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npSXJ3NCWh198HTThPC32_gRT_qk6jZLBzKuM5Z9bMHq-HMA-CEGMrxA5qp5zUdOa5483gy1vDFq5IjeEO11MUd8KMrcvBn8QWZV_73sxibNrc9FVdL5XdTGNL0Kw8HF17Nl5uu=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "크림라떼",
+      "price": 6000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no7EliKGRzPw_kRKFj1813ludVgCl7DYQlCK6yctQk5tnq2UDePRXCWFfvhQ6PF6GxzUM6n6ae08-xBtIbBsRA9KDUE-QBvuZFeZLvT5-smKI6HWC82Lplu7oyLXiefC74Fv34D=s1360-w1360-h1020-rw",
+      "description": "바디감 훌륭하고 크림때문에 목넘김이 매우 부드럽다"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 27
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집 투어",
+  "description" : "서울 전역에서 맛볼 수 있는 맛집 리스트",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 27
+POST http://localhost:8080/restaurants-list/27/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "모던식당",
+  "description": "모던한 분위기의 식당",
+  "address": "서울특별시 강남구 30-2",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqzKaGok0E0XSq35dvAKLqm7C3D3MMtabhjxDfyL73vpduU-3hp13i2JNO2SI4IqpiUc0txPcuvXH6uUbe_Lp0IW1qQ9ljW3rx8dqupxU2sANWZiPod3amTYMqR_kBZLReS8vz3-g=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "한우 스테이크",
+      "price": 35000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nreCKv4J6k-nQ98A0GLqJH3pWKRMxKmHDXA9hqxl2yQbUjSm-6YpKM1Q-UpRy8fglvVY5x3FgFFLdzZvsRf9LCv1CieCgDntPrjNUFl0VNO8Uybv92qxlaFj4poWrH-4d_bsnbT=s1360-w1360-h1020-rw",
+      "description": "풍미 깊은 한우 스테이크"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 28
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 명동 맛집",
+  "description" : "명동에서 맛볼 수 있는 최고의 맛집들",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 28
+POST http://localhost:8080/restaurants-list/28/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "욘카츠",
+  "description": "부드럽고 맛있는 돈까스를 제공하는 집",
+  "address": "서울특별시 중구 명동 12-1",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npsKnPbWDZQYmMBSg_WzRA4f76mL2LLXx_ioiqwX2LPn7STwRHiHVLS5qf0AbZ5SnUCH0wqgvMi-PJfwYEBoCuPOAbCVIEEP-twhQFHQzWjBrFaKt-qHB4ZlOdk-b4d4kP9mQU=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "돈까스",
+      "price": 15000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npwp-mAumKbR3QUInfItiQ0gcVL2h0SpK61ofp_18XWfuiD2_8WguSApFDqCD7x7PLBZuT9iwqauFi1RahAYGPu3csxOc6yv6Fm_GfLxhg9RcG31FsC5jFFV8QnK-OSRuvNf-rZXg=s1360-w1360-h1020-rw",
+      "description": "부드러운 안심을 사용한 바삭한 돈까스"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 29
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집 24시",
+  "description" : "서울에서 24시간 영업하는 맛집들",
+  "isPublic" : true
+}
+
+### 레스토랑 리스트에 식당 등록 - 29
+POST http://localhost:8080/restaurants-list/29/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "봉할매 김치찌개",
+  "description": "24시간 운영되는 맛집",
+  "address": "서울특별시 강남구 50-7",
+  "imageUrl": "https://lh3.googleusercontent.com/p/AF1QipMVoesWy4r_gDfLWK0-f05mUZf0CUI7TIZpeDDz=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "김치찌개",
+      "price": 7000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noJm8UR7uh4o57u0P2GqlX1WdffcEH-ReZGxnzb0NjGUAj4u8C9dopjKa6h5aDxbAD_ydw9fQ9f65xYscSmVkS0qlFYDP3JNlDJUgkyzXF7VK6dcP5wgdm2ZEdFcxg-eeZ1tF02=s1360-w1360-h1020-rw",
+      "description": "얼큰하고 맛있는 김치찌개"
+    }
+  ]
+}
+
+### 레스토랑 리스트 생성 - 30
+POST http://localhost:8080/restaurants-list
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "title" : "서울 맛집",
+  "description" : "서울에서 오믈렛을 맛있게 먹을 수 있는 곳들",
+  "isPublic" : false
+}
+
+### 레스토랑 리스트에 식당 등록 - 30
+POST http://localhost:8080/restaurants-list/30/restaurants
+Authorization: {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "마이란",
+  "description": "오믈렛 전문점",
+  "address": "서울특별시 서초구 23-5",
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqesSguHpAkYQt0urmlguL2GaDSYA-ckQL67_S0zGQHxTWWjnN-hwmXFGG1hxnuJZwR2UXcLXi6O6HLYEhmChtDku0LLsu5up_U1ZmDvWfeuvQsARgtuHw0hy0OT3RhD_0SXX2u7Q=s1360-w1360-h1020-rw",
+  "detailList": [
+    {
+      "name": "오믈렛",
+      "price": 12000,
+      "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq1BeWXJtuhHHQ8iucK3kMD-hkJWfkMKlM28mSggJGe3CCX8bbooVKu7UBjo3kKg8lyLK1ptPnbmw_nN1p6iF7UFs_sJ5VfGZf2rDYn8M675N1iclERn4nVv5LksTIlVtpoPiXNPg=s1360-w1360-h1020-rw",
+      "description": "부드러운 오믈렛"
+    }
+  ]
+}
